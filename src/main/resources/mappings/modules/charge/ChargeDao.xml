@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wxjs.matchfee.modules.charge.dao.ChargeDao">
+    
+	<sql id="chargeColumns">
+		a.id AS "id",
+		a.prj_num AS "prjNum",
+		a.prj_name AS "prjName",
+		a.prj_address AS "prjAddress",
+		a.report_staff AS "reportStaff",
+		a.report_entity AS "reportEntity",
+		a.report_date AS "reportDate",
+		a.cal_staff AS "calStaff",
+		a.cal_date AS "calDate",
+		a.approve_staff AS "approveStaff",
+		a.approve_date AS "approveDate",
+		a.confirm_staff AS "confirmStaff",
+		a.confirm_date AS "confirmDate",
+		a.pay_ticket_path AS "payTicketPath",
+		a.cal_money AS "calMoney",
+		a.pay_money AS "payMoney",
+		a.status AS "status",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="chargeJoins">
+	</sql>
+    
+	<select id="get" resultType="Charge">
+		SELECT 
+			<include refid="chargeColumns"/>
+		FROM tcharge a
+		<include refid="chargeJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Charge">
+		SELECT 
+			<include refid="chargeColumns"/>
+		FROM tcharge a
+		<include refid="chargeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="prjNum != null and prjNum != ''">
+				AND a.prj_num = #{prjNum}
+			</if>
+			<if test="prjName != null and prjName != ''">
+				AND a.prj_name = #{prjName}
+			</if>
+			<if test="prjAddress != null and prjAddress != ''">
+				AND a.prj_address = #{prjAddress}
+			</if>
+			<if test="reportDate != null and reportDate != ''">
+				AND a.report_date = #{reportDate}
+			</if>
+			<if test="status != null and status != ''">
+				AND a.status = #{status}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Charge">
+		SELECT 
+			<include refid="chargeColumns"/>
+		FROM tcharge a
+		<include refid="chargeJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tcharge(
+			prj_num,
+			prj_name,
+			prj_address,
+			report_staff,
+			report_entity,
+			report_date,
+			cal_staff,
+			cal_date,
+			approve_staff,
+			approve_date,
+			confirm_staff,
+			confirm_date,
+			pay_ticket_path,
+			cal_money,
+			pay_money,
+			status,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{prjNum},
+			#{prjName},
+			#{prjAddress},
+			#{reportStaff},
+			#{reportEntity},
+			#{reportDate},
+			#{calStaff},
+			#{calDate},
+			#{approveStaff},
+			#{approveDate},
+			#{confirmStaff},
+			#{confirmDate},
+			#{payTicketPath},
+			#{calMoney},
+			#{payMoney},
+			#{status},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tcharge SET 	
+			prj_num = #{prjNum},
+			prj_name = #{prjName},
+			prj_address = #{prjAddress},
+			report_staff = #{reportStaff},
+			report_entity = #{reportEntity},
+			report_date = #{reportDate},
+			cal_staff = #{calStaff},
+			cal_date = #{calDate},
+			approve_staff = #{approveStaff},
+			approve_date = #{approveDate},
+			confirm_staff = #{confirmStaff},
+			confirm_date = #{confirmDate},
+			pay_ticket_path = #{payTicketPath},
+			cal_money = #{calMoney},
+			pay_money = #{payMoney},
+			status = #{status},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tcharge SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>
