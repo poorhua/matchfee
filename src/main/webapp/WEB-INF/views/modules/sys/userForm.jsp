@@ -117,6 +117,7 @@
 				<span class="help-inline"><font color="red">*</font> “是”代表此账号允许登录，“否”则表示此账号不允许登录</span>
 			</div>
 		</div>
+		<!--  
 		<div class="control-group">
 			<label class="control-label">用户类型:</label>
 			<div class="controls">
@@ -126,7 +127,7 @@
 				</form:select>
 			</div>
 		</div>
-		<!-- 
+		-->
 		<div class="control-group">
 			<label class="control-label">用户角色:</label>
 			<div class="controls">
@@ -134,7 +135,6 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
-		 -->
 		<div class="control-group">
 			<label class="control-label">备注:</label>
 			<div class="controls">

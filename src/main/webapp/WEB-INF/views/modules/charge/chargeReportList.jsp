@@ -5,30 +5,36 @@
 	<title>征收管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
-		$(document).ready(function() {			
+		$(document).ready(function() {
 			
 		});
+		function page(n,s){
+			$("#pageNo").val(n);
+			$("#pageSize").val(s);
+			$("#searchForm").submit();
+        	return false;
+        }
 	</script>
 </head>
 <body>
-    
-    <matchfee:projectInfoView/>
-	
-	<form:form id="createForm" modelAttribute="charge" action="${ctx}/charge/charge/create" method="post" class="breadcrumb form-search">
+
+    <matchfee:projectInfoView content="${project}"/>
+
+	<form:form id="searchForm" modelAttribute="charge" action="${ctx}/charge/charge/" method="post" class="breadcrumb form-search">
+		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
+		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-		    <input id="project.prjNum" name="project.prjNum" type="hidden" value="${project.prjNum}"/>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="新建征收项目"/></li>
+			<li><label></label>
+			</li>
+			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="添加申报"/></li>
 			<li class="clearfix"></li>
 		</ul>
-	</form:form>	
-	
+	</form:form>
+	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
 				<th>代码</th>
-				<th>项目代码</th>
-				<th>项目名称</th>
-				<th>项目地址</th>
 				<th>申报人</th>
 				<th>申报单位</th>
 				<th>申报时间</th>
@@ -41,27 +47,18 @@
 				<th>付款凭证保存路径</th>
 				<th>测算金额</th>
 				<th>付款金额</th>
-				<th>备注信息</th>
+				<th>状态</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${list}" var="charge">
+		<c:forEach items="${page.list}" var="charge">
 			<tr>
 				<td><a href="${ctx}/charge/charge/form?id=${charge.id}">
 					${charge.id}
 				</a></td>
 				<td>
-					${charge.project.prjNum}
-				</td>
-				<td>
-					${charge.project.prjName}
-				</td>
-				<td>
-					${charge.project.prjAddress}
-				</td>
-				<td>
-					${charge.reportStaff.name}
+					${charge.reportStaff}
 				</td>
 				<td>
 					${charge.reportEntity}
@@ -70,19 +67,19 @@
 					<fmt:formatDate value="${charge.reportDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${charge.calStaff.name}
+					${charge.calStaff}
 				</td>
 				<td>
 					<fmt:formatDate value="${charge.calDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${charge.approveStaff.name}
+					${charge.approveStaff}
 				</td>
 				<td>
 					<fmt:formatDate value="${charge.approveDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${charge.confirmStaff.name}
+					${charge.confirmStaff}
 				</td>
 				<td>
 					<fmt:formatDate value="${charge.confirmDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -97,7 +94,7 @@
 					${charge.payMoney}
 				</td>
 				<td>
-					${charge.remarks}
+					${charge.status}
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/charge/form?id=${charge.id}">修改</a>
@@ -107,5 +104,6 @@
 		</c:forEach>
 		</tbody>
 	</table>
+	<div class="pagination">${page}</div>
 </body>
 </html>

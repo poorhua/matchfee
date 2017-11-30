@@ -26,9 +26,14 @@
 	</script>
 </head>
 <body>
+
+    <matchfee:projectInfoView content="${charge}"/>
+
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/charge/">征收列表</a></li>
-		<li class="active"><a href="${ctx}/charge/charge/form?id=${charge.id}">征收<shiro:hasPermission name="charge:charge:edit">${not empty charge.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:charge:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/charge/charge/form?id=${charge.id}">条件意见书</a></li>
+		<li><a href="${ctx}/charge/charge/form?id=${charge.id}">规划许可证</a></li>
+		<li><a href="${ctx}/charge/charge/form?id=${charge.id}">设计院证明</a></li>
+		<li><a href="${ctx}/charge/charge/form?id=${charge.id}">其它抵扣项</a></li>
 	</ul><br/>
 	<form:form id="inputForm" modelAttribute="charge" action="${ctx}/charge/charge/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -36,28 +41,28 @@
 		<div class="control-group">
 			<label class="control-label">项目代码：</label>
 			<div class="controls">
-				<form:input path="project.prjNum" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+				<form:input path="prjNum" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">项目名称：</label>
 			<div class="controls">
-				<form:input path="project.prjName" htmlEscape="false" maxlength="256" class="input-xlarge required"/>
+				<form:input path="prjName" htmlEscape="false" maxlength="256" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">项目地址：</label>
 			<div class="controls">
-				<form:input path="project.prjAddress" htmlEscape="false" maxlength="256" class="input-xlarge required"/>
+				<form:input path="prjAddress" htmlEscape="false" maxlength="256" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">申报人：</label>
 			<div class="controls">
-				<form:input path="reportStaff.name" htmlEscape="false" maxlength="256" class="input-xlarge required"/>
+				<form:input path="reportStaff" htmlEscape="false" maxlength="256" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -79,7 +84,7 @@
 		<div class="control-group">
 			<label class="control-label">测算人：</label>
 			<div class="controls">
-				<form:input path="calStaff.name" htmlEscape="false" maxlength="256" class="input-xlarge "/>
+				<form:input path="calStaff" htmlEscape="false" maxlength="256" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -93,7 +98,7 @@
 		<div class="control-group">
 			<label class="control-label">审核人：</label>
 			<div class="controls">
-				<form:input path="approveStaff.name" htmlEscape="false" maxlength="256" class="input-xlarge "/>
+				<form:input path="approveStaff" htmlEscape="false" maxlength="256" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -107,7 +112,7 @@
 		<div class="control-group">
 			<label class="control-label">确认人：</label>
 			<div class="controls">
-				<form:input path="confirmStaff.name" htmlEscape="false" maxlength="256" class="input-xlarge "/>
+				<form:input path="confirmStaff" htmlEscape="false" maxlength="256" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

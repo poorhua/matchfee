@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wxjs.matchfee.modules.charge.dao.ProjectDao">
+    
+	<sql id="projectColumns">
+		a.id AS "id",
+		a.prj_num AS "prjNum",
+		a.prj_name AS "prjName",
+		a.build_corp_name AS "buildCorpName",
+		a.build_corp_code AS "buildCorpCode",
+		a.prj_address AS "prjAddress",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="projectJoins">
+	</sql>
+    
+	<select id="get" resultType="Project">
+		SELECT 
+			<include refid="projectColumns"/>
+		FROM tproject a
+		<include refid="projectJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="getByPrjNum" resultType="Project">
+		SELECT 
+			<include refid="projectColumns"/>
+		FROM tproject a
+		<include refid="projectJoins"/>
+		WHERE a.prj_num = #{prjNum}
+	</select>	
+	
+	<select id="findList" resultType="Project">
+		SELECT 
+			<include refid="projectColumns"/>
+		FROM tproject a
+		<include refid="projectJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="prjNum != null and prjNum != ''">
+				AND a.prj_num = #{prjNum}
+			</if>
+			<if test="prjName != null and prjName != ''">
+				AND a.prj_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{prjName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{prjName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{prjName},'%')</if>
+			</if>
+			<if test="buildCorpName != null and buildCorpName != ''">
+				AND a.build_corp_name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{buildCorpName}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{buildCorpName}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{buildCorpName},'%')</if>
+			</if>
+			<if test="buildCorpCode != null and buildCorpCode != ''">
+				AND a.build_corp_code = #{buildCorpCode}
+			</if>
+			<if test="prjAddress != null and prjAddress != ''">
+				AND a.prj_address LIKE 
+					<if test="dbName == 'oracle'">'%'||#{prjAddress}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{prjAddress}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{prjAddress},'%')</if>
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Project">
+		SELECT 
+			<include refid="projectColumns"/>
+		FROM tproject a
+		<include refid="projectJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO tproject(
+			prj_num,
+			prj_name,
+			build_corp_name,
+			build_corp_code,
+			prj_address,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{prjNum},
+			#{prjName},
+			#{buildCorpName},
+			#{buildCorpCode},
+			#{prjAddress},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE tproject SET 	
+			prj_num = #{prjNum},
+			prj_name = #{prjName},
+			build_corp_name = #{buildCorpName},
+			build_corp_code = #{buildCorpCode},
+			prj_address = #{prjAddress},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE tproject SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

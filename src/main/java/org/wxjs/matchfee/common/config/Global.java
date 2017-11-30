@@ -11,6 +11,7 @@ import org.springframework.core.io.DefaultResourceLoader;
 
 import com.ckfinder.connector.ServletContextFactory;
 import com.google.common.collect.Maps;
+
 import org.wxjs.matchfee.common.utils.PropertiesLoader;
 import org.wxjs.matchfee.common.utils.StringUtils;
 
@@ -180,5 +181,14 @@ public class Global {
 		}
 		return projectPath;
     }
+    
+    
+    public static final String CHARGE_STATUS_EDIT = "00";
+    public static final String CHARGE_STATUS_REJECT = "05";
+    public static final String CHARGE_STATUS_TO_CALCULATE = "10";
+    public static final String CHARGE_STATUS_TO_APPROVE = "20";
+    public static final String CHARGE_STATUS_TO_CONFIRM = "30";
+    public static final String CHARGE_STATUS_CONFIRMED = "40";
+    public static final String CHARGE_STATUS_CLOSE = "90";
 	
 }

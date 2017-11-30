@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wxjs.matchfee.modules.charge.dao.OpinionBookItemDao">
+    
+	<sql id="opinionBookItemColumns">
+		a.id AS "id",
+		a.doc_id AS "doc.id",
+		a.item_id AS "itemId",
+		a.area AS "area",
+		a.money AS "money",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="opinionBookItemJoins">
+		LEFT JOIN topinion_book b ON b.id = a.doc_id
+	</sql>
+    
+	<select id="get" resultType="OpinionBookItem">
+		SELECT 
+			<include refid="opinionBookItemColumns"/>
+		FROM topinion_book_item a
+		<include refid="opinionBookItemJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OpinionBookItem">
+		SELECT 
+			<include refid="opinionBookItemColumns"/>
+		FROM topinion_book_item a
+		<include refid="opinionBookItemJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="doc != null and doc.id != null and doc.id != ''">
+				AND a.doc_id = #{doc.id}
+			</if>
+			<if test="itemId != null and itemId != ''">
+				AND a.item_id = #{itemId}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OpinionBookItem">
+		SELECT 
+			<include refid="opinionBookItemColumns"/>
+		FROM topinion_book_item a
+		<include refid="opinionBookItemJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.create_date ASC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO topinion_book_item(
+			doc_id,
+			item_id,
+			area,
+			money,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{doc.id},
+			#{itemId},
+			#{area},
+			#{money},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE topinion_book_item SET 	
+			doc_id = #{doc.id},
+			item_id = #{itemId},
+			area = #{area},
+			money = #{money},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE topinion_book_item SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE doc_id = #{doc.id}
+			</otherwise>
+		</choose>
+	</update>
+	
+</mapper>

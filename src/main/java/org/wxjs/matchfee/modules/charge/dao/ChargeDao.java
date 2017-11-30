@@ -15,4 +15,14 @@ import org.wxjs.matchfee.modules.charge.entity.Charge;
 @MyBatisDao
 public interface ChargeDao extends CrudDao<Charge> {
 	
+	public int updateReport(Charge charge);
+	
+	public int updateCalculate(Charge charge);
+	
+	public int updateApprove(Charge charge);
+	
+	public int updateConfirm(Charge charge);
+	
+	public int updateStatus(Charge charge);
+	
 }

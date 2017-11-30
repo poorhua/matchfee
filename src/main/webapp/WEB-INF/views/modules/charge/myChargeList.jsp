@@ -11,13 +11,21 @@
 	</script>
 </head>
 <body>
-    
-    <matchfee:projectInfoView/>
 	
-	<form:form id="createForm" modelAttribute="charge" action="${ctx}/charge/charge/create" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="charge" action="${ctx}/charge/charge/mylist" method="post" class="breadcrumb form-search">
 		<ul class="ul-form">
-		    <input id="project.prjNum" name="project.prjNum" type="hidden" value="${project.prjNum}"/>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="新建征收项目"/></li>
+		    <li>
+			    <label>申报日期 ：</label>
+				<input name="dateFrom" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${charge.dateFrom}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<label>到：</label>
+				<input name="dateTo" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${charge.dateTo}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+			</li>
+			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+			<input id="btnAdd" class="btn btn-primary" type="submit" value="新建征收项目"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>	
@@ -28,7 +36,6 @@
 				<th>代码</th>
 				<th>项目代码</th>
 				<th>项目名称</th>
-				<th>项目地址</th>
 				<th>申报人</th>
 				<th>申报单位</th>
 				<th>申报时间</th>
@@ -41,7 +48,7 @@
 				<th>付款凭证保存路径</th>
 				<th>测算金额</th>
 				<th>付款金额</th>
-				<th>备注信息</th>
+				<th>状态</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -56,9 +63,6 @@
 				</td>
 				<td>
 					${charge.project.prjName}
-				</td>
-				<td>
-					${charge.project.prjAddress}
 				</td>
 				<td>
 					${charge.reportStaff.name}
@@ -97,7 +101,7 @@
 					${charge.payMoney}
 				</td>
 				<td>
-					${charge.remarks}
+					${charge.status}
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/charge/form?id=${charge.id}">修改</a>

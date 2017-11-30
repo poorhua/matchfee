@@ -316,6 +316,22 @@ public class User extends DataEntity<User> {
 		return id != null && "1".equals(id);
 	}
 	
+	/**
+	 * 是否政府用户
+	 * @return
+	 */
+	public boolean isZFUser(){
+		return !this.isQyUser();
+	}
+	
+	/**
+	 * 是否企业用户
+	 * @return
+	 */
+	public boolean isQyUser(){
+		return "3".equals(this.id);
+	}
+	
 	@Override
 	public String toString() {
 		return id;

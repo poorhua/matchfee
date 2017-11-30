@@ -48,14 +48,14 @@
 	</div>
 	<h1 class="form-signin-heading">${fns:getConfig('productName')}</h1>
 	
-	<form id="loginForm" class="form-signin" action="${ctx}/login" method="post">
+	<form id="loginForm" class="form-signin" action="${ctx}/loginQy" method="post">
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/login?type=zf"><strong>政府登录</strong></a></li>
-		<li><a href="${ctx}/login?type=qy"><strong>企业登录</strong></a></li>
-	</ul>	
-		<label class="input-label" for="username">登录名</label>
+		<li><a href="${ctx}/login?type=zf"><strong>政府登录</strong></a></li>
+		<li class="active"><a href="${ctx}/login?type=qy"><strong>企业登录</strong></a></li>
+	</ul>			
+		<label class="input-label" for="username">项目编号</label>
 		<input type="text" id="username" name="username" class="input-block-level required" value="${username}">
-		<label class="input-label" for="password">密码</label>
+		<label class="input-label" for="password">项目管理密码</label>
 		<input type="password" id="password" name="password" class="input-block-level required">
 		<c:if test="${isValidateCodeLogin}"><div class="validateCode">
 			<label class="input-label mid" for="validateCode">验证码</label>

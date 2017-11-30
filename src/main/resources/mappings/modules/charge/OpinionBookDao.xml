@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wxjs.matchfee.modules.charge.dao.OpinionBookDao">
+    
+	<sql id="opinionBookColumns">
+		a.id AS "id",
+		a.name AS "name",
+		a.prj_num AS "prjNum",
+		a.document_no AS "documentNo",
+		a.document_type AS "documentType",
+		a.path AS "path",
+		a.document_date AS "documentDate",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag"
+	</sql>
+	
+	<sql id="opinionBookJoins">
+	</sql>
+    
+	<select id="get" resultType="OpinionBook">
+		SELECT 
+			<include refid="opinionBookColumns"/>
+		FROM topinion_book a
+		<include refid="opinionBookJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="OpinionBook">
+		SELECT 
+			<include refid="opinionBookColumns"/>
+		FROM topinion_book a
+		<include refid="opinionBookJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="prjNum != null and prjNum != ''">
+				AND a.prj_num = #{prjNum}
+			</if>			
+			<if test="name != null and name != ''">
+				AND a.name LIKE 
+					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
+					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
+					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
+			</if>
+			<if test="documentNo != null and documentNo != ''">
+				AND a.document_no = #{documentNo}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="OpinionBook">
+		SELECT 
+			<include refid="opinionBookColumns"/>
+		FROM topinion_book a
+		<include refid="opinionBookJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO topinion_book(
+			name,
+			prj_num,
+			document_no,
+			document_type,
+			path,
+			document_date,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{name},
+			#{prjNum},
+			#{documentNo},
+			#{documentType},
+			#{path},
+			#{documentDate},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE topinion_book SET 	
+			name = #{name},
+			prj_num = #{prjNum},
+			document_no = #{documentNo},
+			document_type = #{documentType},
+			path = #{path},
+			document_date = #{documentDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE topinion_book SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

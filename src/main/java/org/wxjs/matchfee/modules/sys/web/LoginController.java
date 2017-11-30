@@ -47,6 +47,9 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.GET)
 	public String login(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		String loginType = request.getParameter("type");
+		
 		Principal principal = UserUtils.getPrincipal();
 
 //		// 默认页签模式
@@ -74,8 +77,14 @@ public class LoginController extends BaseController{
 //		view += "jar:file:/D:/GitHub/jeesite/src/main/webapp/WEB-INF/lib/jeesite.jar!";
 //		view += "/"+getClass().getName().replaceAll("\\.", "/").replace(getClass().getSimpleName(), "")+"view/sysLogin";
 //		view += ".jsp";
-		return "modules/sys/sysLogin";
-	}
+		
+		String target = "modules/sys/sysLogin";
+		if("qy".equalsIgnoreCase(loginType)){
+			target = "modules/sys/sysLoginQy";
+		}
+		
+		return target;
+	}	
 
 	/**
 	 * 登录失败，真正登录的POST请求由Filter完成
@@ -123,8 +132,10 @@ public class LoginController extends BaseController{
 	        return renderString(response, model);
 		}
 		
+		logger.debug("loginFail...");
+		
 		return "modules/sys/sysLogin";
-	}
+	}	
 
 	/**
 	 * 登录成功，进入管理首页
