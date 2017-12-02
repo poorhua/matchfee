@@ -613,7 +613,7 @@
 		    <exclusions>
                 		<exclusion>
                     			<groupId>org.springframework</groupId>
-                    			<artifactId>spring-aop</artifactId>
+                    			<artifactId>spring</artifactId>
                 		</exclusion>
               </exclusions>
 		</dependency>
