@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -79,8 +80,18 @@ public class ProjectDeductionController extends BaseController {
 		if (!beanValidator(model, projectDeduction)){
 			return form(projectDeduction, httpSession, model);
 		}
-		projectDeductionService.save(projectDeduction);
-		addMessage(redirectAttributes, "保存项目抵扣项成功");
+		try{
+			projectDeductionService.save(projectDeduction);
+			addMessage(redirectAttributes, "保存成功");
+		}catch(DuplicateKeyException e1){
+			addMessage(redirectAttributes, "保存失败。重复！");
+			logger.error("save error", e1);
+		}catch(Exception e2){
+			addMessage(redirectAttributes, "保存失败。");
+			logger.error("save error", e2);
+		}
+		
+		
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/projectDeductionTab/?repage";
 	}
 	
