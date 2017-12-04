@@ -1,0 +1,18 @@
+/**
+ * Copyright &copy; 2012-2016 千里目 All rights reserved.
+ */
+package org.wxjs.matchfee.modules.creadit.dao;
+
+import org.wxjs.matchfee.common.persistence.CrudDao;
+import org.wxjs.matchfee.common.persistence.annotation.MyBatisDao;
+import org.wxjs.matchfee.modules.creadit.entity.Tchecklist;
+
+/**
+ * 结算清单DAO接口
+ * @author XYM
+ * @version 2017-12-04
+ */
+@MyBatisDao
+public interface TchecklistDao extends CrudDao<Tchecklist> {
+	
+}
