@@ -49,9 +49,9 @@
 		<tbody>
 		<c:forEach items="${list}" var="charge">
 			<tr>
-				<td><a href="${ctx}/charge/charge/form?id=${charge.id}">
+				<td>
 					${charge.id}
-				</a></td>
+				</td>
 				<td>
 					${charge.project.prjNum}
 				</td>

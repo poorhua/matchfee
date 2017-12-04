@@ -15,7 +15,7 @@
 	</script>
 </head>
 <body>
-    <h1>第一步：指定项目</h1>
+    <legend>指定项目</legend>
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/charge/project/">项目信息列表</a></li>
 	</ul>

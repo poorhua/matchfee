@@ -85,7 +85,7 @@ public class DeductionDoc extends DataEntity<DeductionDoc> {
 		this.documentType = documentType;
 	}
 	
-	@Length(min=1, max=128, message="保存路径长度必须介于 1 和 128 之间")
+	@Length(min=1, max=256, message="保存路径长度必须介于 1 和 256 之间")
 	public String getPath() {
 		return path;
 	}

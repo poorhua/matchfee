@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
-import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
@@ -159,7 +158,7 @@ public class ChargeController extends BaseController {
 	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "create")
-	public String create(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+	public String create(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, charge)){
 			return form(charge, model);
 		}
@@ -167,7 +166,7 @@ public class ChargeController extends BaseController {
 		User user = UserUtils.getUser();
 		charge.setReportStaff(user);
 		
-		Project project = projectService.getByPrjNum(charge.getProject().getPrjNum());
+		Project project = (Project)httpSession.getAttribute("project");
 		
 		charge.setProject(project);
 		charge.setReportEntity(project.getBuildCorpName());
@@ -176,7 +175,7 @@ public class ChargeController extends BaseController {
 		
 		chargeService.save(charge);
 		addMessage(redirectAttributes, "保存征收成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/mylist?repage";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")

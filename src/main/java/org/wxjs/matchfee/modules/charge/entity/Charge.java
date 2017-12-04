@@ -115,7 +115,7 @@ public class Charge extends DataEntity<Charge> {
 		this.confirmDate = confirmDate;
 	}
 	
-	@Length(min=0, max=128, message="付款凭证保存路径长度必须介于 0 和 128 之间")
+	@Length(min=0, max=256, message="付款凭证保存路径长度必须介于 0 和 256 之间")
 	public String getPayTicketPath() {
 		return payTicketPath;
 	}
