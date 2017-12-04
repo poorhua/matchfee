@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>抵扣项文件管理</title>
+	<title>项目抵扣项管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,30 +27,16 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/deductionDoc/">抵扣项文件列表</a></li>
-		<li class="active"><a href="${ctx}/charge/deductionDoc/form?id=${deductionDoc.id}">抵扣项文件<shiro:hasPermission name="charge:charge:edit">${not empty deductionDoc.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:charge:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/charge/projectDeduction/">项目抵扣项列表</a></li>
+		<li class="active"><a href="${ctx}/charge/projectDeduction/form?id=${projectDeduction.id}">项目抵扣项<shiro:hasPermission name="charge:charge:edit">${not empty projectDeduction.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:charge:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="deductionDoc" action="${ctx}/charge/deductionDoc/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="projectDeduction" action="${ctx}/charge/projectDeduction/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
-		<div class="control-group">
-			<label class="control-label">征收代码：</label>
-			<div class="controls">
-				<form:input path="chargeId" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
 		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">项目代码：</label>
-			<div class="controls">
-				<form:input path="prjNum" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -62,16 +48,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">文件类型：</label>
-			<div class="controls">
-				<form:input path="documentType" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">保存路径：</label>
 			<div class="controls">
-				<form:input path="path" htmlEscape="false" maxlength="128" class="input-xlarge required"/>
+				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/charge/projectDeduction" selectMultiple="true"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -79,8 +59,29 @@
 			<label class="control-label">文档日期：</label>
 			<div class="controls">
 				<input name="documentDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${deductionDoc.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					value="<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">面积（平米）：</label>
+			<div class="controls">
+				<form:input path="area" htmlEscape="false" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">金额（元）：</label>
+			<div class="controls">
+				<form:input path="money" htmlEscape="false" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">抵扣方式：</label>
+			<div class="controls">
+				<form:input path="deductionType" htmlEscape="false" maxlength="1" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

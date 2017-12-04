@@ -53,6 +53,9 @@
 		<li class="active"><a href="${ctx}/login?type=zf"><strong>政府登录</strong></a></li>
 		<li><a href="${ctx}/login?type=qy"><strong>企业登录</strong></a></li>
 	</ul>	
+	
+	    <input type="hidden" id="type" name="type" value="zf">
+	    
 		<label class="input-label" for="username">登录名</label>
 		<input type="text" id="username" name="username" class="input-block-level required" value="${username}">
 		<label class="input-label" for="password">密码</label>

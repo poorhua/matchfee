@@ -3,6 +3,10 @@
  */
 package org.wxjs.matchfee.modules.base.web;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -13,14 +17,17 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.base.entity.DeductionItem;
 import org.wxjs.matchfee.modules.base.service.DeductionItemService;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * deductionitemController
@@ -78,6 +85,34 @@ public class DeductionItemController extends BaseController {
 		deductionItemService.delete(deductionItem);
 		addMessage(redirectAttributes, "删除抵扣项成功");
 		return "redirect:"+Global.getAdminPath()+"/base/deductionItem/?repage";
+	}
+	
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "treeData")
+	public List<Map<String, Object>> treeData(HttpServletResponse response) {
+
+		List<DeductionItem> list = deductionItemService.findList(new DeductionItem());
+
+		return this.getMapList(list);
+	}
+	
+	private List<Map<String, Object>> getMapList(List<DeductionItem> list){
+		
+		List<Map<String, Object>> mapList = Lists.newArrayList();
+
+		for(DeductionItem e : list){
+			
+			Map<String, Object> map = Maps.newHashMap();
+			map.put("id", e.getId());
+			map.put("pId", "");
+			map.put("pIds", "");
+			map.put("name", e.getName());
+			mapList.add(map);
+
+		}		
+		
+		return mapList;
 	}
 
 }

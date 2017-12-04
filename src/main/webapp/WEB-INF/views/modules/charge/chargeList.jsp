@@ -100,7 +100,7 @@
 					${charge.remarks}
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
-    				<a href="${ctx}/charge/charge/form?id=${charge.id}">修改</a>
+    				<a href="${ctx}/charge/charge/opinionBookTab?id=${charge.id}">进入</a>
 					<a href="${ctx}/charge/charge/delete?id=${charge.id}" onclick="return confirmx('确认要删除该征收吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

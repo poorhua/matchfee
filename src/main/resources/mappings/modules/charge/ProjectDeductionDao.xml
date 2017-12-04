@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.wxjs.matchfee.modules.charge.dao.DeductionDocDao">
+<mapper namespace="org.wxjs.matchfee.modules.charge.dao.ProjectDeductionDao">
     
-	<sql id="deductionDocColumns">
+	<sql id="projectDeductionColumns">
 		a.id AS "id",
 		a.charge_id AS "chargeId",
 		a.name AS "name",
 		a.prj_num AS "prjNum",
 		a.document_no AS "documentNo",
-		a.document_type AS "documentType",
 		a.path AS "path",
 		a.document_date AS "documentDate",
+		a.area AS "area",
+		a.money AS "money",
+		a.deduction_type AS "deductionType",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -19,36 +21,27 @@
 		a.del_flag AS "delFlag"
 	</sql>
 	
-	<sql id="deductionDocJoins">
+	<sql id="projectDeductionJoins">
 	</sql>
     
-	<select id="get" resultType="DeductionDoc">
+	<select id="get" resultType="ProjectDeduction">
 		SELECT 
-			<include refid="deductionDocColumns"/>
-		FROM tdeduction_doc a
-		<include refid="deductionDocJoins"/>
+			<include refid="projectDeductionColumns"/>
+		FROM tproject_deduction a
+		<include refid="projectDeductionJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="DeductionDoc">
+	<select id="findList" resultType="ProjectDeduction">
 		SELECT 
-			<include refid="deductionDocColumns"/>
-		FROM tdeduction_doc a
-		<include refid="deductionDocJoins"/>
+			<include refid="projectDeductionColumns"/>
+		FROM tproject_deduction a
+		<include refid="projectDeductionJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="chargeId != null and chargeId != ''">
 				AND a.charge_id = #{chargeId}
-			</if>
-			<if test="name != null and name != ''">
-				AND a.name LIKE 
-					<if test="dbName == 'oracle'">'%'||#{name}||'%'</if>
-					<if test="dbName == 'mssql'">'%'+#{name}+'%'</if>
-					<if test="dbName == 'mysql'">concat('%',#{name},'%')</if>
-			</if>
-			<if test="prjNum != null and prjNum != ''">
-				AND a.prj_num = #{prjNum}
-			</if>
+			</if>			
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
@@ -60,11 +53,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="DeductionDoc">
+	<select id="findAllList" resultType="ProjectDeduction">
 		SELECT 
-			<include refid="deductionDocColumns"/>
-		FROM tdeduction_doc a
-		<include refid="deductionDocJoins"/>
+			<include refid="projectDeductionColumns"/>
+		FROM tproject_deduction a
+		<include refid="projectDeductionJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		
@@ -79,14 +72,16 @@
 	</select>
 	
 	<insert id="insert">
-		INSERT INTO tdeduction_doc(
+		INSERT INTO tproject_deduction(
 			charge_id,
 			name,
 			prj_num,
 			document_no,
-			document_type,
 			path,
 			document_date,
+			area,
+			money,
+			deduction_type,
 			create_by,
 			create_date,
 			update_by,
@@ -98,9 +93,11 @@
 			#{name},
 			#{prjNum},
 			#{documentNo},
-			#{documentType},
 			#{path},
 			#{documentDate},
+			#{area},
+			#{money},
+			#{deductionType},
 			#{createBy.id},
 			#{createDate},
 			#{updateBy.id},
@@ -111,20 +108,22 @@
 	</insert>
 	
 	<update id="update">
-		UPDATE tdeduction_doc SET 	
-			charge_id = #{chargeId},
+		UPDATE tproject_deduction SET 	
 			name = #{name},
-			prj_num = #{prjNum},
 			document_no = #{documentNo},
-			document_type = #{documentType},
 			path = #{path},
 			document_date = #{documentDate},
+			area = #{area},
+			money = #{money},
+			deduction_type = #{deductionType},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
 			remarks = #{remarks}
 		WHERE id = #{id}
 	</update>
 	
 	<update id="delete">
-		DELETE FROM tdeduction_doc
+		DELETE FROM tproject_deduction
 		WHERE id = #{id}
 	</update>
 	

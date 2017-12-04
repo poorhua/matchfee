@@ -120,8 +120,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE topinion_book SET 
-			del_flag = #{DEL_FLAG_DELETE}
+		DELETE FROM topinion_book
 		WHERE id = #{id}
 	</update>
 	

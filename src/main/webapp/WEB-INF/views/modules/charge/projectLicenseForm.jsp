@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>抵扣项文件管理</title>
+	<title>工程许可证管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,19 +27,12 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/deductionDoc/">抵扣项文件列表</a></li>
-		<li class="active"><a href="${ctx}/charge/deductionDoc/form?id=${deductionDoc.id}">抵扣项文件<shiro:hasPermission name="charge:charge:edit">${not empty deductionDoc.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:charge:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/charge/projectLicense/">工程许可证列表</a></li>
+		<li class="active"><a href="${ctx}/charge/projectLicense/form?id=${projectLicense.id}">工程许可证<shiro:hasPermission name="charge:charge:edit">${not empty projectLicense.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:charge:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="deductionDoc" action="${ctx}/charge/deductionDoc/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="projectLicense" action="${ctx}/charge/projectLicense/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
-		<div class="control-group">
-			<label class="control-label">征收代码：</label>
-			<div class="controls">
-				<form:input path="chargeId" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
 		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
@@ -48,23 +41,9 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">项目代码：</label>
-			<div class="controls">
-				<form:input path="prjNum" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">文件编号：</label>
 			<div class="controls">
 				<form:input path="documentNo" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">文件类型：</label>
-			<div class="controls">
-				<form:input path="documentType" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -79,8 +58,22 @@
 			<label class="control-label">文档日期：</label>
 			<div class="controls">
 				<input name="documentDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${deductionDoc.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
+					value="<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">地上面积（平米）：</label>
+			<div class="controls">
+				<form:input path="upArea" htmlEscape="false" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">地下面积（平米）：</label>
+			<div class="controls">
+				<form:input path="downArea" htmlEscape="false" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

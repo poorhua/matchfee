@@ -27,24 +27,16 @@
 	</script>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/opinionBook/">OpinonBook列表</a></li>
-		<li class="active"><a href="${ctx}/charge/opinionBook/form?id=${opinionBook.id}">OpinonBook<shiro:hasPermission name="charge:opinionBook:edit">${not empty opinionBook.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:opinionBook:edit">查看</shiro:lacksPermission></a></li>
-	</ul><br/>
+	<legend>条件意见书</legend>
+	<matchfee:projectInfoView/><br>
 	<form:form id="inputForm" modelAttribute="opinionBook" action="${ctx}/charge/opinionBook/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<form:hidden path="prjNum"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">项目代码：</label>
-			<div class="controls">
-				<form:input path="prjNum" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -79,7 +71,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="charge:opinionBook:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="charge:charge:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

@@ -50,7 +50,17 @@ public class LoginController extends BaseController{
 		
 		String loginType = request.getParameter("type");
 		
+		model.addAttribute("type", loginType);
+		
 		Principal principal = UserUtils.getPrincipal();
+		
+		if(principal!=null){
+			logger.debug("id: "+principal.getId()+",loginName: "+principal.getLoginName()+",name: "+principal.getName());
+		}else{
+			logger.debug("principal is null");
+		}
+		
+		
 
 //		// 默认页签模式
 //		String tabmode = CookieUtils.getCookie(request, "tabmode");
@@ -67,8 +77,13 @@ public class LoginController extends BaseController{
 			CookieUtils.setCookie(response, "LOGINED", "false");
 		}
 		
+		logger.debug("login, loginType: "+loginType);
+		
 		// 如果已经登录，则跳转到管理首页
 		if(principal != null && !principal.isMobileLogin()){
+			
+			logger.debug("login, redirect /a");
+			
 			return "redirect:" + adminPath;
 		}
 //		String view;
@@ -91,10 +106,18 @@ public class LoginController extends BaseController{
 	 */
 	@RequestMapping(value = "${adminPath}/login", method = RequestMethod.POST)
 	public String loginFail(HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		String loginType = request.getParameter("type");
+		
+		logger.debug("login, loginType: "+loginType);
+		
 		Principal principal = UserUtils.getPrincipal();
 		
 		// 如果已经登录，则跳转到管理首页
 		if(principal != null){
+			
+			logger.debug("login, loginType: "+loginType);
+			
 			return "redirect:" + adminPath;
 		}
 
@@ -134,7 +157,12 @@ public class LoginController extends BaseController{
 		
 		logger.debug("loginFail...");
 		
-		return "modules/sys/sysLogin";
+		String target = "modules/sys/sysLogin";
+		if("qy".equalsIgnoreCase(loginType)){
+			target = "modules/sys/sysLoginQy";
+		}
+		
+		return target;
 	}	
 
 	/**

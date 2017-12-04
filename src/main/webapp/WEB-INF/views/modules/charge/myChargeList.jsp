@@ -8,6 +8,7 @@
 		$(document).ready(function() {			
 			
 		});
+		
 	</script>
 </head>
 <body>
@@ -25,7 +26,7 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-			<input id="btnAdd" class="btn btn-primary" type="submit" value="新建征收项目"/></li>
+			<input id="btnAdd" class="btn btn-primary" type="button" value="新申报" onclick="location.href='${ctx}/charge/charge/toProjectList'"/></li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>	
@@ -39,13 +40,6 @@
 				<th>申报人</th>
 				<th>申报单位</th>
 				<th>申报时间</th>
-				<th>测算人</th>
-				<th>测算时间</th>
-				<th>审核人</th>
-				<th>审核时间</th>
-				<th>确认人</th>
-				<th>确认时间</th>
-				<th>付款凭证保存路径</th>
 				<th>测算金额</th>
 				<th>付款金额</th>
 				<th>状态</th>
@@ -74,37 +68,16 @@
 					<fmt:formatDate value="${charge.reportDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${charge.calStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.calDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.approveStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.approveDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.confirmStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.confirmDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.payTicketPath}
-				</td>
-				<td>
 					${charge.calMoney}
 				</td>
 				<td>
 					${charge.payMoney}
 				</td>
 				<td>
-					${charge.status}
+					${charge.statusLabel}
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
-    				<a href="${ctx}/charge/charge/form?id=${charge.id}">修改</a>
+    				<a href="${ctx}/charge/charge/opinionBookTab?id=${charge.id}">进入</a>
 					<a href="${ctx}/charge/charge/delete?id=${charge.id}" onclick="return confirmx('确认要删除该征收吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

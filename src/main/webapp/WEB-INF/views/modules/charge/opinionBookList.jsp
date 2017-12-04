@@ -23,7 +23,7 @@
 				<th>文档日期</th>
 				<th>链接</th>
 				<th>备注信息</th>
-				<shiro:hasPermission name="charge:opinionBook:edit"><th>操作</th></shiro:hasPermission>
+				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
@@ -43,7 +43,7 @@
 				<td>
 					${opinionBook.remarks}
 				</td>
-				<shiro:hasPermission name="charge:opinionBook:edit"><td>
+				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/opinionBook/form?id=${opinionBook.id}">修改</a>
 					<a href="${ctx}/charge/opinionBook/delete?id=${opinionBook.id}" onclick="return confirmx('确认要删除该OpinonBook吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
@@ -51,6 +51,5 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	<div class="pagination">${page}</div>
 </body>
 </html>

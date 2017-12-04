@@ -3,9 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.entity;
 
-import org.hibernate.validator.constraints.Length;
-
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.modules.base.entity.DeductionItem;
 
 /**
  * 条件意见书Entity
@@ -16,7 +15,7 @@ public class OpinionBookItem extends DataEntity<OpinionBookItem> {
 	
 	private static final long serialVersionUID = 1L;
 	private OpinionBook doc;		// 文档代码 父类
-	private String itemId;		// 抵扣项代码
+	private DeductionItem item;		// 抵扣项
 	private String area;		// 面积（平米）
 	private String money;		// 金额（元）
 	
@@ -39,16 +38,15 @@ public class OpinionBookItem extends DataEntity<OpinionBookItem> {
 	public void setDoc(OpinionBook doc) {
 		this.doc = doc;
 	}
-
-	@Length(min=1, max=64, message="抵扣项代码长度必须介于 1 和 64 之间")
-	public String getItemId() {
-		return itemId;
-	}
-
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
-	}
 	
+	public DeductionItem getItem() {
+		return item;
+	}
+
+	public void setItem(DeductionItem item) {
+		this.item = item;
+	}
+
 	public String getArea() {
 		return area;
 	}

@@ -5,7 +5,12 @@
 	<sql id="opinionBookItemColumns">
 		a.id AS "id",
 		a.doc_id AS "doc.id",
-		a.item_id AS "itemId",
+		b.name AS "doc.name",
+		b.path AS "doc.path",
+		b.document_no AS "doc.documentNo",
+		b.document_date AS "doc.documentDate",
+		a.item_id AS "item.id",
+		c.name AS "item.name",
 		a.area AS "area",
 		a.money AS "money",
 		a.create_by AS "createBy.id",
@@ -18,6 +23,7 @@
 	
 	<sql id="opinionBookItemJoins">
 		LEFT JOIN topinion_book b ON b.id = a.doc_id
+		LEFT JOIN tdeduction_item c ON c.id = a.item_id
 	</sql>
     
 	<select id="get" resultType="OpinionBookItem">
@@ -38,8 +44,8 @@
 			<if test="doc != null and doc.id != null and doc.id != ''">
 				AND a.doc_id = #{doc.id}
 			</if>
-			<if test="itemId != null and itemId != ''">
-				AND a.item_id = #{itemId}
+			<if test="item!=null and item.id != null and item.id != ''">
+				AND a.item_id = #{item.id}
 			</if>
 		</where>
 		<choose>
@@ -84,7 +90,7 @@
 			del_flag
 		) VALUES (
 			#{doc.id},
-			#{itemId},
+			#{item.id},
 			#{area},
 			#{money},
 			#{createBy.id},
@@ -99,7 +105,7 @@
 	<update id="update">
 		UPDATE topinion_book_item SET 	
 			doc_id = #{doc.id},
-			item_id = #{itemId},
+			item_id = #{item.id},
 			area = #{area},
 			money = #{money},
 			remarks = #{remarks}
@@ -107,8 +113,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE topinion_book_item SET 
-			del_flag = #{DEL_FLAG_DELETE}
+		DELETE FROM topinion_book_item
 		<choose>
 			<when test="id !=null and id != ''">
 				WHERE id = #{id}

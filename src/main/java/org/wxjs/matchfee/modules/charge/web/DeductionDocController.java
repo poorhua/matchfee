@@ -46,7 +46,7 @@ public class DeductionDocController extends BaseController {
 		return entity;
 	}
 	
-	@RequiresPermissions("charge:deductionDoc:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(DeductionDoc deductionDoc, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<DeductionDoc> page = deductionDocService.findPage(new Page<DeductionDoc>(request, response), deductionDoc); 
@@ -54,14 +54,14 @@ public class DeductionDocController extends BaseController {
 		return "modules/charge/deductionDocList";
 	}
 
-	@RequiresPermissions("charge:deductionDoc:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "form")
 	public String form(DeductionDoc deductionDoc, Model model) {
 		model.addAttribute("deductionDoc", deductionDoc);
 		return "modules/charge/deductionDocForm";
 	}
 
-	@RequiresPermissions("charge:deductionDoc:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "save")
 	public String save(DeductionDoc deductionDoc, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, deductionDoc)){
@@ -72,7 +72,7 @@ public class DeductionDocController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/charge/deductionDoc/?repage";
 	}
 	
-	@RequiresPermissions("charge:deductionDoc:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "delete")
 	public String delete(DeductionDoc deductionDoc, RedirectAttributes redirectAttributes) {
 		deductionDocService.delete(deductionDoc);

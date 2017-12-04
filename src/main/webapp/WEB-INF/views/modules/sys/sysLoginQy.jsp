@@ -48,11 +48,13 @@
 	</div>
 	<h1 class="form-signin-heading">${fns:getConfig('productName')}</h1>
 	
-	<form id="loginForm" class="form-signin" action="${ctx}/loginQy" method="post">
+	<form id="loginForm" class="form-signin" action="${ctx}/login" method="post">
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/login?type=zf"><strong>政府登录</strong></a></li>
 		<li class="active"><a href="${ctx}/login?type=qy"><strong>企业登录</strong></a></li>
 	</ul>			
+	    <input type="hidden" id="type" name="type" value="qy">
+	
 		<label class="input-label" for="username">项目编号</label>
 		<input type="text" id="username" name="username" class="input-block-level required" value="${username}">
 		<label class="input-label" for="password">项目管理密码</label>

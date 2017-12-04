@@ -106,8 +106,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE tdeduction_doc_item SET 
-			del_flag = #{DEL_FLAG_DELETE}
+		DELETE FROM tdeduction_doc_item
 		WHERE id = #{id}
 	</update>
 	

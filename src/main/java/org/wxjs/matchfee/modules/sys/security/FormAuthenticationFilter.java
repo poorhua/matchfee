@@ -35,14 +35,18 @@ public class FormAuthenticationFilter extends org.apache.shiro.web.filter.authc.
 	protected AuthenticationToken createToken(ServletRequest request, ServletResponse response) {
 		String username = getUsername(request);
 		String password = getPassword(request);
+		String userType = request.getParameter("type");
 		if (password==null){
 			password = "";
+		}
+		if(StringUtils.isBlank(userType)){
+			userType = "zf";
 		}
 		boolean rememberMe = isRememberMe(request);
 		String host = StringUtils.getRemoteAddr((HttpServletRequest)request);
 		String captcha = getCaptcha(request);
 		boolean mobile = isMobileLogin(request);
-		return new UsernamePasswordToken(username, password.toCharArray(), rememberMe, host, captcha, mobile);
+		return new UsernamePasswordToken(username, password.toCharArray(), rememberMe, host, captcha, mobile, password, userType);
 	}
 	
 	/**

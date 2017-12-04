@@ -3,6 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -36,6 +38,9 @@ public class ProjectController extends BaseController {
 	@Autowired
 	private ProjectService projectService;
 	
+	@Autowired
+	private ChargeService chargeService;
+	
 	@ModelAttribute
 	public Project get(@RequestParam(required=false) String id) {
 		Project entity = null;
@@ -62,10 +67,28 @@ public class ProjectController extends BaseController {
 		model.addAttribute("page", page);
 		return "modules/charge/projectList";
 	}
+	
+	@RequiresPermissions("charge:project:view")
+	@RequestMapping(value = {"listLocalAndRemote"})
+	public String listLocalAndRemote(Project project, HttpServletRequest request, HttpServletResponse response, Model model) {
+		List<Project> list = projectService.findList_LocalAndRemote(project); 
+		if(list.size()>100){
+			model.addAttribute("list", list.subList(0, 99));
+		}else{
+			model.addAttribute("list", list);
+		}
+		return "modules/charge/projectList";
+	}
 
 	@RequiresPermissions("charge:project:view")
 	@RequestMapping(value = "form")
 	public String form(Project project, Model model) {
+		String prjNum = project.getPrjNum();
+		project = projectService.getByPrjNum(prjNum);
+		if(project == null){
+			project = projectService.getByPrjNum_Remote(prjNum);
+		}
+		
 		model.addAttribute("project", project);
 		return "modules/charge/projectForm";
 	}

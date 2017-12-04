@@ -47,33 +47,22 @@ public class OpinionBookController extends BaseController {
 		return entity;
 	}
 	
-	@RequiresPermissions("charge:opinionBook:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(OpinionBook opinionBook, HttpServletRequest request, HttpServletResponse response, Model model) {
 		List<OpinionBook> list = opinionBookService.findList(opinionBook); 
 		model.addAttribute("list", list);
 		return "modules/charge/opinionBookList";
 	}
-	
-	@RequiresPermissions("charge:opinionBook:view")
-	@RequestMapping(value = {"tab"})
-	public String tab(OpinionBook opinionBook, HttpServletRequest request, HttpServletResponse response, Model model) {
-		List<OpinionBook> list = opinionBookService.findList(opinionBook); 
-		
-		logger.debug("list.size(): "+list.size());
-		
-		model.addAttribute("list", list);
-		return "modules/charge/opinionBookTab";
-	}
 
-	@RequiresPermissions("charge:opinionBook:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "form")
 	public String form(OpinionBook opinionBook, Model model) {
 		model.addAttribute("opinionBook", opinionBook);
 		return "modules/charge/opinionBookForm";
 	}
 
-	@RequiresPermissions("charge:opinionBook:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "save")
 	public String save(OpinionBook opinionBook, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, opinionBook)){
@@ -81,10 +70,10 @@ public class OpinionBookController extends BaseController {
 		}
 		opinionBookService.save(opinionBook);
 		addMessage(redirectAttributes, "保存OpinonBook成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/opinionBook/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/opinionBookTab?repage";
 	}
 	
-	@RequiresPermissions("charge:opinionBook:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "delete")
 	public String delete(OpinionBook opinionBook, RedirectAttributes redirectAttributes) {
 		opinionBookService.delete(opinionBook);

@@ -14,12 +14,14 @@ import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
+
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
 import org.wxjs.matchfee.common.supcan.annotation.treelist.cols.SupCol;
 import org.wxjs.matchfee.common.utils.Collections3;
 import org.wxjs.matchfee.common.utils.excel.annotation.ExcelField;
 import org.wxjs.matchfee.common.utils.excel.fieldtype.RoleListType;
+import org.wxjs.matchfee.modules.charge.entity.Project;
 
 /**
  * 用户Entity
@@ -38,7 +40,7 @@ public class User extends DataEntity<User> {
 	private String email;	// 邮箱
 	private String phone;	// 电话
 	private String mobile;	// 手机
-	private String userType;// 用户类型
+	private String userType;// 用户类型  zf:政府  qy: 企业
 	private String loginIp;	// 最后登陆IP
 	private Date loginDate;	// 最后登陆日期
 	private String loginFlag;	// 是否允许登陆
@@ -53,6 +55,8 @@ public class User extends DataEntity<User> {
 	private Role role;	// 根据角色查询用户条件
 	
 	private List<Role> roleList = Lists.newArrayList(); // 拥有角色列表
+	
+	private Project project;
 
 	public User() {
 		super();
@@ -273,6 +277,14 @@ public class User extends DataEntity<User> {
 		this.role = role;
 	}
 
+	public Project getProject() {
+		return project;
+	}
+
+	public void setProject(Project project) {
+		this.project = project;
+	}
+
 	@JsonIgnore
 	@ExcelField(title="拥有角色", align=1, sort=800, fieldType=RoleListType.class)
 	public List<Role> getRoleList() {
@@ -336,4 +348,6 @@ public class User extends DataEntity<User> {
 	public String toString() {
 		return id;
 	}
+	
+	
 }

@@ -31,46 +31,38 @@ public class Project4Xml{
 		
 	}
 
+	
+	
 	public String getPrj_num() {
 		return prj_num;
 	}
 
-	public void setPrj_num(String prj_num) {
-		this.prj_num = prj_num;
-	}
+
 
 	public String getPrj_name() {
 		return prj_name;
 	}
 
-	public void setPrj_name(String prj_name) {
-		this.prj_name = prj_name;
-	}
+
 
 	public String getBuild_corp_name() {
 		return build_corp_name;
 	}
 
-	public void setBuild_corp_name(String build_corp_name) {
-		this.build_corp_name = build_corp_name;
-	}
+
 
 	public String getBuild_corp_code() {
 		return build_corp_code;
 	}
 
-	public void setBuild_corp_code(String build_corp_code) {
-		this.build_corp_code = build_corp_code;
-	}
+
 
 	public String getPrj_address() {
 		return prj_address;
 	}
 
-	public void setPrj_address(String prj_address) {
-		this.prj_address = prj_address;
-	}
-	
+
+
 	public Project toProject(){
 		Project rst = new Project();
 		

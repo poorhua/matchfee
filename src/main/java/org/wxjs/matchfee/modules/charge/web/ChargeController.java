@@ -23,8 +23,18 @@ import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
+import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
+import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
+import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.entity.Project;
+import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
+import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
+import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
+import org.wxjs.matchfee.modules.charge.service.OpinionBookItemService;
+import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
+import org.wxjs.matchfee.modules.charge.service.ProjectDeductionService;
+import org.wxjs.matchfee.modules.charge.service.ProjectLicenseService;
 import org.wxjs.matchfee.modules.charge.service.ProjectService;
 import org.wxjs.matchfee.modules.sys.entity.User;
 import org.wxjs.matchfee.modules.sys.utils.UserUtils;
@@ -40,6 +50,21 @@ public class ChargeController extends BaseController {
 
 	@Autowired
 	private ChargeService chargeService;
+	
+	@Autowired
+	private DeductionDocService deductionDocService;
+	
+	@Autowired
+	private OpinionBookService opinionBookService;
+	
+	@Autowired
+	private OpinionBookItemService opinionBookItemService;
+	
+	@Autowired
+	private ProjectDeductionService projectDeductionService;
+	
+	@Autowired
+	private ProjectLicenseService projectLicenseService;
 	
 	@Autowired
 	private ProjectService projectService;
@@ -128,7 +153,8 @@ public class ChargeController extends BaseController {
 			
 		}
 		
-		return "redirect:"+Global.getAdminPath()+"/charge/project/list?repage";
+		//return "redirect:"+Global.getAdminPath()+"/charge/project/list?repage";
+		return "modules/charge/projectList";
 	}	
 	
 	@RequiresPermissions("charge:charge:edit")
@@ -151,7 +177,119 @@ public class ChargeController extends BaseController {
 		chargeService.save(charge);
 		addMessage(redirectAttributes, "保存征收成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
-	}	
+	}
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "opinionBookTab")
+	public String opinionBookTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
+		
+		String chargeId = (String)httpSession.getAttribute("chargeId");
+		
+		logger.debug("charge==null: "+(charge==null)+", chargeId: "+chargeId);
+		if(charge!=null){
+			logger.debug(charge.toString());
+		}
+		
+		if(this.isChargeEmpty(charge) && !StringUtils.isBlank(chargeId)){
+			charge = chargeService.get(new Charge(chargeId));
+		}
+		
+		OpinionBook opinionBookParam = new OpinionBook();
+		opinionBookParam.setPrjNum(charge.getProject().getPrjNum());
+		
+		charge.setOpinionBookList(this.opinionBookService.findList(opinionBookParam));
+		
+		for(OpinionBook item : charge.getOpinionBookList()){
+			OpinionBookItem opinionBookItemParam = new OpinionBookItem();
+			opinionBookItemParam.setDoc(item);
+			item.setOpinionBookItemList(opinionBookItemService.findList(opinionBookItemParam));
+		}
+		
+		model.addAttribute("charge", charge);
+		
+		httpSession.setAttribute("chargeId", charge.getId());
+		
+		httpSession.setAttribute("project", charge.getProject());
+		
+		return "modules/charge/opinionBookTab";
+	}
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "projectLicenseTab")
+	public String projectLicenseTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
+		
+		String chargeId = (String)httpSession.getAttribute("chargeId");
+		
+		logger.debug("charge==null: "+(charge==null)+", chargeId: "+chargeId);
+		if(charge!=null){
+			logger.debug(charge.toString());
+		}
+		
+		if(this.isChargeEmpty(charge) && !StringUtils.isBlank(chargeId)){
+			charge = chargeService.get(new Charge(chargeId));
+		}
+		
+		ProjectLicense projectLicenseParam = new ProjectLicense();
+		projectLicenseParam.setChargeId(charge.getId());
+		
+		charge.setProjectLicenseList(this.projectLicenseService.findList(projectLicenseParam));
+		
+		model.addAttribute("charge", charge);
+		
+		httpSession.setAttribute("chargeId", charge.getId());
+		
+		httpSession.setAttribute("project", charge.getProject());
+		
+		return "modules/charge/projectLicenseTab";
+	}
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "projectDeductionTab")
+	public String projectDeductionTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
+		
+		String chargeId = (String)httpSession.getAttribute("chargeId");
+		
+		if(this.isChargeEmpty(charge) && !StringUtils.isBlank(chargeId)){
+			charge = chargeService.get(new Charge(chargeId));
+		}
+		
+		ProjectDeduction projectDeductionParam = new ProjectDeduction();
+		projectDeductionParam.setChargeId(charge.getId());
+		
+		charge.setProjectDeductionList(this.projectDeductionService.findList(projectDeductionParam));
+		
+		model.addAttribute("charge", charge);
+		
+		httpSession.setAttribute("chargeId", charge.getId());
+		
+		httpSession.setAttribute("project", charge.getProject());
+		
+		return "modules/charge/projectDeductionTab";
+	}
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "deductionDocTab")
+	public String deductionDocTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
+		
+		String chargeId = (String)httpSession.getAttribute("chargeId");
+		
+		if(this.isChargeEmpty(charge) && !StringUtils.isBlank(chargeId)){
+			charge = chargeService.get(new Charge(chargeId));
+		}
+		
+		DeductionDoc deductionDocParam = new DeductionDoc();
+		deductionDocParam.setChargeId(charge.getId());
+		
+		charge.setDeductionDocList(this.deductionDocService.findList(deductionDocParam));
+		
+		model.addAttribute("charge", charge);
+		
+		httpSession.setAttribute("chargeId", charge.getId());
+		
+		httpSession.setAttribute("project", charge.getProject());
+		
+		return "modules/charge/deductionDocTab";
+	}
 	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "reportSave")
@@ -273,6 +411,16 @@ public class ChargeController extends BaseController {
 		chargeService.delete(charge);
 		addMessage(redirectAttributes, "删除征收成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
+	}
+	
+	private boolean isChargeEmpty(Charge charge){
+		boolean flag = false;
+		if(charge==null){
+			flag = true;
+		}else if(StringUtils.isBlank(charge.getId())){
+			flag = true;
+		}
+		return flag;
 	}
 
 }

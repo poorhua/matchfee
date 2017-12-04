@@ -14,7 +14,9 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.credential.SimpleCredentialsMatcher;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.Permission;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
@@ -25,12 +27,13 @@ import org.apache.shiro.util.ByteSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.servlet.ValidateCodeServlet;
 import org.wxjs.matchfee.common.utils.Encodes;
 import org.wxjs.matchfee.common.utils.SpringContextHolder;
 import org.wxjs.matchfee.common.web.Servlets;
+import org.wxjs.matchfee.modules.base.utils.WebServiceUtils;
+import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.sys.entity.Menu;
 import org.wxjs.matchfee.modules.sys.entity.Role;
 import org.wxjs.matchfee.modules.sys.entity.User;
@@ -52,6 +55,8 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	
 	private SystemService systemService;
 	
+	private UsernamePasswordToken token;
+	
 	public SystemAuthorizingRealm() {
 		this.setCachingEnabled(false);
 	}
@@ -61,7 +66,10 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	 */
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) {
-		UsernamePasswordToken token = (UsernamePasswordToken) authcToken;
+		
+		logger.debug("doGetAuthenticationInfo... ");
+		
+		token = (UsernamePasswordToken) authcToken;
 		
 		int activeSessionSize = getSystemService().getSessionDao().getActiveSessions(false).size();
 		if (logger.isDebugEnabled()){
@@ -78,23 +86,70 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		}
 		
 		// 校验用户名密码
-		User user = getSystemService().getUserByLoginName(token.getUsername());
-		if (user != null) {
-			if (Global.NO.equals(user.getLoginFlag())){
-				throw new AuthenticationException("msg:该已帐号禁止登录.");
+		//企业
+		if("qy".equalsIgnoreCase(token.getUserType())){
+			
+			boolean flag = WebServiceUtils.enterpriceLogin(token.getUsername(), token.getPasswordStr());
+			
+			logger.debug("qy user: "+token.getUsername()+", pass: "+token.getPasswordStr());
+			
+			if (!flag){
+				throw new AuthenticationException("msg:项目编号或管理密码错误.");
+			}else{
+				//获取项目信息
+				User user = this.getEnterpriceUser(token);
+				
+				logger.debug("qy user id: "+user.getId()+", pass: "+user.getPassword()+", loginName: "+user.getLoginName());
+				
+				return new SimpleAuthenticationInfo(new Principal(user, token.isMobileLogin()), 
+						user.getPassword(), getName());
 			}
-			byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
-			return new SimpleAuthenticationInfo(new Principal(user, token.isMobileLogin()), 
-					user.getPassword().substring(16), ByteSource.Util.bytes(salt), getName());
-		} else {
-			return null;
 		}
+		//政府
+		else{
+			User user = getSystemService().getUserByLoginName(token.getUsername());
+			if (user != null) {
+				if (Global.NO.equals(user.getLoginFlag())){
+					throw new AuthenticationException("msg:该已帐号禁止登录.");
+				}
+				/*
+				byte[] salt = Encodes.decodeHex(user.getPassword().substring(0,16));
+				return new SimpleAuthenticationInfo(new Principal(user, token.isMobileLogin()), 
+						user.getPassword().substring(16), ByteSource.Util.bytes(salt), getName());
+				*/
+				
+				return new SimpleAuthenticationInfo(new Principal(user, token.isMobileLogin()), 
+						user.getPassword(), getName());
+			} else {
+				return null;
+			}			
+		}
+
+	}
+	
+	private User getEnterpriceUser(UsernamePasswordToken token){
+		User user = new User();
+		user.setId("3");
+		user.setLoginName("jsdw");
+		user.setName("建设单位");
+		String prjNum = token.getUsername();
+		Project project = WebServiceUtils.getProjectInfo(prjNum);
+		user.setProject(project);
+		
+		user.setPassword(token.getPasswordStr());
+		
+		logger.debug("project: " + project.toString());
+		
+		return user;
 	}
 	
 	/**
 	 * 获取权限授权信息，如果缓存中存在，则直接从缓存中获取，否则就重新获取， 登录成功后调用
 	 */
 	protected AuthorizationInfo getAuthorizationInfo(PrincipalCollection principals) {
+		
+		logger.debug("getAuthorizationInfo... ");
+		
 		if (principals == null) {
             return null;
         }
@@ -119,6 +174,9 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Principal principal = (Principal) getAvailablePrincipal(principals);
+		
+		logger.debug("doGetAuthorizationInfo... ");
+		
 		// 获取当前已登录的用户
 		if (!Global.TRUE.equals(Global.getConfig("user.multiAccountLogin"))){
 			Collection<Session> sessions = getSystemService().getSessionDao().getActiveSessions(true, principal, UserUtils.getSession());
@@ -209,9 +267,26 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 	 */
 	@PostConstruct
 	public void initCredentialsMatcher() {
-		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(SystemService.HASH_ALGORITHM);
-		matcher.setHashIterations(SystemService.HASH_INTERATIONS);
-		setCredentialsMatcher(matcher);
+		
+		/*
+		String userType = "zf";
+		if(this.token!=null){
+			userType = this.token.getUserType();
+		}
+		if("qy".equalsIgnoreCase(userType)){
+			SimpleCredentialsMatcher matcher = new CustomCredentialsMatcher();
+			setCredentialsMatcher(matcher);	
+			logger.debug("initial SimpleCredentialsMatcher");
+		}else{
+			HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(SystemService.HASH_ALGORITHM);
+			matcher.setHashIterations(SystemService.HASH_INTERATIONS);
+			setCredentialsMatcher(matcher);			
+			logger.debug("initial HashedCredentialsMatcher");
+		}
+		*/
+		
+		SimpleCredentialsMatcher matcher = new CustomCredentialsMatcher();
+		setCredentialsMatcher(matcher);	
 	}
 	
 //	/**

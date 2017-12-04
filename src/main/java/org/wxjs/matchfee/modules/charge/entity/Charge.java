@@ -3,15 +3,18 @@
  */
 package org.wxjs.matchfee.modules.charge.entity;
 
+
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import org.wxjs.matchfee.common.persistence.DataEntity;
 import org.wxjs.matchfee.modules.sys.entity.User;
+import org.wxjs.matchfee.modules.sys.utils.DictUtils;
 
 /**
  * 征收Entity
@@ -43,6 +46,14 @@ public class Charge extends DataEntity<Charge> {
 	private Date dateFrom;		// 时间 从
 	private Date dateTo;		// 时间 到
 	
+	private List<OpinionBook> opinionBookList;
+	
+	private List<ProjectLicense> projectLicenseList;
+	
+	private List<DeductionDoc> deductionDocList;
+	
+	private List<ProjectDeduction> projectDeductionList;
+	
 	public Charge() {
 		super();
 	}
@@ -59,8 +70,6 @@ public class Charge extends DataEntity<Charge> {
 		this.project = project;
 	}
 
-
-	
 	@Length(min=1, max=256, message="申报单位长度必须介于 1 和 256 之间")
 	public String getReportEntity() {
 		return reportEntity;
@@ -167,6 +176,10 @@ public class Charge extends DataEntity<Charge> {
 	public String getStatus() {
 		return status;
 	}
+	
+	public String getStatusLabel() {
+		return DictUtils.getDictLabel(this.status, "charge_status", "");
+	}
 
 	public void setStatus(String status) {
 		this.status = status;
@@ -218,6 +231,38 @@ public class Charge extends DataEntity<Charge> {
 
 	public void setDateTo(Date dateTo) {
 		this.dateTo = dateTo;
+	}
+
+	public List<OpinionBook> getOpinionBookList() {
+		return opinionBookList;
+	}
+
+	public void setOpinionBookList(List<OpinionBook> opinionBookList) {
+		this.opinionBookList = opinionBookList;
+	}
+
+	public List<ProjectLicense> getProjectLicenseList() {
+		return projectLicenseList;
+	}
+
+	public void setProjectLicenseList(List<ProjectLicense> projectLicenseList) {
+		this.projectLicenseList = projectLicenseList;
+	}
+
+	public List<DeductionDoc> getDeductionDocList() {
+		return deductionDocList;
+	}
+
+	public void setDeductionDocList(List<DeductionDoc> deductionDocList) {
+		this.deductionDocList = deductionDocList;
+	}
+
+	public List<ProjectDeduction> getProjectDeductionList() {
+		return projectDeductionList;
+	}
+
+	public void setProjectDeductionList(List<ProjectDeduction> projectDeductionList) {
+		this.projectDeductionList = projectDeductionList;
 	}
 	
 }

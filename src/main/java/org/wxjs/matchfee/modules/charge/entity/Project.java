@@ -1,5 +1,6 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.wxjs.matchfee.common.persistence.DataEntity;
 
 public class Project extends DataEntity<Project> {
@@ -16,6 +17,8 @@ public class Project extends DataEntity<Project> {
 
 	private String prjAddress;
 	
+	private String prjPassword;
+	
 	public Project(){
 		
 	}
@@ -24,10 +27,16 @@ public class Project extends DataEntity<Project> {
 		return prjNum;
 	}
 
-
-
 	public void setPrjNum(String prjNum) {
 		this.prjNum = prjNum;
+	}
+
+	public String getPrjPassword() {
+		return prjPassword;
+	}
+
+	public void setPrjPassword(String prjPassword) {
+		this.prjPassword = prjPassword;
 	}
 
 	public String getPrjName() {
@@ -61,5 +70,10 @@ public class Project extends DataEntity<Project> {
 	public void setPrjAddress(String prjAddress) {
 		this.prjAddress = prjAddress;
 	}
+	
+    @Override
+    public String toString() {
+        return ReflectionToStringBuilder.toString(this);
+    }
 
 }

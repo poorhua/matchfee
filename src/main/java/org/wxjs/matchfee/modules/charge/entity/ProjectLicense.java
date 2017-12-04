@@ -4,39 +4,34 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
 import org.hibernate.validator.constraints.Length;
-
 import java.util.Date;
-import java.util.List;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 import javax.validation.constraints.NotNull;
 
 import org.wxjs.matchfee.common.persistence.DataEntity;
 
 /**
- * 抵扣项文件Entity
+ * 工程许可证Entity
  * @author GLQ
- * @version 2017-11-25
+ * @version 2017-12-03
  */
-public class DeductionDoc extends DataEntity<DeductionDoc> {
+public class ProjectLicense extends DataEntity<ProjectLicense> {
 	
 	private static final long serialVersionUID = 1L;
 	private String chargeId;		// 征收代码
 	private String name;		// 名称
 	private String prjNum;		// 项目代码
 	private String documentNo;		// 文件编号
-	private String documentType;		// 文件类型
 	private String path;		// 保存路径
 	private Date documentDate;		// 文档日期
+	private String upArea;		// 地上面积（平米）
+	private String downArea;		// 地下面积（平米）
 	
-	private List<DeductionDocItem> itemList;
-	
-	public DeductionDoc() {
+	public ProjectLicense() {
 		super();
 	}
 
-	public DeductionDoc(String id){
+	public ProjectLicense(String id){
 		super(id);
 	}
 
@@ -76,15 +71,6 @@ public class DeductionDoc extends DataEntity<DeductionDoc> {
 		this.documentNo = documentNo;
 	}
 	
-	@Length(min=1, max=8, message="文件类型长度必须介于 1 和 8 之间")
-	public String getDocumentType() {
-		return documentType;
-	}
-
-	public void setDocumentType(String documentType) {
-		this.documentType = documentType;
-	}
-	
 	@Length(min=1, max=128, message="保存路径长度必须介于 1 和 128 之间")
 	public String getPath() {
 		return path;
@@ -103,13 +89,21 @@ public class DeductionDoc extends DataEntity<DeductionDoc> {
 	public void setDocumentDate(Date documentDate) {
 		this.documentDate = documentDate;
 	}
-
-	public List<DeductionDocItem> getItemList() {
-		return itemList;
+	
+	public String getUpArea() {
+		return upArea;
 	}
 
-	public void setItemList(List<DeductionDocItem> itemList) {
-		this.itemList = itemList;
+	public void setUpArea(String upArea) {
+		this.upArea = upArea;
+	}
+	
+	public String getDownArea() {
+		return downArea;
+	}
+
+	public void setDownArea(String downArea) {
+		this.downArea = downArea;
 	}
 	
 }

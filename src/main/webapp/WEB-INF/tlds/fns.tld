@@ -244,4 +244,12 @@
     <example>${fns:toJson(object)}</example>  
   </function>
   
+  <function>
+    <description>获取抵扣项列表</description>
+    <name>getDeductionItems</name>
+    <function-class>org.wxjs.matchfee.modules.base.utils.BaseUtils</function-class>
+    <function-signature>java.lang.List getDeductionItems()</function-signature>
+    <example>${fns:getDeductionItems()}</example>  
+  </function>  
+  
 </taglib>

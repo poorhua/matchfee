@@ -32,11 +32,11 @@
 	</script>
 </head>
 <body>
+    <h1>第一步：指定项目</h1>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/project/">项目信息列表</a></li>
-		<li class="active"><a href="${ctx}/charge/project/form?id=${project.id}">项目信息<shiro:hasPermission name="charge:project:edit">${not empty project.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:project:edit">查看</shiro:lacksPermission></a></li>
+		<li class="active"><a href="${ctx}/charge/project/form?id=${project.id}">项目信息</a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="project" action="${ctx}/charge/project/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="project" action="${ctx}/charge/project/saveAndContinue" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
@@ -81,7 +81,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="charge:project:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保存"/>&nbsp;
+			<shiro:hasPermission name="charge:project:edit">&nbsp;
 			<input id="btnSubmitAndContinue" class="btn btn-primary" type="button" value="确定"/>
 			</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
