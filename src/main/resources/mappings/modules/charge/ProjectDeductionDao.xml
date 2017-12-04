@@ -4,9 +4,9 @@
     
 	<sql id="projectDeductionColumns">
 		a.id AS "id",
-		a.charge_id AS "chargeId",
+		a.charge_id AS "charge.id",
 		a.name AS "name",
-		a.prj_num AS "prjNum",
+		a.prj_num AS "project.prjNum",
 		a.document_no AS "documentNo",
 		a.path AS "path",
 		a.document_date AS "documentDate",
@@ -39,8 +39,8 @@
 		<include refid="projectDeductionJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="chargeId != null and chargeId != ''">
-				AND a.charge_id = #{chargeId}
+			<if test="charge.id != null and charge.id != ''">
+				AND a.charge_id = #{charge.id}
 			</if>			
 		</where>
 		<choose>
@@ -89,9 +89,9 @@
 			remarks,
 			del_flag
 		) VALUES (
-			#{chargeId},
+			#{charge.id},
 			#{name},
-			#{prjNum},
+			#{project.prjNum},
 			#{documentNo},
 			#{path},
 			#{documentDate},

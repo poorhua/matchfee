@@ -4,6 +4,12 @@ VALUES
 ('approves_1', '0', '驳回', 'approves', 'approves', 10, '0','1',now(),'1',now()),
 ('approves_2', '1', '批准', 'approves', 'approves', 20, '0','1',now(),'1',now());
 
+delete from sys_dict where id like 'deduction_type_%';
+INSERT INTO `sys_dict` (`id`, `value`, `label`, `type`, `description`, `sort`, `parent_id`, `create_by`,`create_date`,`update_by`,`update_date`) 
+VALUES 
+('deduction_type_1', '1', '不限', 'deduction_type', 'deduction_type', 10, '0','1',now(),'1',now()),
+('deduction_type_2', '2', '只限地面面积', 'deduction_type', 'deduction_type', 20, '0','1',now(),'1',now());
+
 
 delete from sys_dict where id like 'attachment_type_%';
 INSERT INTO `sys_dict` (`id`, `value`, `label`, `type`, `description`, `sort`, `parent_id`, `create_by`,`create_date`,`update_by`,`update_date`) 

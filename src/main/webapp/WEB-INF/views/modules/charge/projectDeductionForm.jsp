@@ -26,12 +26,12 @@
 	</script>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/projectDeduction/">项目抵扣项列表</a></li>
-		<li class="active"><a href="${ctx}/charge/projectDeduction/form?id=${projectDeduction.id}">项目抵扣项<shiro:hasPermission name="charge:charge:edit">${not empty projectDeduction.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:charge:edit">查看</shiro:lacksPermission></a></li>
-	</ul><br/>
+    <legend>其他减项</legend>
+	<matchfee:chargeView charge="${charge}"></matchfee:chargeView><br/>
 	<form:form id="inputForm" modelAttribute="projectDeduction" action="${ctx}/charge/projectDeduction/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<input type="hidden" id="charge.id" name="charge.id" value="${charge.id}">
+		<input type="hidden" id="project.prjNum" name="project.prjNum" value="${charge.project.prjNum}">
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">名称：</label>
@@ -51,7 +51,7 @@
 			<label class="control-label">保存路径：</label>
 			<div class="controls">
 				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
-				<sys:ckfinder input="path" type="files" uploadPath="/charge/projectDeduction" selectMultiple="true"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/charge/projectDeduction" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -59,29 +59,36 @@
 			<label class="control-label">文档日期：</label>
 			<div class="controls">
 				<input name="documentDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">面积（平米）：</label>
 			<div class="controls">
-				<form:input path="area" htmlEscape="false" class="input-xlarge required"/>
+				<form:input path="area" htmlEscape="false" class="input-xlarge required"
+				 onkeyup="this.value=this.value.replace(/[^\d.]/g,'');$('#money').val(Math.round(this.value*105*100)/100)"
+                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">金额（元）：</label>
 			<div class="controls">
-				<form:input path="money" htmlEscape="false" class="input-xlarge required"/>
+				<form:input path="money" htmlEscape="false" class="input-xlarge required"
+				 onkeyup="this.value=this.value.replace(/[^\d.]/g,'');$('#area').val(Math.round(this.value/105*100)/100)"
+				 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
-		</div>
+		</div>		
 		<div class="control-group">
 			<label class="control-label">抵扣方式：</label>
 			<div class="controls">
-				<form:input path="deductionType" htmlEscape="false" maxlength="1" class="input-xlarge required"/>
+				<form:select path="deductionType" class="input-large required">
+					<form:options items="${fns:getDictList('deduction_type')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>
+				
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

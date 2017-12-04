@@ -20,7 +20,7 @@
 </head>
 <body>
     <sys:message content="${message}"/>
-    <matchfee:projectInfoView/><br>
+    <matchfee:chargeView charge="${charge}"></matchfee:chargeView><br>
 
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>
@@ -30,10 +30,15 @@
 	</ul>
 
 <c:if test="${empty charge.opinionBookList}">
+  
+	<div style="margin:10px 60px 10px 0;width='100%'">
+	   <div align="right">
+		    <shiro:hasPermission name="charge:charge:edit">
+		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加文件" onclick="toNewOpinonBook()"/>
+		    </shiro:hasPermission>	   
+	   </div>
+	</div>    
     
-    <shiro:hasPermission name="charge:charge:edit">
-    <input id="btnAdd" class="btn btn-primary" type="button" value="添加文件" onclick="toNewOpinonBook()"/>
-    </shiro:hasPermission>
 </c:if>
 
 <c:if test="${not empty charge.opinionBookList}">

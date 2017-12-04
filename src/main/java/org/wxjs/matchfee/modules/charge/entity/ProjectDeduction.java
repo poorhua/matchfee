@@ -18,9 +18,9 @@ import org.wxjs.matchfee.common.persistence.DataEntity;
 public class ProjectDeduction extends DataEntity<ProjectDeduction> {
 	
 	private static final long serialVersionUID = 1L;
-	private String chargeId;		// 征收代码
+	private Charge charge;		// 征收代码
 	private String name;		// 名称
-	private String prjNum;		// 项目代码
+	private Project project;		// 项目代码
 	private String documentNo;		// 文件编号
 	private String path;		// 保存路径
 	private Date documentDate;		// 文档日期
@@ -35,16 +35,15 @@ public class ProjectDeduction extends DataEntity<ProjectDeduction> {
 	public ProjectDeduction(String id){
 		super(id);
 	}
-
-	@Length(min=1, max=11, message="征收代码长度必须介于 1 和 11 之间")
-	public String getChargeId() {
-		return chargeId;
-	}
-
-	public void setChargeId(String chargeId) {
-		this.chargeId = chargeId;
-	}
 	
+	public Charge getCharge() {
+		return charge;
+	}
+
+	public void setCharge(Charge charge) {
+		this.charge = charge;
+	}
+
 	@Length(min=1, max=64, message="名称长度必须介于 1 和 64 之间")
 	public String getName() {
 		return name;
@@ -54,15 +53,14 @@ public class ProjectDeduction extends DataEntity<ProjectDeduction> {
 		this.name = name;
 	}
 	
-	@Length(min=1, max=64, message="项目代码长度必须介于 1 和 64 之间")
-	public String getPrjNum() {
-		return prjNum;
+	public Project getProject() {
+		return project;
 	}
 
-	public void setPrjNum(String prjNum) {
-		this.prjNum = prjNum;
+	public void setProject(Project project) {
+		this.project = project;
 	}
-	
+
 	@Length(min=1, max=8, message="文件编号长度必须介于 1 和 8 之间")
 	public String getDocumentNo() {
 		return documentNo;

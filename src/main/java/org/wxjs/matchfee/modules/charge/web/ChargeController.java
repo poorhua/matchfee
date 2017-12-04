@@ -253,7 +253,7 @@ public class ChargeController extends BaseController {
 		}
 		
 		ProjectDeduction projectDeductionParam = new ProjectDeduction();
-		projectDeductionParam.setChargeId(charge.getId());
+		projectDeductionParam.setCharge(new Charge(chargeId));
 		
 		charge.setProjectDeductionList(this.projectDeductionService.findList(projectDeductionParam));
 		

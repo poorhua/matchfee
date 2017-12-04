@@ -5,6 +5,7 @@ package org.wxjs.matchfee.modules.charge.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
+import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
+import org.wxjs.matchfee.modules.charge.service.ChargeService;
 import org.wxjs.matchfee.modules.charge.service.ProjectDeductionService;
 
 /**
@@ -33,6 +35,9 @@ public class ProjectDeductionController extends BaseController {
 
 	@Autowired
 	private ProjectDeductionService projectDeductionService;
+	
+	@Autowired
+	private ChargeService chargeService;
 	
 	@ModelAttribute
 	public ProjectDeduction get(@RequestParam(required=false) String id) {
@@ -56,20 +61,27 @@ public class ProjectDeductionController extends BaseController {
 
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "form")
-	public String form(ProjectDeduction projectDeduction, Model model) {
+	public String form(ProjectDeduction projectDeduction, HttpSession httpSession, Model model) {
 		model.addAttribute("projectDeduction", projectDeduction);
+		
+		String chargeId = (String)httpSession.getAttribute("chargeId");
+		
+		Charge charge = chargeService.get(chargeId);
+		
+		model.addAttribute("charge", charge);
+		
 		return "modules/charge/projectDeductionForm";
 	}
 
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "save")
-	public String save(ProjectDeduction projectDeduction, Model model, RedirectAttributes redirectAttributes) {
+	public String save(ProjectDeduction projectDeduction, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, projectDeduction)){
-			return form(projectDeduction, model);
+			return form(projectDeduction, httpSession, model);
 		}
 		projectDeductionService.save(projectDeduction);
 		addMessage(redirectAttributes, "保存项目抵扣项成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/projectDeduction/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/projectDeductionTab/?repage";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
@@ -77,7 +89,7 @@ public class ProjectDeductionController extends BaseController {
 	public String delete(ProjectDeduction projectDeduction, RedirectAttributes redirectAttributes) {
 		projectDeductionService.delete(projectDeduction);
 		addMessage(redirectAttributes, "删除项目抵扣项成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/projectDeduction/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/projectDeductionTab/?repage";
 	}
 
 }

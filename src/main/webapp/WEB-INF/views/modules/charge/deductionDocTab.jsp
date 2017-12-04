@@ -8,36 +8,17 @@
 		$(document).ready(function() {
 			
 		});
-		function page(n,s){
-			$("#pageNo").val(n);
-			$("#pageSize").val(s);
-			$("#searchForm").submit();
-        	return false;
-        }
 	</script>
 </head>
 <body>
+    <sys:message content="${message}"/>
+    <matchfee:chargeView charge="${charge}"></matchfee:chargeView><br>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/charge/deductionDoc/">抵扣项文件列表</a></li>
-		<shiro:hasPermission name="charge:charge:edit"><li><a href="${ctx}/charge/deductionDoc/form">抵扣项文件添加</a></li></shiro:hasPermission>
-	</ul>
-	<form:form id="searchForm" modelAttribute="deductionDoc" action="${ctx}/charge/deductionDoc/" method="post" class="breadcrumb form-search">
-		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form">
-			<li><label>征收代码：</label>
-				<form:input path="chargeId" htmlEscape="false" maxlength="11" class="input-medium"/>
-			</li>
-			<li><label>名称：</label>
-				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
-			<li><label>项目代码：</label>
-				<form:input path="prjNum" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="clearfix"></li>
-		</ul>
-	</form:form>
+		<li><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>
+		<li><a href="${ctx}/charge/charge/projectLicenseTab">工程许可证</a></li>
+		<li class="active"><a href="${ctx}/charge/charge/deductionDocTab">设计院证明</a></li>
+		<li><a href="${ctx}/charge/charge/projectDeductionTab">其他减项</a></li>
+	</ul>    
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
@@ -96,6 +77,5 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	<div class="pagination">${page}</div>
 </body>
 </html>

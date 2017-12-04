@@ -15,7 +15,8 @@
 	</script>
 </head>
 <body>
-    <matchfee:projectInfoView/>
+    <sys:message content="${message}"/>
+    <matchfee:chargeView charge="${charge}"></matchfee:chargeView><br>
 
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>

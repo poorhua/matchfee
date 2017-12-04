@@ -8,27 +8,29 @@
 		$(document).ready(function() {
 			
 		});
-		function page(n,s){
-			$("#pageNo").val(n);
-			$("#pageSize").val(s);
-			$("#searchForm").submit();
-        	return false;
-        }
+		
+	    function toNew(){
+		       window.location.replace("${ctx}/charge/projectDeduction/form");
+	    }		
 	</script>
 </head>
 <body>
+    <sys:message content="${message}"/>
+    <matchfee:chargeView charge="${charge}"></matchfee:chargeView><br>
+
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/charge/projectDeduction/">项目抵扣项列表</a></li>
-		<shiro:hasPermission name="charge:charge:edit"><li><a href="${ctx}/charge/projectDeduction/form">项目抵扣项添加</a></li></shiro:hasPermission>
+		<li><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>
+		<li><a href="${ctx}/charge/charge/projectLicenseTab">工程许可证</a></li>
+		<li><a href="${ctx}/charge/charge/deductionDocTab">设计院证明</a></li>
+		<li class="active"><a href="${ctx}/charge/charge/projectDeductionTab">其他减项</a></li>
 	</ul>
-	<form:form id="searchForm" modelAttribute="projectDeduction" action="${ctx}/charge/projectDeduction/" method="post" class="breadcrumb form-search">
-		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form">
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="clearfix"></li>
-		</ul>
-	</form:form>
+	<div style="margin:10px 60px 10px 0;width='100%'">
+	   <div align="right">
+		    <shiro:hasPermission name="charge:charge:edit">
+		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNew()"/>
+		    </shiro:hasPermission>	   
+	   </div>
+	</div>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
@@ -45,19 +47,20 @@
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="projectDeduction">
+		<c:forEach items="${charge.projectDeductionList}" var="projectDeduction">
 			<tr>
-				<td><a href="${ctx}/charge/projectDeduction/form?id=${projectDeduction.id}">
+				<td>
 					${projectDeduction.name}
-				</a></td>
+				</td>
 				<td>
 					${projectDeduction.documentNo}
 				</td>
 				<td>
-					${projectDeduction.path}
+				<input type="hidden" id="path${projectDeduction.id}" name="path${projectDeduction.id}" value="${projectDeduction.path}">
+				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/charge/projectDeduction" selectMultiple="false" readonly="true"/>					
 				</td>
 				<td>
-					<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					${projectDeduction.area}
@@ -66,7 +69,7 @@
 					${projectDeduction.money}
 				</td>
 				<td>
-					${projectDeduction.deductionType}
+					${fns:getDictLabel(projectDeduction.deductionType, 'deduction_type', '')}
 				</td>
 				<td>
 					${projectDeduction.remarks}
@@ -79,6 +82,5 @@
 		</c:forEach>
 		</tbody>
 	</table>
-	<div class="pagination">${page}</div>
 </body>
 </html>
