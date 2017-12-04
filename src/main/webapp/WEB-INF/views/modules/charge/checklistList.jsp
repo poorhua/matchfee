@@ -18,10 +18,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/creadit/tchecklist/">结算清单信息列表</a></li>
-		<shiro:hasPermission name="creadit:tchecklist:edit"><li><a href="${ctx}/creadit/tchecklist/form">结算清单信息添加</a></li></shiro:hasPermission>
+		<li class="active"><a href="${ctx}/charge/checklist/">结算清单信息列表</a></li>
+		<shiro:hasPermission name="charge:checklist:edit"><li><a href="${ctx}/charge/checklist/form">结算清单信息添加</a></li></shiro:hasPermission>
 	</ul>
-	<form:form id="searchForm" modelAttribute="tchecklist" action="${ctx}/creadit/tchecklist/" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="checklist" action="${ctx}/charge/checklist/" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
@@ -45,42 +45,42 @@
 				<th>结欠费用</th>
 				<th>更新时间</th>
 				<th>备注信息</th>
-				<shiro:hasPermission name="creadit:tchecklist:edit"><th>操作</th></shiro:hasPermission>
+				<shiro:hasPermission name="charge:checklist:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
-		<c:forEach items="${page.list}" var="tchecklist">
+		<c:forEach items="${page.list}" var="checklist">
 			<tr>
-				<td><a href="${ctx}/creadit/tchecklist/form?id=${tchecklist.id}">
-					${tchecklist.projectname}
+				<td><a href="${ctx}/charge/checklist/form?id=${checklist.id}">
+					${checklist.projectname}
 				</a></td>
 				<td>
-					${tchecklist.companyname}
+					${checklist.companyname}
 				</td>
 				<td>
-					${tchecklist.area}
+					${checklist.area}
 				</td>
 				<td>
-					${tchecklist.assessment}
+					${checklist.assessment}
 				</td>
 				<td>
-					${tchecklist.derate}
+					${checklist.derate}
 				</td>
 				<td>
-					${tchecklist.pay}
+					${checklist.pay}
 				</td>
 				<td>
-					${tchecklist.balancedue}
+					${checklist.balancedue}
 				</td>
 				<td>
-					<fmt:formatDate value="${tchecklist.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${checklist.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${tchecklist.remarks}
+					${checklist.remarks}
 				</td>
-				<shiro:hasPermission name="creadit:tchecklist:edit"><td>
-    				<a href="${ctx}/creadit/tchecklist/form?id=${tchecklist.id}">修改</a>
-					<a href="${ctx}/creadit/tchecklist/delete?id=${tchecklist.id}" onclick="return confirmx('确认要删除该结算清单信息吗？', this.href)">删除</a>
+				<shiro:hasPermission name="charge:checklist:edit"><td>
+    				<a href="${ctx}/charge/checklist/form?id=${checklist.id}">修改</a>
+					<a href="${ctx}/charge/checklist/delete?id=${checklist.id}" onclick="return confirmx('确认要删除该结算清单信息吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

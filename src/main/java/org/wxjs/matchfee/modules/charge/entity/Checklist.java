@@ -12,7 +12,7 @@ import org.wxjs.matchfee.common.persistence.DataEntity;
  * @author XYM
  * @version 2017-12-04
  */
-public class Tchecklist extends DataEntity<Tchecklist> {
+public class Checklist extends DataEntity<Checklist> {
 	
 	private static final long serialVersionUID = 1L;
 	private String projectname;		// 项目名称
@@ -23,11 +23,11 @@ public class Tchecklist extends DataEntity<Tchecklist> {
 	private String pay;		// 已缴费用
 	private String balancedue;		// 结欠费用
 	
-	public Tchecklist() {
+	public Checklist() {
 		super();
 	}
 
-	public Tchecklist(String id){
+	public Checklist(String id){
 		super(id);
 	}
 

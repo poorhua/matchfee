@@ -27,10 +27,10 @@
 </head>
 <body>
 	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/tchecklist/">结算清单信息列表</a></li>
-		<li class="active"><a href="${ctx}/charge/tchecklist/form?id=${tchecklist.id}">结算清单信息<shiro:hasPermission name="charge:tchecklist:edit">${not empty tchecklist.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:tchecklist:edit">查看</shiro:lacksPermission></a></li>
+		<li><a href="${ctx}/charge/checklist/">结算清单信息列表</a></li>
+		<li class="active"><a href="${ctx}/charge/checklist/form?id=${checklist.id}">结算清单信息<shiro:hasPermission name="charge:checklist:edit">${not empty checklist.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:checklist:edit">查看</shiro:lacksPermission></a></li>
 	</ul><br/>
-	<form:form id="inputForm" modelAttribute="tchecklist" action="${ctx}/charge/tchecklist/save" method="post" class="form-horizontal">
+	<form:form id="inputForm" modelAttribute="checklist" action="${ctx}/charge/checklist/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
@@ -84,7 +84,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="charge:tchecklist:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="charge:checklist:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

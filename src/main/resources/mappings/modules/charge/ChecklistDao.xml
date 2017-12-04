@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="org.wxjs.matchfee.modules.creadit.dao.TchecklistDao">
+<mapper namespace="org.wxjs.matchfee.modules.charge.dao.ChecklistDao">
     
-	<sql id="tchecklistColumns">
+	<sql id="checklistColumns">
 		a.id AS "id",
 		a.projectname AS "projectname",
 		a.companyname AS "companyname",
@@ -19,22 +19,22 @@
 		a.del_flag AS "delFlag"
 	</sql>
 	
-	<sql id="tchecklistJoins">
+	<sql id="checklistJoins">
 	</sql>
     
-	<select id="get" resultType="Tchecklist">
+	<select id="get" resultType="Checklist">
 		SELECT 
-			<include refid="tchecklistColumns"/>
+			<include refid="checklistColumns"/>
 		FROM tchecklist a
-		<include refid="tchecklistJoins"/>
+		<include refid="checklistJoins"/>
 		WHERE a.id = #{id}
 	</select>
 	
-	<select id="findList" resultType="Tchecklist">
+	<select id="findList" resultType="Checklist">
 		SELECT 
-			<include refid="tchecklistColumns"/>
+			<include refid="checklistColumns"/>
 		FROM tchecklist a
-		<include refid="tchecklistJoins"/>
+		<include refid="checklistJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="companyname != null and companyname != ''">
@@ -51,11 +51,11 @@
 		</choose>
 	</select>
 	
-	<select id="findAllList" resultType="Tchecklist">
+	<select id="findAllList" resultType="Checklist">
 		SELECT 
-			<include refid="tchecklistColumns"/>
+			<include refid="checklistColumns"/>
 		FROM tchecklist a
-		<include refid="tchecklistJoins"/>
+		<include refid="checklistJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 		</where>		

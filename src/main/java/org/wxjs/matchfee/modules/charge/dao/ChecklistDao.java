@@ -5,7 +5,7 @@ package org.wxjs.matchfee.modules.charge.dao;
 
 import org.wxjs.matchfee.common.persistence.CrudDao;
 import org.wxjs.matchfee.common.persistence.annotation.MyBatisDao;
-import org.wxjs.matchfee.modules.charge.entity.Tchecklist;
+import org.wxjs.matchfee.modules.charge.entity.Checklist;
 
 /**
  * 结算清单DAO接口
@@ -13,6 +13,6 @@ import org.wxjs.matchfee.modules.charge.entity.Tchecklist;
  * @version 2017-12-04
  */
 @MyBatisDao
-public interface TchecklistDao extends CrudDao<Tchecklist> {
+public interface ChecklistDao extends CrudDao<Checklist> {
 	
 }
