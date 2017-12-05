@@ -94,8 +94,7 @@
 			update_date,
 			remarks,
 			del_flag
-		) VALUES (
-			#{charge.id},
+		) VALUES (#{charge.id},
 			#{name},
 			#{prjNum},
 			#{documentNo},

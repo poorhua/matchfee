@@ -31,7 +31,7 @@
 	<form:form id="inputForm" modelAttribute="deductionDoc" action="${ctx}/charge/deductionDoc/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<form:hidden path="prjNum"/>
-		<input type="hidden" id="charge.id" name="charge.id" value="${charge.id}">
+		<input type="hidden" id="charge.id" name="charge.id" value="${chargeId}">
 		<sys:message content="${message}"/>		
 		<div class="control-group">
 			<label class="control-label">名称：</label>
