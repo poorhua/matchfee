@@ -4,7 +4,7 @@
     
 	<sql id="deductionDocColumns">
 		a.id AS "id",
-		a.charge_id AS "chargeId",
+		a.charge_id AS "charge.id",
 		a.name AS "name",
 		a.prj_num AS "prjNum",
 		a.document_no AS "documentNo",
@@ -20,6 +20,7 @@
 	</sql>
 	
 	<sql id="deductionDocJoins">
+		LEFT JOIN tcharge b ON b.id = a.charge_id
 	</sql>
     
 	<select id="get" resultType="DeductionDoc">
@@ -37,8 +38,8 @@
 		<include refid="deductionDocJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="chargeId != null and chargeId != ''">
-				AND a.charge_id = #{chargeId}
+			<if test="charge != null and charge.id != null and charge.id != ''">
+				AND a.charge_id = #{charge.id}
 			</if>
 			<if test="name != null and name != ''">
 				AND a.name LIKE 
@@ -55,7 +56,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.create_date ASC
 			</otherwise>
 		</choose>
 	</select>
@@ -73,7 +74,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.create_date ASC
 			</otherwise>
 		</choose>
 	</select>
@@ -94,7 +95,7 @@
 			remarks,
 			del_flag
 		) VALUES (
-			#{chargeId},
+			#{charge.id},
 			#{name},
 			#{prjNum},
 			#{documentNo},
@@ -112,7 +113,7 @@
 	
 	<update id="update">
 		UPDATE tdeduction_doc SET 	
-			charge_id = #{chargeId},
+			charge_id = #{charge.id},
 			name = #{name},
 			prj_num = #{prjNum},
 			document_no = #{documentNo},
@@ -124,8 +125,16 @@
 	</update>
 	
 	<update id="delete">
-		DELETE FROM tdeduction_doc
-		WHERE id = #{id}
+		UPDATE tdeduction_doc SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE charge_id = #{charge.id}
+			</otherwise>
+		</choose>
 	</update>
 	
 </mapper>

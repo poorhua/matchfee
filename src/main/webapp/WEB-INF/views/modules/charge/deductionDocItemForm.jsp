@@ -26,38 +26,39 @@
 	</script>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/deductionDocItem/">抵扣项目列表</a></li>
-		<li class="active"><a href="${ctx}/charge/deductionDocItem/form?id=${deductionDocItem.id}">抵扣项目<shiro:hasPermission name="charge:deductionDocItem:edit">${not empty deductionDocItem.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:deductionDocItem:edit">查看</shiro:lacksPermission></a></li>
-	</ul><br/>
+	 <legend>抵扣项</legend>
+	<matchfee:deductionDocView deductionDoc="${deductionDocItem.doc}"></matchfee:deductionDocView><br/>
 	<form:form id="inputForm" modelAttribute="deductionDocItem" action="${ctx}/charge/deductionDocItem/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
+		<input type="hidden" id="doc.id" name="doc.id" value="${deductionDocItem.doc.id}" />
 		<div class="control-group">
-			<label class="control-label">文档代码：</label>
+			<label class="control-label">抵扣项：</label>
 			<div class="controls">
-				<form:input path="docId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">抵扣项代码：</label>
-			<div class="controls">
-				<form:input path="itemId" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
+				
+				<form:select path="item.id" class="input-large required">
+				    <form:option value="" label="请选择"/>
+					<form:options items="${fns:getDeductionItems()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
+				</form:select>				
+				
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">面积（平米）：</label>
 			<div class="controls">
-				<form:input path="area" htmlEscape="false" class="input-xlarge required"/>
+				<form:input path="area" htmlEscape="false" class="input-xlarge required"
+				 onkeyup="this.value=this.value.replace(/[^\d.]/g,'');$('#money').val(Math.round(this.value*105*100)/100)"
+                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">金额（元）：</label>
 			<div class="controls">
-				<form:input path="money" htmlEscape="false" class="input-xlarge required"/>
+				<form:input path="money" htmlEscape="false" class="input-xlarge required"
+				 onkeyup="this.value=this.value.replace(/[^\d.]/g,'');$('#area').val(Math.round(this.value/105*100)/100)"
+				 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -68,7 +69,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="charge:deductionDocItem:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="charge:charge:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

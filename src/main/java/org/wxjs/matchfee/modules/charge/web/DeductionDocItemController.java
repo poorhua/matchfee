@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +22,7 @@ import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocItemService;
+import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
 
 /**
  * 抵扣项目Controller
@@ -34,6 +36,10 @@ public class DeductionDocItemController extends BaseController {
 	@Autowired
 	private DeductionDocItemService deductionDocItemService;
 	
+	@Autowired
+	private DeductionDocService  deductionDocService;
+	
+	
 	@ModelAttribute
 	public DeductionDocItem get(@RequestParam(required=false) String id) {
 		DeductionDocItem entity = null;
@@ -46,7 +52,7 @@ public class DeductionDocItemController extends BaseController {
 		return entity;
 	}
 	
-	@RequiresPermissions("charge:deductionDocItem:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(DeductionDocItem deductionDocItem, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<DeductionDocItem> page = deductionDocItemService.findPage(new Page<DeductionDocItem>(request, response), deductionDocItem); 
@@ -54,25 +60,37 @@ public class DeductionDocItemController extends BaseController {
 		return "modules/charge/deductionDocItemList";
 	}
 
-	@RequiresPermissions("charge:deductionDocItem:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "form")
 	public String form(DeductionDocItem deductionDocItem, Model model) {
+		if(deductionDocItem.getDoc()!=null && !StringUtils.isBlank(deductionDocItem.getDoc().getId())){
+			deductionDocItem.setDoc(deductionDocService.get(deductionDocItem.getDoc().getId()));
+		}
 		model.addAttribute("deductionDocItem", deductionDocItem);
 		return "modules/charge/deductionDocItemForm";
 	}
 
-	@RequiresPermissions("charge:deductionDocItem:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "save")
 	public String save(DeductionDocItem deductionDocItem, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, deductionDocItem)){
 			return form(deductionDocItem, model);
 		}
-		deductionDocItemService.save(deductionDocItem);
-		addMessage(redirectAttributes, "保存抵扣项目成功");
+		try{
+			deductionDocItemService.save(deductionDocItem);
+			addMessage(redirectAttributes, "保存抵扣项目成功");
+		}catch(DuplicateKeyException e1){
+			addMessage(redirectAttributes, "保存抵扣项目失败。重复！");
+			logger.error("save error", e1);
+		}catch(Exception e2){
+			addMessage(redirectAttributes, "保存抵扣项目失败。");
+			logger.error("save error", e2);
+		}
+		
 		return "redirect:"+Global.getAdminPath()+"/charge/deductionDocItem/?repage";
 	}
 	
-	@RequiresPermissions("charge:deductionDocItem:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "delete")
 	public String delete(DeductionDocItem deductionDocItem, RedirectAttributes redirectAttributes) {
 		deductionDocItemService.delete(deductionDocItem);

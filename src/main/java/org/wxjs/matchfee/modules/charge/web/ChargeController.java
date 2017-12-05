@@ -19,16 +19,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
-import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
+import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
+import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
+import org.wxjs.matchfee.modules.charge.service.DeductionDocItemService;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookItemService;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
@@ -52,6 +54,9 @@ public class ChargeController extends BaseController {
 	
 	@Autowired
 	private DeductionDocService deductionDocService;
+	
+	@Autowired
+	private DeductionDocItemService  deductionDocItemService;
 	
 	@Autowired
 	private OpinionBookService opinionBookService;
@@ -272,15 +277,22 @@ public class ChargeController extends BaseController {
 		
 		String chargeId = (String)httpSession.getAttribute("chargeId");
 		
+		logger.debug("charge==null: "+(charge==null)+", chargeId: "+chargeId);
 		if(this.isChargeEmpty(charge) && !StringUtils.isBlank(chargeId)){
 			charge = chargeService.get(new Charge(chargeId));
 		}
 		
 		DeductionDoc deductionDocParam = new DeductionDoc();
-		deductionDocParam.setChargeId(charge.getId());
+		deductionDocParam.setPrjNum(charge.getProject().getPrjNum());
 		
 		charge.setDeductionDocList(this.deductionDocService.findList(deductionDocParam));
 		
+		for(DeductionDoc item : charge.getDeductionDocList()){
+			DeductionDocItem deductionDocItemParam = new DeductionDocItem();
+			deductionDocItemParam.setDoc(item);
+			item.setDeductionDocItemList(deductionDocItemService.findList(deductionDocItemParam));
+			item.setCharge(charge);
+		}
 		model.addAttribute("charge", charge);
 		
 		httpSession.setAttribute("chargeId", charge.getId());

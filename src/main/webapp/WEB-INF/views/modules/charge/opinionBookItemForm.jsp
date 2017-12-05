@@ -27,7 +27,7 @@
 </head>
 <body>
     <legend>抵扣项</legend>
-	<matchfee:opinionBookView opinionBook="${opinionBookItem.doc}"></matchfee:opinionBookView><br/>
+	<matchfee:opinionBookView opinionBook="${opinionBookItem.docId}"></matchfee:opinionBookView><br/>
 	<form:form id="inputForm" modelAttribute="opinionBookItem" action="${ctx}/charge/opinionBookItem/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		

@@ -25,9 +25,6 @@
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
 		<ul class="ul-form">
-			<li><label>征收代码：</label>
-				<form:input path="chargeId" htmlEscape="false" maxlength="11" class="input-medium"/>
-			</li>
 			<li><label>名称：</label>
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-medium"/>
 			</li>
@@ -42,15 +39,12 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>代码</th>
-				<th>征收代码</th>
 				<th>名称</th>
 				<th>项目代码</th>
 				<th>文件编号</th>
 				<th>文件类型</th>
 				<th>保存路径</th>
 				<th>文档日期</th>
-				<th>更新时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -59,14 +53,8 @@
 		<c:forEach items="${page.list}" var="deductionDoc">
 			<tr>
 				<td><a href="${ctx}/charge/deductionDoc/form?id=${deductionDoc.id}">
-					${deductionDoc.id}
-				</a></td>
-				<td>
-					${deductionDoc.chargeId}
-				</td>
-				<td>
 					${deductionDoc.name}
-				</td>
+				</a></td>
 				<td>
 					${deductionDoc.prjNum}
 				</td>
@@ -81,9 +69,6 @@
 				</td>
 				<td>
 					<fmt:formatDate value="${deductionDoc.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					<fmt:formatDate value="${deductionDoc.updateDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${deductionDoc.remarks}

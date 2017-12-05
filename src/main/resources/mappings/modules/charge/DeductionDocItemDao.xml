@@ -4,10 +4,11 @@
     
 	<sql id="deductionDocItemColumns">
 		a.id AS "id",
-		a.doc_id AS "docId",
-		a.item_id AS "itemId",
+		a.doc_id AS "doc.id",
+		a.item_id AS "item.id",
 		a.area AS "area",
 		a.money AS "money",
+		c.name AS "item.name",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -17,6 +18,8 @@
 	</sql>
 	
 	<sql id="deductionDocItemJoins">
+		LEFT JOIN tdeduction_doc b ON b.id = a.doc_id
+		LEFT JOIN tdeduction_item c ON c.id = a.item_id
 	</sql>
     
 	<select id="get" resultType="DeductionDocItem">
@@ -34,11 +37,11 @@
 		<include refid="deductionDocItemJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="docId != null and docId != ''">
-				AND a.doc_id = #{docId}
+			<if test="doc != null and doc.id != null and doc.id != ''">
+				AND a.doc_id = #{doc.id}
 			</if>
-			<if test="itemId != null and itemId != ''">
-				AND a.item_id = #{itemId}
+			<if test="item != item and item.id != null and item.id != ''">
+				AND a.item_id = #{item.id}
 			</if>
 		</where>
 		<choose>
@@ -46,7 +49,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.create_date ASC
 			</otherwise>
 		</choose>
 	</select>
@@ -64,7 +67,7 @@
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.create_date ASC
 			</otherwise>
 		</choose>
 	</select>
@@ -82,8 +85,8 @@
 			remarks,
 			del_flag
 		) VALUES (
-			#{docId},
-			#{itemId},
+			#{doc.id},
+			#{item.id},
 			#{area},
 			#{money},
 			#{createBy.id},
@@ -97,8 +100,8 @@
 	
 	<update id="update">
 		UPDATE tdeduction_doc_item SET 	
-			doc_id = #{docId},
-			item_id = #{itemId},
+			doc_id = #{doc.id},
+			item_id = #{item.id},
 			area = #{area},
 			money = #{money},
 			remarks = #{remarks}
@@ -106,8 +109,16 @@
 	</update>
 	
 	<update id="delete">
-		DELETE FROM tdeduction_doc_item
-		WHERE id = #{id}
+		UPDATE tdeduction_doc_item SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		<choose>
+			<when test="id !=null and id != ''">
+				WHERE id = #{id}
+			</when>
+			<otherwise>
+				WHERE doc_id = #{doc.id}
+			</otherwise>
+		</choose>
 	</update>
 	
 </mapper>

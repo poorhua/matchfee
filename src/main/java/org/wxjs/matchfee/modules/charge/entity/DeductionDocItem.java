@@ -3,20 +3,20 @@
  */
 package org.wxjs.matchfee.modules.charge.entity;
 
-import org.hibernate.validator.constraints.Length;
 
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.modules.base.entity.DeductionItem;
 
 /**
- * 抵扣项目Entity
+ * 抵扣项文件Entity
  * @author GLQ
- * @version 2017-11-25
+ * @version 2017-12-05
  */
 public class DeductionDocItem extends DataEntity<DeductionDocItem> {
 	
 	private static final long serialVersionUID = 1L;
-	private String docId;		// 文档代码
-	private String itemId;		// 抵扣项代码
+	private DeductionDoc doc;		// 文档代码 父类
+	private DeductionItem item;		// 抵扣项代码
 	private String area;		// 面积（平米）
 	private String money;		// 金额（元）
 	
@@ -28,24 +28,31 @@ public class DeductionDocItem extends DataEntity<DeductionDocItem> {
 		super(id);
 	}
 
-	@Length(min=1, max=64, message="文档代码长度必须介于 1 和 64 之间")
-	public String getDocId() {
-		return docId;
-	}
-
-	public void setDocId(String docId) {
-		this.docId = docId;
+	public DeductionDocItem(DeductionDoc doc){
+		this.doc = doc;
 	}
 	
-	@Length(min=1, max=64, message="抵扣项代码长度必须介于 1 和 64 之间")
-	public String getItemId() {
-		return itemId;
+	public DeductionDocItem(DeductionItem item){
+		this.item = item;
 	}
 
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
+	public DeductionDoc getDoc() {
+		return doc;
+	}
+
+	public void setDoc(DeductionDoc doc) {
+		this.doc = doc;
 	}
 	
+	
+	public DeductionItem getItem() {
+		return item;
+	}
+
+	public void setItem(DeductionItem item) {
+		this.item = item;
+	}
+
 	public String getArea() {
 		return area;
 	}

@@ -8,33 +8,9 @@
 		$(document).ready(function() {
 			
 		});
-		function page(n,s){
-			$("#pageNo").val(n);
-			$("#pageSize").val(s);
-			$("#searchForm").submit();
-        	return false;
-        }
 	</script>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/charge/deductionDocItem/">抵扣项目列表</a></li>
-		<shiro:hasPermission name="charge:deductionDocItem:edit"><li><a href="${ctx}/charge/deductionDocItem/form">抵扣项目添加</a></li></shiro:hasPermission>
-	</ul>
-	<form:form id="searchForm" modelAttribute="deductionDocItem" action="${ctx}/charge/deductionDocItem/" method="post" class="breadcrumb form-search">
-		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
-		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>
-		<ul class="ul-form">
-			<li><label>文档代码：</label>
-				<form:input path="docId" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
-			<li><label>抵扣项代码：</label>
-				<form:input path="itemId" htmlEscape="false" maxlength="64" class="input-medium"/>
-			</li>
-			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/></li>
-			<li class="clearfix"></li>
-		</ul>
-	</form:form>
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
@@ -56,10 +32,10 @@
 					${deductionDocItem.id}
 				</a></td>
 				<td>
-					${deductionDocItem.docId}
+					${deductionDocItem.doc}
 				</td>
 				<td>
-					${deductionDocItem.itemId}
+					${deductionDocItem.item}
 				</td>
 				<td>
 					${deductionDocItem.area}
