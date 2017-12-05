@@ -78,16 +78,16 @@ public class DeductionDocItemController extends BaseController {
 		}
 		try{
 			deductionDocItemService.save(deductionDocItem);
-			addMessage(redirectAttributes, "保存抵扣项目成功");
+			addMessage(redirectAttributes, "保存设计院证明项目成功");
 		}catch(DuplicateKeyException e1){
-			addMessage(redirectAttributes, "保存抵扣项目失败。重复！");
+			addMessage(redirectAttributes, "保存设计院证明项目失败。重复！");
 			logger.error("save error", e1);
 		}catch(Exception e2){
-			addMessage(redirectAttributes, "保存抵扣项目失败。");
+			addMessage(redirectAttributes, "保存设计院证明项目失败。");
 			logger.error("save error", e2);
 		}
 		
-		return "redirect:"+Global.getAdminPath()+"/charge/deductionDocItem/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/deductionDocTab";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
@@ -95,7 +95,7 @@ public class DeductionDocItemController extends BaseController {
 	public String delete(DeductionDocItem deductionDocItem, RedirectAttributes redirectAttributes) {
 		deductionDocItemService.delete(deductionDocItem);
 		addMessage(redirectAttributes, "删除抵扣项目成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/deductionDocItem/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/deductionDocTab";
 	}
 
 }
