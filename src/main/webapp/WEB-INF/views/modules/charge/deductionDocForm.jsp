@@ -26,31 +26,17 @@
 	</script>
 </head>
 <body>
-	<ul class="nav nav-tabs">
-		<li><a href="${ctx}/charge/deductionDoc/">抵扣项文件列表</a></li>
-		<li class="active"><a href="${ctx}/charge/deductionDoc/form?id=${deductionDoc.id}">抵扣项文件<shiro:hasPermission name="charge:charge:edit">${not empty deductionDoc.id?'修改':'添加'}</shiro:hasPermission><shiro:lacksPermission name="charge:charge:edit">查看</shiro:lacksPermission></a></li>
-	</ul><br/>
+	<legend>设计院证明</legend>
+	<matchfee:projectInfoView/><br>
 	<form:form id="inputForm" modelAttribute="deductionDoc" action="${ctx}/charge/deductionDoc/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<form:hidden path="prjNum"/>
+		<input type="hidden" id="charge.id" name="charge.id" value="${chargeId}">
 		<sys:message content="${message}"/>		
-		<div class="control-group">
-			<label class="control-label">征收代码：</label>
-			<div class="controls">
-				<form:input path="chargeId" htmlEscape="false" maxlength="11" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
 		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">项目代码：</label>
-			<div class="controls">
-				<form:input path="prjNum" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -62,16 +48,10 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">文件类型：</label>
-			<div class="controls">
-				<form:input path="documentType" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
 			<label class="control-label">保存路径：</label>
 			<div class="controls">
-				<form:input path="path" htmlEscape="false" maxlength="128" class="input-xlarge required"/>
+				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/charge/deductionDoc" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

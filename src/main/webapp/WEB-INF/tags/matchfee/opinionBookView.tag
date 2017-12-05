@@ -13,7 +13,7 @@
 				</tr>
 				<tr>
 					<td class="tit">文档日期：</td><td><fmt:formatDate value="${opinionBook.documentDate}" pattern="yyyy-MM-dd"/></td>
-					<td class="tit">连接：</td><td>
+					<td class="tit">链接：</td><td>
 				<input type="hidden" id="path" name="path" value="${opinionBook.path}">
 				<sys:ckfinder input="path" type="files" uploadPath="/charge/opinionBook" selectMultiple="false" readonly="true"/>					
 					</td>
