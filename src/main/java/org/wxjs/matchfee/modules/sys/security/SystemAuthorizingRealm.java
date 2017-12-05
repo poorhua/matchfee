@@ -100,6 +100,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 				User user = this.getEnterpriceUser(token);
 				
 				logger.debug("qy user id: "+user.getId()+", pass: "+user.getPassword()+", loginName: "+user.getLoginName());
+				logger.debug(user.getProject().toString());
 				
 				return new SimpleAuthenticationInfo(new Principal(user, token.isMobileLogin()), 
 						user.getPassword(), getName());
@@ -134,6 +135,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		user.setName("建设单位");
 		String prjNum = token.getUsername();
 		Project project = WebServiceUtils.getProjectInfo(prjNum);
+		user.setRemarks(project.getBuildCorpName());
 		user.setProject(project);
 		
 		user.setPassword(token.getPasswordStr());
@@ -331,6 +333,9 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 		private String id; // 编号
 		private String loginName; // 登录名
 		private String name; // 姓名
+		
+		private Project project;
+		
 		private boolean mobileLogin; // 是否手机登录
 		
 //		private Map<String, Object> cacheMap;
@@ -340,6 +345,7 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 			this.loginName = user.getLoginName();
 			this.name = user.getName();
 			this.mobileLogin = mobileLogin;
+			this.project = user.getProject();
 		}
 
 		public String getId() {
@@ -352,6 +358,14 @@ public class SystemAuthorizingRealm extends AuthorizingRealm {
 
 		public String getName() {
 			return name;
+		}
+
+		public Project getProject() {
+			return project;
+		}
+
+		public void setProject(Project project) {
+			this.project = project;
 		}
 
 		public boolean isMobileLogin() {

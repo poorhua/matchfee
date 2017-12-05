@@ -89,12 +89,38 @@ public class ChargeController extends BaseController {
 	}
 	
 	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = {"enterpriselist"})
+	public String enterpriselist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		User user = UserUtils.getUser();
+		
+		charge.setProject(user.getProject());
+		
+		charge.setStatus(Global.CHARGE_STATUS_EDIT
+				 + "," + Global.CHARGE_STATUS_REJECT);
+		
+		if(user.getProject()==null){
+			logger.debug("user.getProject()==null");
+		}else{
+			logger.debug(user.getProject().toString());
+		}
+		
+		
+		List<Charge> list = chargeService.findList(charge); 
+		model.addAttribute("list", list);
+		return "modules/charge/myChargeList_enterprise";
+	}	
+	
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"mylist"})
 	public String mylist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
 		
 		User user = UserUtils.getUser();
 		
 		charge.setReportStaff(user);
+		
+		charge.setStatus(Global.CHARGE_STATUS_EDIT
+				 + "," + Global.CHARGE_STATUS_REJECT);
 		
 		if(charge.getDateFrom() == null){
 			Calendar cal=Calendar.getInstance();
@@ -110,6 +136,51 @@ public class ChargeController extends BaseController {
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
 		return "modules/charge/myChargeList";
+	}	
+	
+	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = {"calculatelist"})
+	public String calculatelist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		//User user = UserUtils.getUser();
+		
+		//charge.setReportStaff(user);
+		
+		charge.setStatus(Global.CHARGE_STATUS_TO_CALCULATE);
+		
+		List<Charge> list = chargeService.findList(charge); 
+		model.addAttribute("list", list);
+		return "modules/charge/myChargeList_postSubmit";
+	}
+	
+	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = {"approvelist"})
+	public String approvelist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		//User user = UserUtils.getUser();
+		
+		//charge.setReportStaff(user);
+		
+		charge.setStatus(Global.CHARGE_STATUS_TO_APPROVE);
+		
+		List<Charge> list = chargeService.findList(charge); 
+		model.addAttribute("list", list);
+		return "modules/charge/myChargeList_postSubmit";
+	}
+	
+	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = {"confirmlist"})
+	public String confirmlist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		//User user = UserUtils.getUser();
+		
+		//charge.setReportStaff(user);
+		
+		charge.setStatus(Global.CHARGE_STATUS_TO_CONFIRM);
+		
+		List<Charge> list = chargeService.findList(charge); 
+		model.addAttribute("list", list);
+		return "modules/charge/myChargeList_postSubmit";
 	}
 	
 	@RequiresPermissions("charge:charge:view")
@@ -147,13 +218,11 @@ public class ChargeController extends BaseController {
 		
 		User user = UserUtils.getUser();
 		if(user.isQyUser()){
-			
+			model.addAttribute("project", user.getProject());
+			return "modules/charge/projectForm";
 		}else{
-			
+			return "modules/charge/projectList";
 		}
-		
-		//return "redirect:"+Global.getAdminPath()+"/charge/project/list?repage";
-		return "modules/charge/projectList";
 	}	
 	
 	@RequiresPermissions("charge:charge:edit")
@@ -175,7 +244,12 @@ public class ChargeController extends BaseController {
 		
 		chargeService.save(charge);
 		addMessage(redirectAttributes, "保存征收成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/mylist?repage";
+		if(user.isQyUser()){
+			return "redirect:"+Global.getAdminPath()+"/charge/charge/enterpriselist?repage";
+		}else{
+			return "redirect:"+Global.getAdminPath()+"/charge/charge/mylist?repage";
+		}
+		
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
@@ -320,7 +394,12 @@ public class ChargeController extends BaseController {
 		
 		chargeService.updateReport(charge);
 		addMessage(redirectAttributes, "保存征收成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
+		
+		if(user.isQyUser()){
+			return "redirect:"+Global.getAdminPath()+"/charge/charge/enterpriselist?repage";
+		}else{
+			return "redirect:"+Global.getAdminPath()+"/charge/charge/mylist?repage";
+		}
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
@@ -349,12 +428,12 @@ public class ChargeController extends BaseController {
 		
 		chargeService.updateCalculate(charge);
 		addMessage(redirectAttributes, "保存征收成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/calculatelist?repage";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
-	@RequestMapping(value = "approve")
-	public String approve(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "approvePass")
+	public String approvePass(Charge charge, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, charge)){
 			return form(charge, model);
 		}
@@ -368,7 +447,26 @@ public class ChargeController extends BaseController {
 		
 		chargeService.updateApprove(charge);
 		addMessage(redirectAttributes, "保存征收成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/approvelist?repage";
+	}
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "approveReject")
+	public String approveReject(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, charge)){
+			return form(charge, model);
+		}
+		
+		User user = UserUtils.getUser();
+		charge.setApproveStaff(user);
+
+		charge.setApproveDate(Calendar.getInstance().getTime());
+		
+		charge.setStatus(Global.CHARGE_STATUS_REJECT);
+		
+		chargeService.updateApprove(charge);
+		addMessage(redirectAttributes, "保存征收成功");
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/approvelist?repage";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
@@ -387,7 +485,7 @@ public class ChargeController extends BaseController {
 		
 		chargeService.updateConfirm(charge);
 		addMessage(redirectAttributes, "保存征收成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/confirmlist?repage";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")

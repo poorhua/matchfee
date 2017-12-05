@@ -53,7 +53,7 @@ public class ProjectController extends BaseController {
 		return entity;
 	}
 	
-	@RequiresPermissions("charge:project:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Project project, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<Project> page = projectService.findPage(new Page<Project>(request, response), project); 
@@ -68,7 +68,7 @@ public class ProjectController extends BaseController {
 		return "modules/charge/projectList";
 	}
 	
-	@RequiresPermissions("charge:project:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"listLocalAndRemote"})
 	public String listLocalAndRemote(Project project, HttpServletRequest request, HttpServletResponse response, Model model) {
 		List<Project> list = projectService.findList_LocalAndRemote(project); 
@@ -80,7 +80,7 @@ public class ProjectController extends BaseController {
 		return "modules/charge/projectList";
 	}
 
-	@RequiresPermissions("charge:project:view")
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "form")
 	public String form(Project project, Model model) {
 		String prjNum = project.getPrjNum();
@@ -93,7 +93,7 @@ public class ProjectController extends BaseController {
 		return "modules/charge/projectForm";
 	}
 
-	@RequiresPermissions("charge:project:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "save")
 	public String save(Project project, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, project)){
@@ -104,7 +104,7 @@ public class ProjectController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/charge/project/?repage";
 	}
 	
-	@RequiresPermissions("charge:project:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "saveAndContinue")
 	public String saveAndContinue(Project project, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, project)){
@@ -119,7 +119,7 @@ public class ProjectController extends BaseController {
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/create?repage";
 	}
 	
-	@RequiresPermissions("charge:project:edit")
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "delete")
 	public String delete(Project project, RedirectAttributes redirectAttributes) {
 		projectService.delete(project);

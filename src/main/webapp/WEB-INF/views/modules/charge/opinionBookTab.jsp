@@ -20,7 +20,7 @@
 </head>
 <body>
     <sys:message content="${message}"/>
-    <matchfee:chargeView charge="${charge}"></matchfee:chargeView><br>
+    <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>
 
 	<ul class="nav nav-tabs">
 		<li class="active"><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>

@@ -17,7 +17,7 @@ CREATE TABLE `tproject` (
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   UNIQUE(`prj_num`),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '工程项目';
 
 -- ----------------------------
 -- Table structure for tdeduction_item
@@ -33,7 +33,7 @@ CREATE TABLE `tdeduction_item` (
   `remarks` varchar(64) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '抵扣项';
 
 -- ----------------------------
 -- Table structure for tcharge
@@ -66,7 +66,7 @@ CREATE TABLE `tcharge` (
   `remarks` varchar(64) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '项目征收';
 
 -- ----------------------------
 -- Table structure for topinion_book
@@ -87,7 +87,7 @@ CREATE TABLE `topinion_book` (
   `remarks` varchar(64) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '条件意见书';
 
 -- ----------------------------
 -- Table structure for topinion_book_item
@@ -107,7 +107,7 @@ CREATE TABLE `topinion_book_item` (
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   UNIQUE(`doc_id`, `item_id`),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '条件意见书项目';
 
 -- ----------------------------
 -- Table structure for tdeduction_doc
@@ -130,7 +130,7 @@ CREATE TABLE `tdeduction_doc` (
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   UNIQUE(`name`, prj_num),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '减项证明文件';
 
 -- ----------------------------
 -- Table structure for tdeduction_doc_item
@@ -150,7 +150,7 @@ CREATE TABLE `tdeduction_doc_item` (
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   UNIQUE(`doc_id`, `item_id`),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '减项条目';
 
 -- ----------------------------
 -- Table structure for tproject_license
@@ -174,7 +174,7 @@ CREATE TABLE `tproject_license` (
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
   UNIQUE(`name`, prj_num),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '工程许可证';
 
 -- ----------------------------
 -- Table structure for tproject_deduction

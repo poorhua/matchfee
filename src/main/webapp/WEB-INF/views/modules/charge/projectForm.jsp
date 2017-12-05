@@ -81,7 +81,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="charge:project:edit">&nbsp;
+			<shiro:hasPermission name="charge:charge:edit">&nbsp;
 			<input id="btnSubmitAndContinue" class="btn btn-primary" type="button" value="确定"/>
 			</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>

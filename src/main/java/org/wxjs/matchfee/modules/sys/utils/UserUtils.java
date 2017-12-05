@@ -123,6 +123,10 @@ public class UserUtils {
 		Principal principal = getPrincipal();
 		if (principal!=null){
 			User user = get(principal.getId());
+			
+			//set project for enterprise user
+			user.setProject(principal.getProject());
+			
 			if (user != null){
 				return user;
 			}

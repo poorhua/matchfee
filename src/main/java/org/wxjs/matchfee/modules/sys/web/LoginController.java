@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.google.common.collect.Maps;
+
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.security.shiro.session.SessionDAO;
 import org.wxjs.matchfee.common.servlet.ValidateCodeServlet;
@@ -27,6 +28,8 @@ import org.wxjs.matchfee.common.utils.CookieUtils;
 import org.wxjs.matchfee.common.utils.IdGen;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.common.web.BaseController;
+import org.wxjs.matchfee.modules.base.utils.WebServiceUtils;
+import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.sys.security.FormAuthenticationFilter;
 import org.wxjs.matchfee.modules.sys.security.SystemAuthorizingRealm.Principal;
 import org.wxjs.matchfee.modules.sys.utils.UserUtils;
@@ -51,6 +54,12 @@ public class LoginController extends BaseController{
 		String loginType = request.getParameter("type");
 		
 		model.addAttribute("type", loginType);
+		
+//		if("qy".equals(loginType)){
+//			String prjNum = request.getParameter("username");
+//			Project project = WebServiceUtils.getProjectInfo(prjNum);		
+//			request.getSession().setAttribute("project", project);
+//		}
 		
 		Principal principal = UserUtils.getPrincipal();
 		

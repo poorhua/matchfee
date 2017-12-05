@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.common.collect.Lists;
 
 import org.wxjs.matchfee.common.persistence.DataEntity;
 import org.wxjs.matchfee.modules.sys.entity.User;
@@ -216,6 +217,36 @@ public class Charge extends DataEntity<Charge> {
 	public void setConfirmStaff(User confirmStaff) {
 		this.confirmStaff = confirmStaff;
 	}
+	
+	@JsonIgnore
+	public String getIsMultipleStatus(){
+		return this.isMultiple(this.status)?"1":"0";
+	}
+	
+	@JsonIgnore
+	public List<String> getStatuses(){
+		List<String> rst = Lists.newArrayList();
+		
+		if(!this.status.equals("")){
+			String[] ids = this.status.split(",");
+			for(String id: ids){
+				rst.add(id);
+			}
+		}
+		
+		return rst;
+	}
+	
+	private boolean isMultiple(String str){
+		boolean rst = false;
+		if(str!=null && !str.equals("")){
+			String[] arr = str.split(",");
+			if(arr.length>1){
+				rst = true;
+			}
+		}
+		return rst;		
+	}	
 
 	public Date getDateFrom() {
 		return dateFrom;

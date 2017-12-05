@@ -69,16 +69,27 @@
 			<if test="dateTo != null and dateTo != ''">
 				AND DATE_FORMAT(a.report_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{dateTo},'%Y-%m-%d')
 			</if> 			
-			<if test="status != null and status != ''">
-				AND a.status = #{status}
-			</if>
+			<if test='status != null and status != ""'>
+				<choose>
+					<when test='isMultipleStatus == "0"'>
+					    AND a.status = #{status}
+					</when>
+					<otherwise>
+					    AND a.status in (
+					    <foreach collection="statuses" item="tempStr" separator=",">
+			               '${tempStr}'
+			            </foreach>
+			            )						
+					</otherwise>
+				</choose>				
+			</if>			
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
 			<otherwise>
-				ORDER BY a.update_date DESC
+				ORDER BY a.status, a.id DESC
 			</otherwise>
 		</choose>
 	</select>

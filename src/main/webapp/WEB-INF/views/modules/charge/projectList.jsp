@@ -58,7 +58,7 @@
 				<th>建设单位代码</th>
 				<th>建设单位名称</th>
 				<th>项目地址</th>
-				<shiro:hasPermission name="charge:project:edit"><th>操作</th></shiro:hasPermission>
+				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
@@ -78,7 +78,7 @@
 				<td>
 					${project.prjAddress}
 				</td>
-				<shiro:hasPermission name="charge:project:edit"><td>
+				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/project/form?id=${project.id}&prjNum=${project.prjNum}"><strong> 申报 </strong></a>
 				</td></shiro:hasPermission>			
 			</tr>

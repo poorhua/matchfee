@@ -12,7 +12,7 @@
 </head>
 <body>
     <sys:message content="${message}"/>
-    <matchfee:chargeView charge="${charge}"></matchfee:chargeView><br>
+    <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>
 		<li><a href="${ctx}/charge/charge/projectLicenseTab">工程许可证</a></li>
