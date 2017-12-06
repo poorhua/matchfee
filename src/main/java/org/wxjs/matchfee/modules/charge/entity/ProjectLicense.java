@@ -11,16 +11,16 @@ import javax.validation.constraints.NotNull;
 import org.wxjs.matchfee.common.persistence.DataEntity;
 
 /**
- * 工程许可证Entity
+ * 征收Entity
  * @author GLQ
- * @version 2017-12-03
+ * @version 2017-12-06
  */
 public class ProjectLicense extends DataEntity<ProjectLicense> {
 	
 	private static final long serialVersionUID = 1L;
-	private String chargeId;		// 征收代码
+	private Charge charge;		// 征收代码 父类
 	private String name;		// 名称
-	private String prjNum;		// 项目代码
+	private Project project;		// 项目代码
 	private String documentNo;		// 文件编号
 	private String path;		// 保存路径
 	private Date documentDate;		// 文档日期
@@ -35,13 +35,16 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		super(id);
 	}
 
-	@Length(min=1, max=11, message="征收代码长度必须介于 1 和 11 之间")
-	public String getChargeId() {
-		return chargeId;
+	public ProjectLicense(Charge charge){
+		this.charge = charge;
 	}
 
-	public void setChargeId(String chargeId) {
-		this.chargeId = chargeId;
+	public Charge getCharge() {
+		return charge;
+	}
+
+	public void setCharge(Charge charge) {
+		this.charge = charge;
 	}
 	
 	@Length(min=1, max=64, message="名称长度必须介于 1 和 64 之间")
@@ -53,13 +56,12 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		this.name = name;
 	}
 	
-	@Length(min=1, max=64, message="项目代码长度必须介于 1 和 64 之间")
-	public String getPrjNum() {
-		return prjNum;
+	public Project getProject() {
+		return project;
 	}
 
-	public void setPrjNum(String prjNum) {
-		this.prjNum = prjNum;
+	public void setProject(Project project) {
+		this.project = project;
 	}
 	
 	@Length(min=1, max=8, message="文件编号长度必须介于 1 和 8 之间")
@@ -71,7 +73,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		this.documentNo = documentNo;
 	}
 	
-	@Length(min=1, max=256, message="保存路径长度必须介于 1 和 256 之间")
+	@Length(min=1, max=128, message="保存路径长度必须介于 1 和 128 之间")
 	public String getPath() {
 		return path;
 	}

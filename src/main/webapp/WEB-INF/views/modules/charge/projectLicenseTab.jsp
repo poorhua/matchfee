@@ -25,22 +25,19 @@
 		<li><a href="${ctx}/charge/charge/projectDeductionTab">其他减项</a></li>
 	</ul>
 	
-	<form:form id="searchForm" modelAttribute="charge" action="" method="post" class="breadcrumb form-search">
-		<ul class="ul-form">
-		<shiro:hasPermission name="charge:charge:edit">
-			<li>
-			<input id="btnAdd" class="btn btn-primary" type="button" value="手动添加" onclick="toNewPage()"/></li>
-		</shiro:hasPermission>
-			<li class="clearfix"></li>
-		</ul>
-	</form:form>	
+	<div style="margin:10px 60px 10px 0;width='100%'">
+	   <div align="right">
+		    <shiro:hasPermission name="charge:charge:edit">
+		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNewPage()"/>
+		    </shiro:hasPermission>	   
+	   </div>
+	</div>
+	
 	<sys:message content="${message}"/>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>征收代码</th>
 				<th>名称</th>
-				<th>项目代码</th>
 				<th>文件编号</th>
 				<th>保存路径</th>
 				<th>文档日期</th>
@@ -53,19 +50,14 @@
 		<c:forEach items="${charge.projectLicenseList}" var="projectLicense">
 			<tr>
 				<td><a href="${ctx}/charge/projectLicense/form?id=${projectLicense.id}">
-					${projectLicense.chargeId}
-				</a></td>
-				<td>
 					${projectLicense.name}
-				</td>
-				<td>
-					${projectLicense.prjNum}
-				</td>
+				</a></td>
 				<td>
 					${projectLicense.documentNo}
 				</td>
 				<td>
-					${projectLicense.path}
+				<input type="hidden" id="path${projectDeduction.id}" name="path${projectDeduction.id}" value="${projectDeduction.path}">
+				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/charge/projectDeduction" selectMultiple="false" readonly="true"/>					
 				</td>
 				<td>
 					<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

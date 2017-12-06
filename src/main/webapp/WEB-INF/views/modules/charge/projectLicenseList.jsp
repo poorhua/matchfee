@@ -33,15 +33,12 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>征收代码</th>
 				<th>名称</th>
-				<th>项目代码</th>
 				<th>文件编号</th>
 				<th>保存路径</th>
 				<th>文档日期</th>
 				<th>地上面积（平米）</th>
 				<th>地下面积（平米）</th>
-				<th>更新时间</th>
 				<th>备注信息</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -50,19 +47,14 @@
 		<c:forEach items="${page.list}" var="projectLicense">
 			<tr>
 				<td><a href="${ctx}/charge/projectLicense/form?id=${projectLicense.id}">
-					${projectLicense.chargeId}
-				</a></td>
-				<td>
 					${projectLicense.name}
-				</td>
-				<td>
-					${projectLicense.prjNum}
-				</td>
+				</a></td>
 				<td>
 					${projectLicense.documentNo}
 				</td>
 				<td>
-					${projectLicense.path}
+					<input type="hidden" id="path${projectLicense.id}" name="path${projectLicense.id}" value="${projectLicense.path}">
+					<sys:ckfinder input="path${projectLicense.id}" type="files" uploadPath="/charge/projectLicense" selectMultiple="false" readonly="true"/>
 				</td>
 				<td>
 					<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>

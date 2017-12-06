@@ -308,7 +308,7 @@ public class ChargeController extends BaseController {
 		}
 		
 		ProjectLicense projectLicenseParam = new ProjectLicense();
-		projectLicenseParam.setChargeId(charge.getId());
+		projectLicenseParam.setCharge(new Charge(chargeId));
 		
 		charge.setProjectLicenseList(this.projectLicenseService.findList(projectLicenseParam));
 		

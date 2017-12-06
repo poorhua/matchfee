@@ -69,15 +69,15 @@ public class DeductionDocController extends BaseController {
 		}
 		deductionDocService.save(deductionDoc);
 		addMessage(redirectAttributes, "保存设计院证明文件成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/deductionDocTab";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/deductionDocTab/?repage";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "delete")
 	public String delete(DeductionDoc deductionDoc, RedirectAttributes redirectAttributes) {
 		deductionDocService.delete(deductionDoc);
-		addMessage(redirectAttributes, "删除抵扣项文件成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/deductionDocTab";
+		addMessage(redirectAttributes, "删除设计院证明文件成功");
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/deductionDocTab/?repage";
 	}
 
 }
