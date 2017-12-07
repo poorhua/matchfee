@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +15,7 @@ import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.service.BaseService;
 import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.report.dao.ChargeReportDao;
+import org.wxjs.matchfee.modules.report.dao.ReportDao;
 import org.wxjs.matchfee.modules.report.dataModel.ChartData;
 import org.wxjs.matchfee.modules.report.dataModel.ColumnData;
 import org.wxjs.matchfee.modules.report.dataModel.PieData;
@@ -27,6 +29,9 @@ import org.wxjs.matchfee.modules.report.entity.ReportParam;
 @Service
 @Transactional(readOnly = true)
 public class ReportService extends BaseService{
+	
+	@Autowired
+	public ReportDao reportDao;
 	
 	public static enum reportTypes {monthTimes, monthMoney};
 	
@@ -143,6 +148,21 @@ public class ReportService extends BaseService{
 			rst = "CHARGE_MONEY";
 		}
 		return rst;
+	}
+	
+	public Collection<HashMap<String, Object>> dashboardDeclare(){
+		Collection<HashMap<String, Object>> map=reportDao.dashboardDeclare();
+		return map;
+	}
+	
+	public Collection<HashMap<String, Object>> dashboardChargeMoney(){
+		Collection<HashMap<String, Object>> map=reportDao.dashboardChargeMoney();
+		return map;
+	}
+	
+	public Collection<HashMap<String, Object>> dashboardChargeStatus(){
+		Collection<HashMap<String, Object>> map=reportDao.dashboardChargeStatus();
+		return map;
 	}
 
 

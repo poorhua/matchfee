@@ -15,5 +15,11 @@ import org.wxjs.matchfee.modules.report.entity.ReportParam;
 public interface ReportDao extends BaseDao{
 	
 	public Collection<HashMap<String, Object>> report(ReportParam reportParam);
+	
+	public  Collection<HashMap<String, Object>> dashboardDeclare();
+	
+	public  Collection<HashMap<String, Object>> dashboardChargeMoney();
+	
+	public  Collection<HashMap<String, Object>> dashboardChargeStatus();
 
 }
