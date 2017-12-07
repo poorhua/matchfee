@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.wxjs.matchfee.modules.report.dao.ChargeReportDao">
+
+   <sql id="variableFields">
+       <choose>
+		   <when test="reportType == 'monthTimes'">DATE_FORMAT(a.report_date,'%Y-%m')</when>
+		   <when test="reportType == 'monthMoney'">DATE_FORMAT(a.report_date,'%Y-%m')</when>
+		   <otherwise></otherwise>
+	   </choose>   
+
+   </sql>
+	
+	<select id="report" resultType="java.util.HashMap">
+		SELECT 
+           <include refid="variableFields"/> ITEMNAME, 
+		<choose>
+			<when test="reportType == 'monthTimes'">count(*)</when>
+			<when test="reportType == 'monthMoney'">sum(a.pay_money)</when>
+			<otherwise></otherwise>
+		</choose> ITEMVALUE
+		from tcharge a
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="reportType == 'monthMoney'">
+			AND a.status in ('40')
+			</if>			
+			
+			<if test="dateFrom != null and dateFrom != ''">
+		       AND DATE_FORMAT(a.report_date,'%Y-%m') &gt;= DATE_FORMAT(#{dateFrom},'%Y-%m')
+			</if>
+			<if test="dateTo != null and dateTo != ''">
+		       AND DATE_FORMAT(a.report_date,'%Y-%m') &lt;= DATE_FORMAT(#{dateTo},'%Y-%m')					
+			</if>
+		</where>
+		GROUP BY <include refid="variableFields"/>
+		ORDER BY <include refid="variableFields"/>
+	</select>
+
+</mapper>
