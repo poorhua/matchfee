@@ -56,8 +56,8 @@
 					${projectLicense.documentNo}
 				</td>
 				<td>
-				<input type="hidden" id="path${projectDeduction.id}" name="path${projectDeduction.id}" value="${projectDeduction.path}">
-				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/charge/projectDeduction" selectMultiple="false" readonly="true"/>					
+				<input type="hidden" id="path${projectLicense.id}" name="path${projectLicense.id}" value="${projectLicense.path}">
+				<sys:ckfinder input="path${projectLicense.id}" type="files" uploadPath="/charge/projectLicense" selectMultiple="false" readonly="true"/>					
 				</td>
 				<td>
 					<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
