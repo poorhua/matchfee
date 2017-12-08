@@ -43,7 +43,8 @@
 		<div class="control-group">
 			<label class="control-label">文件编号：</label>
 			<div class="controls">
-				<form:input path="documentNo" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
+				<form:input path="documentNo" htmlEscape="false" maxlength="8" class="input-xlarge required" onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -67,14 +68,16 @@
 		<div class="control-group">
 			<label class="control-label">地上面积（平米）：</label>
 			<div class="controls">
-				<form:input path="upArea" htmlEscape="false" class="input-xlarge required"/>
+				<form:input path="upArea" htmlEscape="false" class="input-xlarge required"  onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
 			<label class="control-label">地下面积（平米）：</label>
 			<div class="controls">
-				<form:input path="downArea" htmlEscape="false" class="input-xlarge required"/>
+				<form:input path="downArea" htmlEscape="false" class="input-xlarge required"  onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

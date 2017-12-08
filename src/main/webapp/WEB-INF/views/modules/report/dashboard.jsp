@@ -13,35 +13,48 @@
 <body>
 
 	<div id="prat1">
-		<table id="customers">
-			<tr>
-				<td>用户名：</td>
-				<td>${user.name }</tr>
-			
-			<tr>
-				<td>用户邮箱：</td>
-				<td>${user.email }</td>
-			</tr>
-			<tr>
-				<td>最后登录日期：</td>
-				<td>${user.loginDate }</td>
-			</tr>
-			<tr>
-				<td>用户工号：</td>
-				<td>${user.no }</td>
-			</tr>
-		</table>
+		<fieldset id="fieldset1">
+			<legend>账号信息</legend>
+			<table id="customers" align="center">
+				<tr>
+					<td>用户名：</td>
+					<td>${user.name }
+				</tr>
+
+				<tr>
+					<td>用户邮箱：</td>
+					<td>${user.email }</td>
+				</tr>
+				<tr>
+					<td>最后登录日期：</td>
+					<td>${user.loginDate }</td>
+				</tr>
+				<tr>
+					<td>用户工号：</td>
+					<td>${user.no }</td>
+				</tr>
+			</table>
+		</fieldset>
 	</div>
 	<div id="prat2">
-	<table id="customers2">
-			
-	</table>
+		<fieldset id="fieldset2">
+			<legend>征收汇总</legend>
+			<table id="customers2" align="center">
+
+			</table>
+		</fieldset>
 	</div>
 	<div id="prat3">
-		<canvas id="myChart1"></canvas>
+		<fieldset id="fieldset3">
+			<legend>申报数按月统计</legend>
+				<canvas id="myChart1"></canvas>
+		</fieldset>
 	</div>
 	<div id="prat4">
-		<canvas id="myChart2"></canvas>
+		<fieldset id="fieldset4">
+			<legend>征收金额按月统计</legend>
+				<canvas id="myChart2"></canvas>
+		</fieldset>
 	</div>
 
 	<script type="text/javascript">
@@ -91,13 +104,14 @@
 			type : 'bar',
 			data : chargeMoney,
 		});
-		
+
 		var bufferChargeStatus = ${chargeStatusData};
 		var trStr = '';
 		for ( var i in bufferChargeStatus) {
-			trStr += '<tr><td>'+bufferChargeStatus[i].status+'</td><td>'+bufferChargeStatus[i].count+'个<td></tr>';
+			trStr += '<tr><td>' + bufferChargeStatus[i].status + '：</td><td>'
+					+ bufferChargeStatus[i].count + '个<td></tr>';
 		}
-		document.getElementById("customers2").innerHTML=trStr;
+		document.getElementById("customers2").innerHTML = trStr;
 	</script>
 </body>
 </html>
