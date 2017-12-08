@@ -76,7 +76,7 @@
 		</div>
 	</form>
 	<div class="footer">
-		Copyright &copy; 2012-${fns:getConfig('copyrightYear')} <a href="${pageContext.request.contextPath}${fns:getFrontPath()}">${fns:getConfig('productName')}</a> - Powered By <a href="" target="_blank">千里目软件</a> ${fns:getConfig('version')} 
+		<a href="" target="_blank">千里目软件</a>&nbsp;提供技术支持 ${fns:getConfig('version')} 
 	</div>
 	<script src="${ctxStatic}/flash/zoom.min.js" type="text/javascript"></script>
 </body>

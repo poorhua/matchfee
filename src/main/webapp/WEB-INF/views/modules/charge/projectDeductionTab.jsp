@@ -35,9 +35,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+				<th>文件</th>			
 				<th>名称</th>
 				<th>文件编号</th>
-				<th>保存路径</th>
 				<th>文档日期</th>
 				<th>面积（平米）</th>
 				<th>金额（元）</th>
@@ -50,14 +50,14 @@
 		<c:forEach items="${charge.projectDeductionList}" var="projectDeduction">
 			<tr>
 				<td>
+				<input type="hidden" id="path${projectDeduction.id}" name="path${projectDeduction.id}" value="${projectDeduction.path}">
+				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/charge/projectDeduction" selectMultiple="false" readonly="true"/>					
+				</td>			
+				<td>
 					${projectDeduction.name}
 				</td>
 				<td>
 					${projectDeduction.documentNo}
-				</td>
-				<td>
-				<input type="hidden" id="path${projectDeduction.id}" name="path${projectDeduction.id}" value="${projectDeduction.path}">
-				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/charge/projectDeduction" selectMultiple="false" readonly="true"/>					
 				</td>
 				<td>
 					<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd"/>

@@ -34,6 +34,10 @@ public class DeductionDocItemService extends CrudService<DeductionDocItemDao, De
 		return super.findPage(page, deductionDocItem);
 	}
 	
+	public List<DeductionDocItem> sumDeductions(DeductionDocItem deductionDocItem){
+		return dao.sumDeductions(deductionDocItem);
+	}
+	
 	@Transactional(readOnly = false)
 	public void save(DeductionDocItem deductionDocItem) {
 		super.save(deductionDocItem);

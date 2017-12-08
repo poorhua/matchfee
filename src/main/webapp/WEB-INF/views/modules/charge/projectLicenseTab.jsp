@@ -37,9 +37,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+                <th>文件</th>			
 				<th>名称</th>
 				<th>文件编号</th>
-				<th>保存路径</th>
 				<th>文档日期</th>
 				<th>地上面积（平米）</th>
 				<th>地下面积（平米）</th>
@@ -49,18 +49,19 @@
 		<tbody>
 		<c:forEach items="${charge.projectLicenseList}" var="projectLicense">
 			<tr>
-				<td><a href="${ctx}/charge/projectLicense/form?id=${projectLicense.id}">
-					${projectLicense.name}
-				</a></td>
-				<td>
-					${projectLicense.documentNo}
-				</td>
 				<td>
 				<input type="hidden" id="path${projectLicense.id}" name="path${projectLicense.id}" value="${projectLicense.path}">
 				<sys:ckfinder input="path${projectLicense.id}" type="files" uploadPath="/charge/projectLicense" selectMultiple="false" readonly="true"/>					
+				</td>			
+				<td>
+					${projectLicense.name}
 				</td>
 				<td>
-					<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					${projectLicense.documentNo}
+				</td>
+
+				<td>
+					<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					${projectLicense.upArea}

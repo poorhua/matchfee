@@ -10,6 +10,7 @@ import com.lowagie.text.Phrase;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
+
 import java.util.List;
 
 public class PdfUtil {
@@ -57,12 +58,13 @@ public class PdfUtil {
     	if(bold){
     		fontType = Font.BOLD;
     	}
-    	return new Font(bfChinese, 12, fontType);
+    	return new Font(bfChinese, 10, fontType);
     }
     
     public static PdfPTable generateTable(String[] headers, Font headerFont, List<String[]> items, Font rowFont, float[] widths, int tableWidth) throws DocumentException{
-    	int columns = headers.length;
+    	int columns = widths.length;
     	//int rows = items.size()+1;
+    	
         PdfPTable table = new PdfPTable(columns);
         table.setWidths(widths);
         table.setWidthPercentage(tableWidth);
@@ -70,25 +72,30 @@ public class PdfUtil {
         Phrase phrase;
         PdfPCell cell;
         
-        //write header
-        for(String header: headers){
-        	phrase = new Phrase(header, headerFont);
-        	cell = new PdfPCell(phrase);
-        	cell.setBorderWidth(1);
-        	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-        	cell.setBackgroundColor(Color.lightGray);
-        	table.addCell(cell);
-        }   	
-    	//write items
-    	for(String[] strs: items){
-    		for(String str:strs){
-            	phrase = new Phrase(str, rowFont);
+        if(headers!=null){
+            //write header
+            for(String header: headers){
+            	phrase = new Phrase(header, headerFont);
             	cell = new PdfPCell(phrase);
             	cell.setBorderWidth(1);
-            	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            	cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            	//cell.setBackgroundColor(Color.lightGray);
             	table.addCell(cell);
-    		}
-    	}
+            }           	
+        }
+	
+        if(items!=null){
+        	//write items
+        	for(String[] strs: items){
+        		for(String str:strs){
+                	phrase = new Phrase(str, rowFont);
+                	cell = new PdfPCell(phrase);
+                	cell.setBorderWidth(1);
+                	cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                	table.addCell(cell);
+        		}
+        	}        	
+        }
     	
     	return table;
     }

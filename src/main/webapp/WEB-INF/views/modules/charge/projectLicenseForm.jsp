@@ -26,13 +26,22 @@
 	</script>
 </head>
 <body>
+    <sys:message content="${message}"/>	
     <legend>规划许可证</legend>
 	<matchfee:chargeView charge="${charge}"></matchfee:chargeView><br/>
 	<form:form id="inputForm" modelAttribute="projectLicense" action="${ctx}/charge/projectLicense/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<input type="hidden" id="charge.id" name="charge.id" value="${charge.id}">
 		<input type="hidden" id="project.prjNum" name="project.prjNum" value="${charge.project.prjNum}">
-		<sys:message content="${message}"/>		
+			
+		<div class="control-group">
+			<label class="control-label">文件：</label>
+			<div class="controls">
+				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/charge/projectLicense" selectMultiple="false"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>		
 		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
@@ -45,14 +54,6 @@
 			<div class="controls">
 				<form:input path="documentNo" htmlEscape="false" maxlength="8" class="input-xlarge required" onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
                  onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">保存路径：</label>
-			<div class="controls">
-				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
-				<sys:ckfinder input="path" type="files" uploadPath="/charge/projectLicense" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

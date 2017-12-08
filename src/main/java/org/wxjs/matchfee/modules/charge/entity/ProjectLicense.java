@@ -4,11 +4,16 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
 import org.hibernate.validator.constraints.Length;
+
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotNull;
 
+import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.common.utils.Util;
 
 /**
  * 征收Entity
@@ -108,4 +113,11 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		this.downArea = downArea;
 	}
 	
+	public float getTotalMoney(){
+		return this.getTotalArea() * Util.getFloat(Global.getConfig("matchfee.basis"));
+	}
+	
+	public float getTotalArea(){
+		return Util.getFloat(this.upArea) + Util.getFloat(this.downArea);
+	}
 }

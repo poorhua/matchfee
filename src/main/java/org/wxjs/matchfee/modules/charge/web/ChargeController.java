@@ -19,9 +19,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
+import org.wxjs.matchfee.common.persistence.Page;
+import org.wxjs.matchfee.common.utils.DateUtils;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.common.utils.Util;
+import org.wxjs.matchfee.common.utils.excel.ExportExcel;
 import org.wxjs.matchfee.common.web.BaseController;
+import org.wxjs.matchfee.modules.base.utils.ExportSettlementList;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
@@ -31,6 +35,7 @@ import org.wxjs.matchfee.modules.charge.entity.PayTicket;
 import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
+import org.wxjs.matchfee.modules.charge.entity.SettlementList;
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocItemService;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
@@ -270,6 +275,7 @@ public class ChargeController extends BaseController {
 		
 		chargeService.save(charge);
 		addMessage(redirectAttributes, "保存征收成功");
+		
 		if(user.isQyUser()){
 			return "redirect:"+Global.getAdminPath()+"/charge/charge/enterpriselist?repage";
 		}else{
@@ -581,16 +587,30 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = "showSettlementList")
 	public String showSettlementList(Charge charge, Model model, RedirectAttributes redirectAttributes) {
 		
-		chargeService.updateStatus(charge);
+		SettlementList settementList = chargeService.settle(charge.getId());
+		
+		model.addAttribute("settementList", settementList);
 
 		return "modules/charge/settlementList";
 	}
 	
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "exportSettlementList")
-	public String exportSettlementList(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+	public String exportSettlementList(Charge charge, HttpServletResponse response,  Model model, RedirectAttributes redirectAttributes) {
 		
-		chargeService.updateStatus(charge);
+		SettlementList settementList = chargeService.settle(charge.getId());
+		
+		model.addAttribute("settementList", settementList);
+		
+		try {
+            String fileName = "结算清单"+DateUtils.getDate("yyyyMMddHHmmss")+".pdf";
+            ExportSettlementList export = new ExportSettlementList(settementList);
+            export.write(response, fileName);
+    		return null;
+		} catch (Exception e) {
+			logger.error("导出失败", e);
+			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
+		}		
 
 		return "modules/charge/settlementList";
 	}

@@ -34,6 +34,14 @@
 		<form:hidden path="prjNum"/>
 		<sys:message content="${message}"/>		
 		<div class="control-group">
+			<label class="control-label">文件：</label>
+			<div class="controls">
+				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/charge/opinionBook" selectMultiple="false"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>		
+		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
@@ -44,14 +52,6 @@
 			<label class="control-label">文件编号：</label>
 			<div class="controls">
 				<form:input path="documentNo" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">保存路径：</label>
-			<div class="controls">
-				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
-				<sys:ckfinder input="path" type="files" uploadPath="/charge/opinionBook" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

@@ -3,13 +3,17 @@
  */
 package org.wxjs.matchfee.modules.charge.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
+import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
@@ -102,6 +106,9 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 	public SettlementList settle(String chargeId) {
 		SettlementList settlementList = new SettlementList();
 		
+		float calMoney = 0; //结算金额
+		float payMoney = 0; //缴费金额
+		
 		Charge charge = this.get(chargeId);
 		
 		settlementList.setCharge(charge);
@@ -114,20 +121,60 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		
 		settlementList.setOpinionBookItems(this.opinionBookItemService.findList(opinionBookItem));
 		
+		Map<String, String> opinionBookItemMap = new HashMap<String, String>();
+		for(OpinionBookItem item : settlementList.getOpinionBookItems()){
+			opinionBookItemMap.put(item.getItem().getId(), item.getArea());
+		}
+		
+		//ProjectLicense
+		ProjectLicense projectLicense = new ProjectLicense();
+		projectLicense.setCharge(charge);
+		settlementList.setProjectLicenses(this.projectLicenseService.findList(projectLicense));
+		
+		for(ProjectLicense item : settlementList.getProjectLicenses()){
+			calMoney += item.getTotalMoney();
+			item.setRemarks("规划许可证号: "+item.getDocumentNo());
+		}
+		
 		//DeductionDocItem
 		DeductionDocItem deductionDocItem = new DeductionDocItem();
 		
 		DeductionDoc deductionDoc = new DeductionDoc();
 		deductionDoc.setCharge(charge);
+		deductionDoc.setPrjNum(charge.getProject().getPrjNum());
 		deductionDocItem.setDoc(deductionDoc);
 		
 		settlementList.setDeductionDocItems(this.deductionDocItemService.findList(deductionDocItem));
 		
-		//PayTicket
-		PayTicket payTicket = new PayTicket();
-		payTicket.setCharge(charge);
+		//get settled item till this charge
+		List<DeductionDocItem> settledItemList = this.deductionDocItemService.sumDeductions(deductionDocItem);
+		Map<String, String> settledItemMap = new HashMap<String, String>();
+		for(DeductionDocItem item : settledItemList){
+			settledItemMap.put(item.getItem().getId(), item.getArea());
+		}
 		
-		settlementList.setPayTickets(this.payTicketService.findList(payTicket));
+		for(DeductionDocItem item : settlementList.getDeductionDocItems()){
+			
+			calMoney -= Util.getFloat(item.getMoney());
+			
+			String opinionBookValue = opinionBookItemMap.get(item.getItem().getId());
+			if(opinionBookValue == null){
+				opinionBookValue = "无";
+			}else{
+				opinionBookValue = opinionBookValue + "平米";
+			}
+			String settledValue = settledItemMap.get(item.getItem().getId());
+			if(settledValue == null){
+				settledValue = "0平米";
+			}else{
+				settledValue = settledValue + "平米";
+			}			
+			StringBuilder sb = new StringBuilder();
+			sb.append("意见书总面积: ").append(opinionBookValue);
+			sb.append("，至本期共抵扣: ").append(settledValue);
+			
+			item.setRemarks(sb.toString());
+		}
 		
 		//ProjectDeduction
 		ProjectDeduction projectDeduction = new ProjectDeduction();
@@ -135,10 +182,24 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		
 		settlementList.setProjectDeductions(this.projectDeductionService.findList(projectDeduction));
 		
-		//ProjectLicense
-		ProjectLicense projectLicense = new ProjectLicense();
-		projectLicense.setCharge(charge);
-		settlementList.setProjectLicenses(this.projectLicenseService.findList(projectLicense));
+		for(ProjectDeduction item : settlementList.getProjectDeductions()){
+			calMoney -= Util.getFloat(item.getMoney());
+		}
+		
+		
+		//PayTicket
+		PayTicket payTicket = new PayTicket();
+		payTicket.setCharge(charge);
+		
+		settlementList.setPayTickets(this.payTicketService.findList(payTicket));
+		
+		for(PayTicket item : settlementList.getPayTickets()){
+			payMoney += Util.getFloat(item.getMoney());
+			item.setRemarks("票据号: "+item.getTicketNo()+", 缴费日期: "+DateUtil.formatDate(item.getPayDate(), "yyyy-MM-dd"));
+		}
+		
+		settlementList.getCharge().setCalMoney(calMoney + "");
+		settlementList.getCharge().setPayMoney(payMoney + "");
 		
 		return settlementList;
 	}

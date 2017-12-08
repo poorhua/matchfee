@@ -65,6 +65,13 @@
 			top.$('.jbox-body .jbox-icon').css('top','55px');
 	    	
 	    }
+	    
+	    function exportPdf(){
+
+			$("#chargeForm").attr("action","${ctx}/charge/charge/exportSettlementList");
+			$("#chargeForm").submit();
+	    	
+	    }
 	</script>
 	
 <form:form id="chargeForm" class="form-horizontal">
@@ -134,7 +141,10 @@
 		   			</c:when>	
 		   			<c:when test="${charge.status eq '30'}">
 		   				<input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
-		   			</c:when>		   				   				   					   					   			
+		   			</c:when>	
+		   			<c:when test="${charge.status eq '40'}">
+		   				<input id="btnYes" class="btn btn-primary" type="button" value="导出结算清单" onclick="exportPdf()"/>
+		   			</c:when>		   				   				   				   					   					   			
 		   			<c:otherwise>
 		   			
 		   			</c:otherwise>

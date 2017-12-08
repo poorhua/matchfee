@@ -8,15 +8,16 @@
 		<fieldset>			
 			<table class="table-form">
 				<tr>
-					<td class="tit">文件编号：</td><td>${deductionDoc.documentNo}</td>
-					<td class="tit">名称：</td><td>${deductionDoc.name}</td>
-				</tr>
-				<tr>
-					<td class="tit">文档日期：</td><td><fmt:formatDate value="${deductionDoc.documentDate}" pattern="yyyy-MM-dd"/></td>
 					<td class="tit">链接：</td><td>
 				<input type="hidden" id="path${deductionDoc.id}" name="path${deductionDoc.id}" value="${deductionDoc.path}">
 				<sys:ckfinder input="path${deductionDoc.id}" type="files" uploadPath="/charge/deductionDoc" selectMultiple="false" readonly="true"/>					
 					</td>
+					<td class="tit">名称：</td><td>${deductionDoc.name}</td>
+				</tr>
+				<tr>
+				    <td class="tit">文件编号：</td><td>${deductionDoc.documentNo}</td>
+					<td class="tit">文档日期：</td><td><fmt:formatDate value="${deductionDoc.documentDate}" pattern="yyyy-MM-dd"/></td>
+
 				</tr>
 				<tr>
 					<td class="tit">备注信息：</td>
