@@ -55,6 +55,8 @@ public class Charge extends DataEntity<Charge> {
 	
 	private List<ProjectDeduction> projectDeductionList;
 	
+	private List<PayTicket> payTicketList;
+	
 	public Charge() {
 		super();
 	}
@@ -294,6 +296,14 @@ public class Charge extends DataEntity<Charge> {
 
 	public void setProjectDeductionList(List<ProjectDeduction> projectDeductionList) {
 		this.projectDeductionList = projectDeductionList;
+	}
+
+	public List<PayTicket> getPayTicketList() {
+		return payTicketList;
+	}
+
+	public void setPayTicketList(List<PayTicket> payTicketList) {
+		this.payTicketList = payTicketList;
 	}
 	
 }

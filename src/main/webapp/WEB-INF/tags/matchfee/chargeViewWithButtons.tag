@@ -53,12 +53,24 @@
 			top.$('.jbox-body .jbox-icon').css('top','55px');
 
 	    }
+	    
+	    function confirmSubmit(){
+
+			top.$.jBox.confirm("确定要确认缴费吗？","系统提示",function(v,h,f){
+				if(v=="ok"){	    	
+					$("#chargeForm").attr("action","${ctx}/charge/charge/confirm");
+					$("#chargeForm").submit();	
+				}
+			},{buttonsFocus:1});
+			top.$('.jbox-body .jbox-icon').css('top','55px');
+	    	
+	    }
 	</script>
 	
 <form:form id="chargeForm" class="form-horizontal">
     <input id="id" name="id" type="hidden" value="${charge.id}"/>
 	<fieldset>
-		<legend>申报信息</legend>
+		<strong>申报信息</strong>
 		<table class="table-form">
 		  <tr>
 		    <td width="85%">
@@ -119,7 +131,10 @@
 		   				    </td>
 		   				  </tr>
 		   				</table>
-		   			</c:when>		   				   					   					   			
+		   			</c:when>	
+		   			<c:when test="${charge.status eq '30'}">
+		   				<input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
+		   			</c:when>		   				   				   					   					   			
 		   			<c:otherwise>
 		   			
 		   			</c:otherwise>

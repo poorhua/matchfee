@@ -16,6 +16,8 @@ public class ColumnData extends ChartData{
 	private String subTitle = "";
 	private String yTitle;
 	
+	private String yAxisUnit = "";
+	
 	private List<String> categories;
 	
 	private List<ColumnSeries> series;
@@ -38,6 +40,14 @@ public class ColumnData extends ChartData{
 
 	public void setyTitle(String yTitle) {
 		this.yTitle = yTitle;
+	}
+
+	public String getyAxisUnit() {
+		return yAxisUnit;
+	}
+
+	public void setyAxisUnit(String yAxisUnit) {
+		this.yAxisUnit = yAxisUnit;
 	}
 
 	public List<String> getCategories() {

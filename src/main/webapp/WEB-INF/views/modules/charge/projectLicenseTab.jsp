@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>工程许可证管理</title>
+	<title>规划许可证管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -20,7 +20,7 @@
 
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>
-		<li class="active"><a href="${ctx}/charge/charge/projectLicenseTab">工程许可证</a></li>
+		<li class="active"><a href="${ctx}/charge/charge/projectLicenseTab">规划许可证</a></li>
 		<li><a href="${ctx}/charge/charge/deductionDocTab">设计院证明</a></li>
 		<li><a href="${ctx}/charge/charge/projectDeductionTab">其他减项</a></li>
 	</ul>
@@ -70,7 +70,7 @@
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/projectLicense/form?id=${projectLicense.id}">修改</a>
-					<a href="${ctx}/charge/projectLicense/delete?id=${projectLicense.id}" onclick="return confirmx('确认要删除该工程许可证吗？', this.href)">删除</a>
+					<a href="${ctx}/charge/projectLicense/delete?id=${projectLicense.id}" onclick="return confirmx('确认要删除该规划许可证吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

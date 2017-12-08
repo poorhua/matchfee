@@ -10,6 +10,8 @@
 <%@ attribute name="chartyTitle" type="java.lang.String" required="true" description="chart yTitle"%>
 <%@ attribute name="chartSeries" type="java.lang.String" required="true" description="chart series"%>
 
+<%@ attribute name="chartyAxisUnit" type="java.lang.String" required="true" description="grid yAxisUnit"%>
+
 <%@ attribute name="gridData" type="java.lang.String" required="true" description="grid data"%>
 <%@ attribute name="gridColModel" type="java.lang.String" required="true" description="grid ColModel"%>
 
@@ -44,7 +46,7 @@ $(function () {
         tooltip: {
             headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
             pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                '<td style="padding:0"><b>{point.y:.0f} item</b></td></tr>',
+                '<td style="padding:0"><b>{point.y:.0f} ${chartyAxisUnit}</b></td></tr>',
             footerFormat: '</table>',
             shared: true,
             useHTML: true

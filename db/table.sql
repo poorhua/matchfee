@@ -200,3 +200,44 @@ CREATE TABLE `tproject_deduction` (
   UNIQUE(`name`, prj_num),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '项目抵扣项';
+
+
+-- ----------------------------
+-- Table structure for sms_outbox, only use for test
+-- ----------------------------
+DROP TABLE IF EXISTS `sms_outbox`;
+CREATE TABLE `sms_outbox` (
+  `id` int(11) NOT NULL auto_increment COMMENT '流水号',
+  `extcode` varchar(64) NOT NULL COMMENT 'extcode',
+  `destaddr` varchar(256) NOT NULL COMMENT '目标地址',
+  `messagecontent` varchar(256) NOT NULL COMMENT '短信内容',
+  `reqdeliveryreport` varchar(64) NOT NULL COMMENT '',
+  `msgfmt` varchar(64) NOT NULL COMMENT '',
+  `sendmethod` varchar(64) NOT NULL COMMENT '',
+  `requesttime` datetime default now() COMMENT '',
+  `applicationid` varchar(64) NOT NULL COMMENT '',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '短信表';
+
+-- ----------------------------
+-- Table structure for tpay_ticket
+-- ----------------------------
+DROP TABLE IF EXISTS `tpay_ticket`;
+CREATE TABLE `tpay_ticket` (
+  `id` int(11) NOT NULL auto_increment COMMENT '代码',
+  `charge_id` int(11) NOT NULL COMMENT '征收代码',
+  `name` varchar(64) NULL COMMENT '名称',
+  `prj_num` varchar(64) NOT NULL COMMENT '项目代码',
+  `ticket_no` varchar(8) NOT NULL COMMENT '票据号',
+  `path` varchar(256) NOT NULL COMMENT '保存路径',
+  `money` decimal(10,2) NOT NULL COMMENT '金额（元）',
+  `pay_date` datetime NOT NULL COMMENT '缴费日期',
+  `create_by` varchar(32) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(32) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remarks` varchar(64) DEFAULT NULL COMMENT '备注信息',
+  `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
+  UNIQUE(`ticket_no`),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '缴费凭证';

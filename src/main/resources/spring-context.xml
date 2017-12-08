@@ -110,4 +110,11 @@
 		<property name="password" value="${jdbc.password}"/>
 	</bean>-->
 	
+	<bean id="dataSourceSms" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${sms.jdbc.driver}" />
+		<property name="url" value="${sms.jdbc.url}" />
+		<property name="username" value="${sms.jdbc.username}"/>
+		<property name="password" value="${sms.jdbc.password}"/>
+	</bean>	
+	
 </beans>

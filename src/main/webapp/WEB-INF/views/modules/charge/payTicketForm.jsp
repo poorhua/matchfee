@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>条件意见书项目管理</title>
+	<title>缴费凭证管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -26,39 +26,43 @@
 	</script>
 </head>
 <body>
-    <legend>抵扣项</legend>
-	<matchfee:opinionBookView opinionBook="${opinionBookItem.doc}"></matchfee:opinionBookView><br/>
-	<form:form id="inputForm" modelAttribute="opinionBookItem" action="${ctx}/charge/opinionBookItem/save" method="post" class="form-horizontal">
+    <legend>缴费凭证</legend>
+	<matchfee:chargeView charge="${charge}"></matchfee:chargeView><br/>
+	<form:form id="inputForm" modelAttribute="payTicket" action="${ctx}/charge/payTicket/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<input type="hidden" id="charge.id" name="charge.id" value="${charge.id}">
+		<input type="hidden" id="prjNum" name="prjNum" value="${charge.project.prjNum}">
 		<sys:message content="${message}"/>		
-		<form:hidden path="doc.id" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 		<div class="control-group">
-			<label class="control-label">抵扣项：</label>
+			<label class="control-label">缴费凭证：</label>
 			<div class="controls">
-				
-				<form:select path="item.id" class="input-large required">
-				    <form:option value="" label="请选择"/>
-					<form:options items="${fns:getDeductionItems()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
-				</form:select>				
-				
+				<form:hidden id="path" path="path" htmlEscape="false" maxlength="256" class="input-xlarge"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/charge/payTicket" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">面积（平米）：</label>
-			<div class="controls">
-				<form:input path="area" htmlEscape="false" class="input-xlarge required"
-				 onkeyup="this.value=this.value.replace(/[^\d.]/g,'');$('#money').val(Math.round(this.value*105*100)/100)"
-                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
+		</div>	
 		<div class="control-group">
 			<label class="control-label">金额（元）：</label>
 			<div class="controls">
-				<form:input path="money" htmlEscape="false" class="input-xlarge required"
-				 onkeyup="this.value=this.value.replace(/[^\d.]/g,'');$('#area').val(Math.round(this.value/105*100)/100)"
-				 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+				<form:input path="money" htmlEscape="false" maxlength="8" class="input-xlarge required"
+				onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
+                onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>			
+		<div class="control-group">
+			<label class="control-label">票据号：</label>
+			<div class="controls">
+				<form:input path="ticketNo" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">缴费日期：</label>
+			<div class="controls">
+				<input name="payDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
+					value="<fmt:formatDate value="${payTicket.payDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

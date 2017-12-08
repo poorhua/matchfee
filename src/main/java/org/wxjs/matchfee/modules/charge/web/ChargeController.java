@@ -20,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.utils.StringUtils;
+import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
+import org.wxjs.matchfee.modules.charge.entity.PayTicket;
 import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
@@ -34,6 +36,7 @@ import org.wxjs.matchfee.modules.charge.service.DeductionDocItemService;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookItemService;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
+import org.wxjs.matchfee.modules.charge.service.PayTicketService;
 import org.wxjs.matchfee.modules.charge.service.ProjectDeductionService;
 import org.wxjs.matchfee.modules.charge.service.ProjectLicenseService;
 import org.wxjs.matchfee.modules.charge.service.ProjectService;
@@ -69,6 +72,9 @@ public class ChargeController extends BaseController {
 	
 	@Autowired
 	private ProjectLicenseService projectLicenseService;
+	
+	@Autowired
+	private PayTicketService payTicketService;
 	
 	@Autowired
 	private ProjectService projectService;
@@ -182,6 +188,21 @@ public class ChargeController extends BaseController {
 		//charge.setReportStaff(user);
 		
 		charge.setStatus(Global.CHARGE_STATUS_TO_CONFIRM);
+		
+		List<Charge> list = chargeService.findList(charge); 
+		model.addAttribute("list", list);
+		return "modules/charge/myChargeList_postSubmit";
+	}
+	
+	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = {"settlementlist"})
+	public String settlementlist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		//User user = UserUtils.getUser();
+		
+		//charge.setReportStaff(user);
+		
+		charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
@@ -377,6 +398,30 @@ public class ChargeController extends BaseController {
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "payTicketTab")
+	public String payTicketTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
+		
+		PayTicket payTicketParam = new PayTicket();
+		
+		if(charge==null || StringUtils.isBlank(charge.getId())){
+			String chargeId = Util.getString(httpSession.getAttribute("chargeId"));
+			payTicketParam.setCharge(new Charge(chargeId));
+			charge = chargeService.get(chargeId);
+		}else{
+			payTicketParam.setCharge(charge);
+		}
+
+		
+		charge.setPayTicketList(this.payTicketService.findList(payTicketParam));
+		
+		model.addAttribute("charge", charge);
+		
+		//logger.debug("charge: "+charge.toString());
+		
+		return "modules/charge/payTicketTab";
+	}
+	
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "reportSave")
 	public String reportSave(Charge charge, Model model, RedirectAttributes redirectAttributes) {
 		charge.setStatus(Global.CHARGE_STATUS_EDIT);
@@ -530,6 +575,24 @@ public class ChargeController extends BaseController {
 			flag = true;
 		}
 		return flag;
+	}
+	
+	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = "showSettlementList")
+	public String showSettlementList(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+		
+		chargeService.updateStatus(charge);
+
+		return "modules/charge/settlementList";
+	}
+	
+	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = "exportSettlementList")
+	public String exportSettlementList(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+		
+		chargeService.updateStatus(charge);
+
+		return "modules/charge/settlementList";
 	}
 
 }

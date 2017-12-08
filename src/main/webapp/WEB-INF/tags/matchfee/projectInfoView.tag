@@ -4,7 +4,7 @@
 
 <form:form class="form-horizontal">
 	<fieldset>
-		<legend>项目信息</legend>
+		<strong>项目信息</strong>
 		<table class="table-form">
 			<tr>
 				<td class="tit">项目编号：</td><td>${sessionScope.project.prjNum}</td>

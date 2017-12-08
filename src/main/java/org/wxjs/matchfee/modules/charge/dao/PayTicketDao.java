@@ -5,14 +5,14 @@ package org.wxjs.matchfee.modules.charge.dao;
 
 import org.wxjs.matchfee.common.persistence.CrudDao;
 import org.wxjs.matchfee.common.persistence.annotation.MyBatisDao;
-import org.wxjs.matchfee.modules.charge.entity.Checklist;
+import org.wxjs.matchfee.modules.charge.entity.PayTicket;
 
 /**
- * 结算清单DAO接口
- * @author XYM
- * @version 2017-12-04
+ * 缴费凭证DAO接口
+ * @author GLQ
+ * @version 2017-12-07
  */
 @MyBatisDao
-public interface ChecklistDao extends CrudDao<Checklist> {
+public interface PayTicketDao extends CrudDao<PayTicket> {
 	
 }

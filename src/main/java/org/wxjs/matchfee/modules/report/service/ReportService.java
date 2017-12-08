@@ -106,6 +106,7 @@ public class ReportService extends BaseService{
 			chartData = new ColumnData();
 			
 			((ColumnData)chartData).setyTitle(Global.getConfig(this.getyTitle(param)));
+			((ColumnData)chartData).setyAxisUnit(Global.getConfig(this.getyAxisUnit(param)));
 			chartData.loadData(col, Global.getConfig(rst.getTableLabel()));
 		}
 
@@ -141,6 +142,16 @@ public class ReportService extends BaseService{
 			rst = "REPORT_TIMES";
 		}else if(param.getReportType().equalsIgnoreCase(reportTypes.monthMoney.toString())){
 			rst = "CHARGE_MONEY";
+		}
+		return rst;
+	}
+	
+	protected String getyAxisUnit(ReportParam param){
+		String rst = "";
+		if(param.getReportType().equalsIgnoreCase(reportTypes.monthTimes.toString())){
+			rst = "UNIT_TIMES";
+		}else if(param.getReportType().equalsIgnoreCase(reportTypes.monthMoney.toString())){
+			rst = "UNIT_YUAN";
 		}
 		return rst;
 	}

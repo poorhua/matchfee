@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>工程许可证管理</title>
+	<title>规划许可证管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -26,7 +26,7 @@
 	</script>
 </head>
 <body>
-    <legend>工程许可证</legend>
+    <legend>规划许可证</legend>
 	<matchfee:chargeView charge="${charge}"></matchfee:chargeView><br/>
 	<form:form id="inputForm" modelAttribute="projectLicense" action="${ctx}/charge/projectLicense/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>

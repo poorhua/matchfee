@@ -44,6 +44,9 @@
 			<if test="doc != null and doc.id != null and doc.id != ''">
 				AND a.doc_id = #{doc.id}
 			</if>
+			<if test="doc != null and doc.prjNum != null and doc.prjNum != ''">
+				AND b.prj_num = #{doc.prjNum}
+			</if>			
 			<if test="item!=null and item.id != null and item.id != ''">
 				AND a.item_id = #{item.id}
 			</if>

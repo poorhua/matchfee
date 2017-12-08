@@ -10,7 +10,6 @@
 
 <%@ attribute name="gridData" type="java.lang.String" required="true" description="grid data"%>
 <%@ attribute name="gridColModel" type="java.lang.String" required="true" description="grid ColModel"%>
-
 			
 		<script type="text/javascript">
 $(function () {
@@ -68,6 +67,7 @@ $(document).ready(function () {
         colModel: ${gridColModel},               
         viewrecords: true, // show the current page, data rang and total records on the toolbar
 		loadonce:true,
+	
 		sortable:false,
         rowNum: 50,
         caption: "",

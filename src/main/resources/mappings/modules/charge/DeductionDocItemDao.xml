@@ -40,6 +40,9 @@
 			<if test="doc != null and doc.id != null and doc.id != ''">
 				AND a.doc_id = #{doc.id}
 			</if>
+			<if test="doc != null and doc.charge != null and doc.charge.id != null and doc.charge.id != ''">
+				AND b.charge_id = #{doc.charge.id}
+			</if>			
 			<if test="item != item and item.id != null and item.id != ''">
 				AND a.item_id = #{item.id}
 			</if>

@@ -78,7 +78,7 @@ public class OpinionBookController extends BaseController {
 	public String delete(OpinionBook opinionBook, RedirectAttributes redirectAttributes) {
 		opinionBookService.delete(opinionBook);
 		addMessage(redirectAttributes, "删除OpinonBook成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/opinionBook/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/opinionBookTab/?repage";
 	}
 
 }

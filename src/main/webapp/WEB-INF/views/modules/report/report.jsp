@@ -54,7 +54,7 @@
 	  <c:otherwise>
 	    <report:columnChartAndTable gridColModel="${reportData.tableData.jsonColModel}" chartSeries="${reportData.chartData.jsonSeries}" 
 	    chartyTitle="${reportData.chartData.yTitle}" chartCategories="${reportData.chartData.jsonCategories}" gridData="${reportData.tableData.jsonData}" 
-	    chartTitle="${reportData.chartData.title}" chartSubTitle="${reportData.chartData.subTitle}">	
+	    chartTitle="${reportData.chartData.title}" chartSubTitle="${reportData.chartData.subTitle}" chartyAxisUnit="${reportData.chartData.yAxisUnit}">	
 	    </report:columnChartAndTable>			  
 	  </c:otherwise>
 	</c:choose>

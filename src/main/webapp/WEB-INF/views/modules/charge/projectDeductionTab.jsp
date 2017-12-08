@@ -20,7 +20,7 @@
 
 	<ul class="nav nav-tabs">
 		<li><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>
-		<li><a href="${ctx}/charge/charge/projectLicenseTab">工程许可证</a></li>
+		<li><a href="${ctx}/charge/charge/projectLicenseTab">规划许可证</a></li>
 		<li><a href="${ctx}/charge/charge/deductionDocTab">设计院证明</a></li>
 		<li class="active"><a href="${ctx}/charge/charge/projectDeductionTab">其他减项</a></li>
 	</ul>
