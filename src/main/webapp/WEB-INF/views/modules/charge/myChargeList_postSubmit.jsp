@@ -23,8 +23,8 @@
 				<th>申报人</th>
 				<th>申报单位</th>
 				<th>申报时间</th>
-				<th>测算金额</th>
-				<th>付款金额</th>
+				<th>结算金额</th>
+				<th>缴费金额</th>
 				<th>状态</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -68,7 +68,7 @@
 				        <a href="${ctx}/charge/charge/payTicketTab?id=${charge.id}">进入</a>
 		   			  </c:when>
 				      <c:when test="${charge.status eq '40'}">
-				        <a href="${ctx}/charge/charge/showSettlementList?id=${charge.id}">进入</a>
+				        <a href="${ctx}/charge/charge/showSettlementList?id=${charge.id}" target="_blank">结算清单</a>
 		   			  </c:when>			   			  		   			  
 		   			  <c:otherwise></c:otherwise>		   			  
 				   </c:choose>

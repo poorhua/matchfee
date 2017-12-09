@@ -21,7 +21,9 @@ import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
+import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
+import org.wxjs.matchfee.modules.charge.service.ProjectService;
 
 /**
  * 条件意见书Controller
@@ -34,6 +36,9 @@ public class OpinionBookController extends BaseController {
 
 	@Autowired
 	private OpinionBookService opinionBookService;
+	
+	@Autowired
+	private ProjectService projectService;
 	
 	@ModelAttribute
 	public OpinionBook get(@RequestParam(required=false) String id) {
@@ -59,6 +64,14 @@ public class OpinionBookController extends BaseController {
 	@RequestMapping(value = "form")
 	public String form(OpinionBook opinionBook, Model model) {
 		model.addAttribute("opinionBook", opinionBook);
+		
+		Project project = projectService.getByPrjNum(opinionBook.getPrjNum());
+		
+		logger.debug("opinionBook.getPrjNum(): "+opinionBook.getPrjNum());
+		logger.debug(project.toString());
+		
+		model.addAttribute("project", project);
+		
 		return "modules/charge/opinionBookForm";
 	}
 

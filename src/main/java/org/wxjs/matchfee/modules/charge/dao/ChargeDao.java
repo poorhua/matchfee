@@ -25,4 +25,8 @@ public interface ChargeDao extends CrudDao<Charge> {
 	
 	public int updateStatus(Charge charge);
 	
+	public void refreshCalMoney(Charge charge);
+	
+	public void refreshPayMoney(Charge charge);
+	
 }

@@ -36,8 +36,8 @@
 		<div class="control-group">
 			<label class="control-label">文件：</label>
 			<div class="controls">
-				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
-				<sys:ckfinder input="path" type="files" uploadPath="/charge/opinionBook" selectMultiple="false"/>
+				<form:hidden id="path" path="path" htmlEscape="false" maxlength="256" class="input-xlarge"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/配套费/条件意见书" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>		

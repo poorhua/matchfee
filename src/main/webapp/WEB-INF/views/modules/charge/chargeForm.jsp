@@ -121,7 +121,7 @@
 		<div class="control-group">
 			<label class="control-label">付款凭证保存路径：</label>
 			<div class="controls">
-				<form:input path="payTicketPath" htmlEscape="false" maxlength="128" class="input-xlarge "/>
+				<form:input path="payTicketPath" htmlEscape="false" maxlength="256" class="input-xlarge "/>
 			</div>
 		</div>
 		<div class="control-group">

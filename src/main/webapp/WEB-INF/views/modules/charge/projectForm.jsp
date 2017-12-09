@@ -70,10 +70,21 @@
 		<div class="control-group">
 			<label class="control-label">项目地址：</label>
 			<div class="controls">
-				<form:input path="prjAddress" htmlEscape="false" maxlength="128" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="prjAddress" htmlEscape="false" maxlength="128" class="input-xlarge"/>
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">联系人：</label>
+			<div class="controls">
+				<form:input path="contact" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
+			</div>
+		</div>		
+		<div class="control-group">
+			<label class="control-label">移动电话：</label>
+			<div class="controls">
+				<form:input path="mobile" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
+			</div>
+		</div>		
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">

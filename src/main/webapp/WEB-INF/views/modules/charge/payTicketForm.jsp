@@ -37,7 +37,7 @@
 			<label class="control-label">缴费凭证：</label>
 			<div class="controls">
 				<form:hidden id="path" path="path" htmlEscape="false" maxlength="256" class="input-xlarge"/>
-				<sys:ckfinder input="path" type="files" uploadPath="/charge/payTicket" selectMultiple="false"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/配套费/缴费票据" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>	
@@ -53,7 +53,7 @@
 		<div class="control-group">
 			<label class="control-label">票据号：</label>
 			<div class="controls">
-				<form:input path="ticketNo" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
+				<form:input path="ticketNo" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

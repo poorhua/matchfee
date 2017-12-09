@@ -53,7 +53,7 @@ public class PayTicket extends DataEntity<PayTicket> {
 		this.prjNum = prjNum;
 	}
 	
-	@Length(min=1, max=8, message="票据号长度必须介于 1 和 8 之间")
+	@Length(min=1, max=64, message="票据号长度必须介于 1 和64 之间")
 	public String getTicketNo() {
 		return ticketNo;
 	}

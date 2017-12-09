@@ -36,8 +36,8 @@
 		<div class="control-group">
 			<label class="control-label">文件：</label>
 			<div class="controls">
-				<form:hidden id="path" path="path" htmlEscape="false" maxlength="128" class="input-xlarge"/>
-				<sys:ckfinder input="path" type="files" uploadPath="/charge/deductionDoc" selectMultiple="false"/>
+				<form:hidden id="path" path="path" htmlEscape="false" maxlength="256" class="input-xlarge"/>
+				<sys:ckfinder input="path" type="files" uploadPath="/配套费/设计院证明" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>		
@@ -51,7 +51,7 @@
 		<div class="control-group">
 			<label class="control-label">文件编号：</label>
 			<div class="controls">
-				<form:input path="documentNo" htmlEscape="false" maxlength="8" class="input-xlarge required"/>
+				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

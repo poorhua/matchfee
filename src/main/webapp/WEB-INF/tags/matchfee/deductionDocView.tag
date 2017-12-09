@@ -10,7 +10,7 @@
 				<tr>
 					<td class="tit">链接：</td><td>
 				<input type="hidden" id="path${deductionDoc.id}" name="path${deductionDoc.id}" value="${deductionDoc.path}">
-				<sys:ckfinder input="path${deductionDoc.id}" type="files" uploadPath="/charge/deductionDoc" selectMultiple="false" readonly="true"/>					
+				<sys:ckfinder input="path${deductionDoc.id}" type="files" uploadPath="/配套费/设计院证明" selectMultiple="false" readonly="true"/>					
 					</td>
 					<td class="tit">名称：</td><td>${deductionDoc.name}</td>
 				</tr>

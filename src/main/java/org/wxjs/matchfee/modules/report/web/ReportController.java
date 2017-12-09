@@ -29,7 +29,7 @@ import com.google.gson.Gson;
 
 
 /**
- * FaultReportController
+ * ReportController
  * @author GLQ
  * @version 2017-12-07
  */

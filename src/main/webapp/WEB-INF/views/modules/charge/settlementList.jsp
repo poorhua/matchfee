@@ -28,7 +28,7 @@
 </head>
 <body>
 	<legend>结算清单</legend>
-	<matchfee:chargeViewWithButtons charge="${settementList.charge}"></matchfee:chargeViewWithButtons><br>
+	<matchfee:chargeViewWithSettleButton charge="${settementList.charge}"></matchfee:chargeViewWithSettleButton><br>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>

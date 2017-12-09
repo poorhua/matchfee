@@ -5,12 +5,13 @@ package org.wxjs.matchfee.modules.charge.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
 import org.wxjs.matchfee.modules.charge.entity.PayTicket;
+import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 import org.wxjs.matchfee.modules.charge.dao.PayTicketDao;
 
 /**
@@ -21,6 +22,9 @@ import org.wxjs.matchfee.modules.charge.dao.PayTicketDao;
 @Service
 @Transactional(readOnly = true)
 public class PayTicketService extends CrudService<PayTicketDao, PayTicket> {
+	
+	@Autowired
+	private ChargeDao chargeDao;	
 
 	public PayTicket get(String id) {
 		return super.get(id);
@@ -37,11 +41,17 @@ public class PayTicketService extends CrudService<PayTicketDao, PayTicket> {
 	@Transactional(readOnly = false)
 	public void save(PayTicket payTicket) {
 		super.save(payTicket);
+		
+		//refresh payMoney in charge
+		chargeDao.refreshPayMoney(payTicket.getCharge());
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(PayTicket payTicket) {
 		super.delete(payTicket);
+		
+		//refresh payMoney in charge
+		chargeDao.refreshPayMoney(payTicket.getCharge());
 	}
 	
 }

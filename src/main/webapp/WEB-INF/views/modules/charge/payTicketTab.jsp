@@ -44,7 +44,7 @@
 			<tr>
 				<td>
 				<input type="hidden" id="path${payTicket.id}" name="path${payTicket.id}" value="${payTicket.path}">
-				<sys:ckfinder input="path${payTicket.id}" type="files" uploadPath="/charge/payTicket" selectMultiple="false" readonly="true"/>					
+				<sys:ckfinder input="path${payTicket.id}" type="files" uploadPath="/配套费/缴费票据" selectMultiple="false" readonly="true"/>					
 				</td>
 				<td>
 					${payTicket.money}

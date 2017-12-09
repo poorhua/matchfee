@@ -51,7 +51,7 @@
 			<tr>
 				<td>
 				<input type="hidden" id="path${projectLicense.id}" name="path${projectLicense.id}" value="${projectLicense.path}">
-				<sys:ckfinder input="path${projectLicense.id}" type="files" uploadPath="/charge/projectLicense" selectMultiple="false" readonly="true"/>					
+				<sys:ckfinder input="path${projectLicense.id}" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false" readonly="true"/>					
 				</td>			
 				<td>
 					${projectLicense.name}

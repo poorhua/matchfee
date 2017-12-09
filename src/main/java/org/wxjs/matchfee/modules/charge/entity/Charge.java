@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
+import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
 import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.sys.entity.User;
@@ -27,6 +28,9 @@ import org.wxjs.matchfee.modules.sys.utils.DictUtils;
 public class Charge extends DataEntity<Charge> {
 	
 	private static final long serialVersionUID = 1L;
+	
+	public static final float MatchfeeBasis = Util.getFloat(Global.getConfig("matchfee.basis"));
+	
 	private Project project;		// 项目代码
 	private User reportStaff;		// 申报人
 	private String reportEntity;		// 申报单位

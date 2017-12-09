@@ -69,7 +69,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		this.project = project;
 	}
 	
-	@Length(min=1, max=8, message="文件编号长度必须介于 1 和 8 之间")
+	@Length(min=1, max=64, message="文件编号长度必须介于 1 和 64 之间")
 	public String getDocumentNo() {
 		return documentNo;
 	}
@@ -78,7 +78,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		this.documentNo = documentNo;
 	}
 	
-	@Length(min=1, max=128, message="保存路径长度必须介于 1 和 128 之间")
+	@Length(min=1, max=256, message="保存路径长度必须介于 1 和 256 之间")
 	public String getPath() {
 		return path;
 	}

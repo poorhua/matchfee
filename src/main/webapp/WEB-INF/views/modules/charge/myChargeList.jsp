@@ -40,8 +40,8 @@
 				<th>申报人</th>
 				<th>申报单位</th>
 				<th>申报时间</th>
-				<th>测算金额</th>
-				<th>付款金额</th>
+				<th>结算金额</th>
+				<th>缴费金额</th>
 				<th>状态</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>

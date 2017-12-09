@@ -51,7 +51,7 @@
 			<tr>
 				<td>
 				<input type="hidden" id="path${projectDeduction.id}" name="path${projectDeduction.id}" value="${projectDeduction.path}">
-				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/charge/projectDeduction" selectMultiple="false" readonly="true"/>					
+				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/配套费/减项证明" selectMultiple="false" readonly="true"/>					
 				</td>			
 				<td>
 					${projectDeduction.name}

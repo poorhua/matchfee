@@ -27,8 +27,8 @@
 				<th>申报人</th>
 				<th>申报单位</th>
 				<th>申报时间</th>
-				<th>测算金额</th>
-				<th>付款金额</th>
+				<th>结算金额</th>
+				<th>缴费金额</th>
 				<th>状态</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -68,7 +68,7 @@
     				<c:if test="${charge.status eq '00'}">
     				  <a href="${ctx}/charge/charge/delete?id=${charge.id}" onclick="return confirmx('确认要删除该征收吗？', this.href)">删除</a>
     				</c:if>
-					
+					<a href="${ctx}/charge/charge/showSettlementList?id=${charge.id}" target="_blank">结算清单</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

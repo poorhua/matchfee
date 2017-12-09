@@ -80,11 +80,11 @@ public class ExportSettlementList {
             
             document.add(PdfUtil.generateTable4Padding());
 
-            pragraph = new Paragraph("申报信息", PdfUtil.getTitle3Font(false));
-            pragraph.setAlignment(Paragraph.ALIGN_LEFT);
-            document.add(pragraph);
-            
-            document.add(PdfUtil.generateTable4Padding());
+//            pragraph = new Paragraph("申报信息", PdfUtil.getTitle3Font(false));
+//            pragraph.setAlignment(Paragraph.ALIGN_LEFT);
+//            document.add(pragraph);
+//            
+//            document.add(PdfUtil.generateTable4Padding());
             
             //add table
 			table = this.getChargeInfoTable();

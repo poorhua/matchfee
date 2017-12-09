@@ -10,7 +10,7 @@
 				<tr>
 					<td class="tit">链接：</td><td>
 				<input type="hidden" id="path" name="path" value="${opinionBook.path}">
-				<sys:ckfinder input="path" type="files" uploadPath="/charge/opinionBook" selectMultiple="false" readonly="true"/>					
+				<sys:ckfinder input="path" type="files" uploadPath="/配套费/条件意见书" selectMultiple="false" readonly="true"/>					
 					</td>				
 					
 					<td class="tit">名称：</td><td>${opinionBook.name}</td>

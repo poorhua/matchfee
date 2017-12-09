@@ -107,7 +107,8 @@ public class UserController extends BaseController {
 		user.setOffice(new Office(request.getParameter("office.id")));
 		// 如果新密码为空，则不更换密码
 		if (StringUtils.isNotBlank(user.getNewPassword())) {
-			user.setPassword(SystemService.entryptPassword(user.getNewPassword()));
+			//user.setPassword(SystemService.entryptPassword(user.getNewPassword()));
+			user.setPassword(user.getNewPassword());
 		}
 		if (!beanValidator(model, user)){
 			return form(user, model);

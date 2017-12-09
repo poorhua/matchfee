@@ -61,7 +61,7 @@ public class ProjectDeduction extends DataEntity<ProjectDeduction> {
 		this.project = project;
 	}
 
-	@Length(min=1, max=8, message="文件编号长度必须介于 1 和 8 之间")
+	@Length(min=1, max=64, message="文件编号长度必须介于 1 和 64 之间")
 	public String getDocumentNo() {
 		return documentNo;
 	}

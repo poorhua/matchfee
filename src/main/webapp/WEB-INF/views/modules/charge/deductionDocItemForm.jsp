@@ -32,6 +32,7 @@
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>		
 		<input type="hidden" id="doc.id" name="doc.id" value="${deductionDocItem.doc.id}" />
+		<input type="hidden" id="doc.charge.id" name="doc.charge.id" value="${deductionDocItem.doc.charge.id}" />
 		<div class="control-group">
 			<label class="control-label">抵扣项：</label>
 			<div class="controls">

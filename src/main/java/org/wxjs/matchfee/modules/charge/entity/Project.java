@@ -19,6 +19,10 @@ public class Project extends DataEntity<Project> {
 	
 	private String prjPassword;
 	
+	private String contact;
+	
+	private String mobile;
+	
 	public Project(){
 		
 	}
@@ -71,7 +75,23 @@ public class Project extends DataEntity<Project> {
 		this.prjAddress = prjAddress;
 	}
 	
-    @Override
+    public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	public String getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	@Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }

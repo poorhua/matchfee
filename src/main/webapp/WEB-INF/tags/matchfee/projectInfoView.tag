@@ -2,8 +2,6 @@
 
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>	
 
-<%@ attribute name="project" type="org.wxjs.matchfee.modules.charge.entity.Project" required="true"%>
-
 <form:form class="form-horizontal">
 	<fieldset>
 		<strong>项目信息</strong>

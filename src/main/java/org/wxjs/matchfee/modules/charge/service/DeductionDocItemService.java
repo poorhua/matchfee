@@ -5,12 +5,13 @@ package org.wxjs.matchfee.modules.charge.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
+import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 import org.wxjs.matchfee.modules.charge.dao.DeductionDocItemDao;
 
 /**
@@ -21,6 +22,9 @@ import org.wxjs.matchfee.modules.charge.dao.DeductionDocItemDao;
 @Service
 @Transactional(readOnly = true)
 public class DeductionDocItemService extends CrudService<DeductionDocItemDao, DeductionDocItem> {
+	
+	@Autowired
+	private ChargeDao chargeDao;	
 
 	public DeductionDocItem get(String id) {
 		return super.get(id);
@@ -41,11 +45,16 @@ public class DeductionDocItemService extends CrudService<DeductionDocItemDao, De
 	@Transactional(readOnly = false)
 	public void save(DeductionDocItem deductionDocItem) {
 		super.save(deductionDocItem);
+		
+		//refresh calMoney in charge
+		chargeDao.refreshCalMoney(deductionDocItem.getDoc().getCharge());
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(DeductionDocItem deductionDocItem) {
 		super.delete(deductionDocItem);
+		//refresh calMoney in charge
+		chargeDao.refreshCalMoney(deductionDocItem.getDoc().getCharge());
 	}
 	
 }
