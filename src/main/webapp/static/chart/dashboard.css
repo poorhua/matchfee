@@ -25,7 +25,7 @@
 
 #customers {
 	font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-	width: 65%;
+	width: 100%;
 }
 
 #customers td {
@@ -39,7 +39,7 @@
 
 #fieldset1 {
 	width: 80%;
-	border: 11px solid #B5B8C8;
+	border: 5px solid #B5B8C8;
 	margin: 10px 0px 10px 50px;
 	height: 250px;
 	display: block;
@@ -62,7 +62,7 @@
 
 #fieldset2 {
 	width: 80%;
-	border: 11px solid #B5B8C8;
+	border: 5px solid #B5B8C8;
 	margin: 10px 0px 10px 50px;
 	height: 250px;
 	display: block;
@@ -70,7 +70,7 @@
 
 #fieldset3 {
 	width: 80%;
-	border: 11px solid #B5B8C8;
+	border: 5px solid #B5B8C8;
 	margin: 30px 0px 10px 50px;
 	height: 300px;
 	display: block;
@@ -78,7 +78,7 @@
 
 #fieldset4 {
 	width: 80%;
-	border: 11px solid #B5B8C8;
+	border: 5px solid #B5B8C8;
 	margin: 30px 0px 10px 50px;
 	height: 300px;
 	display: block;

@@ -27,7 +27,7 @@
 				</tr>
 				<tr>
 					<td>最后登录日期：</td>
-					<td>${user.loginDate }</td>
+					<td><fmt:formatDate value="${user.loginDate }" pattern="yyyy-MM-dd HH:mm:ss"/></td>
 				</tr>
 				<tr>
 					<td>用户工号：</td>

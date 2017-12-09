@@ -75,6 +75,6 @@
 		select b.label status,count(c.id) count from (select a.label,a.value from sys_dict a
 		where a.type='charge_status') b
 		left join tcharge c on b.value=c.status
-		group by b.label
+		group by b.label order by b.value
 	</select>
 	</mapper>
