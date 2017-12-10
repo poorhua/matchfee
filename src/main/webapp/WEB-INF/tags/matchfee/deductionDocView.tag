@@ -8,7 +8,7 @@
 		<fieldset>			
 			<table class="table-form">
 				<tr>
-					<td class="tit">链接：</td><td>
+					<td class="tit">文件：</td><td>
 				<input type="hidden" id="path${deductionDoc.id}" name="path${deductionDoc.id}" value="${deductionDoc.path}">
 				<sys:ckfinder input="path${deductionDoc.id}" type="files" uploadPath="/配套费/设计院证明" selectMultiple="false" readonly="true"/>					
 					</td>

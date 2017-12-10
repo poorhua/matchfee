@@ -8,11 +8,11 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>抵扣项</th>
-				<th>面积（平米）</th>
-				<th>金额（元）</th>
-				<th>备注信息</th>
-				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
+				<th width="30%">抵扣项</th>
+				<th width="15%">面积（平米）</th>
+				<th width="15%">金额（元）</th>
+				<th width="30%">备注信息</th>
+				<shiro:hasPermission name="charge:charge:edit"><th width="10%">操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>

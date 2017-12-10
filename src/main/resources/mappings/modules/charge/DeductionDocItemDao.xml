@@ -81,7 +81,6 @@
         LEFT JOIN tdeduction_doc b on a.doc_id=b.id
         WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
         AND b.prj_num = #{doc.prjNum}	
-        AND b.charge_id = #{doc.charge.id}		
 		GROUP BY a.item_id
 		ORDER BY a.item_id
 	</select>

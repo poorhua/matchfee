@@ -77,18 +77,20 @@
 			<label class="control-label">联系人：</label>
 			<div class="controls">
 				<form:input path="contact" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>		
 		<div class="control-group">
 			<label class="control-label">移动电话：</label>
 			<div class="controls">
 				<form:input path="mobile" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
+				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>		
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="64" class="input-xxlarge "/>
+				<form:textarea path="remarks" htmlEscape="false" rows="2" maxlength="64" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">

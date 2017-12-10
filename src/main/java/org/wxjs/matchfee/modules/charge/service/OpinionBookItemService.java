@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
+import org.wxjs.matchfee.modules.base.entity.DeductionItem;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.dao.OpinionBookItemDao;
@@ -24,6 +25,27 @@ public class OpinionBookItemService extends CrudService<OpinionBookItemDao, Opin
 
 	public OpinionBookItem get(String id) {
 		return super.get(id);
+	}
+	
+	@Transactional(readOnly = true)
+	public String getAreaInOpinionBook(String itemId, String prjNum) {
+		OpinionBookItem opinionBookItem = new OpinionBookItem();
+		OpinionBook doc = new OpinionBook();
+		doc.setPrjNum(prjNum);
+		opinionBookItem.setDoc(doc);
+		DeductionItem item = new DeductionItem(itemId);
+		opinionBookItem.setItem(item);
+		List<OpinionBookItem> list = this.findList(opinionBookItem);
+		
+		String rst = "";
+		
+		if(list != null){
+			for(OpinionBookItem entity : list){
+				rst = entity.getArea();
+			}
+		}
+		
+		return rst;
 	}
 	
 	public List<OpinionBookItem> findList(OpinionBookItem opinionBookItem) {

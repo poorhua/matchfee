@@ -4,6 +4,7 @@
 package org.wxjs.matchfee.modules.charge.web;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.web.BaseController;
@@ -23,6 +25,10 @@ import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookItemService;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
+import org.wxjs.matchfee.modules.sys.entity.User;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 
 /**
  * 条件意见书项目Controller

@@ -18,7 +18,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
+import org.wxjs.matchfee.modules.charge.entity.Charge;
+import org.wxjs.matchfee.modules.charge.service.ChargeService;
 import org.wxjs.matchfee.modules.report.dataModel.ReportData;
 import org.wxjs.matchfee.modules.report.entity.ReportParam;
 import org.wxjs.matchfee.modules.report.service.ReportService;
@@ -39,6 +42,9 @@ public class ReportController extends BaseController {
 	
 	@Autowired
 	ReportService reportService;
+	
+	@Autowired
+	ChargeService chargeService;
 	
 	@RequiresPermissions("report:report:view")
 	@RequestMapping(value = {"query"})
@@ -66,6 +72,31 @@ public class ReportController extends BaseController {
 		model.addAttribute("reportParam", param);
 		
 		return "modules/report/report";
+	}
+	
+	
+	@RequiresPermissions("report:report:view")
+	@RequestMapping(value = {"search"})
+	public String search(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		if(charge.getDateFrom()==null){
+			Calendar cal=Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			charge.setDateFrom(cal.getTime());
+		}
+		
+		if(charge.getDateTo()==null){
+			Calendar cal=Calendar.getInstance();
+			charge.setDateTo(cal.getTime());
+		}
+		
+		Page<Charge> page = chargeService.findPage(new Page<Charge>(request, response), charge);
+		
+		model.addAttribute("page", page);
+		
+		model.addAttribute("charge", charge);
+		
+		return "modules/report/queryChargeList";
 	}
 	
 	@RequiresPermissions("report:report:view")

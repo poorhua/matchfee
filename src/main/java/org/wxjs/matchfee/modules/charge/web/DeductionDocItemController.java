@@ -3,6 +3,9 @@
  */
 package org.wxjs.matchfee.modules.charge.web;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -14,15 +17,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
+import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocItemService;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
+import org.wxjs.matchfee.modules.charge.service.OpinionBookItemService;
+
+import com.google.common.collect.Maps;
 
 /**
  * 抵扣项目Controller
@@ -32,6 +39,9 @@ import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
 @Controller
 @RequestMapping(value = "${adminPath}/charge/deductionDocItem")
 public class DeductionDocItemController extends BaseController {
+	
+	@Autowired
+	private OpinionBookItemService opinionBookItemService;
 
 	@Autowired
 	private DeductionDocItemService deductionDocItemService;
@@ -65,8 +75,43 @@ public class DeductionDocItemController extends BaseController {
 	public String form(DeductionDocItem deductionDocItem, Model model) {
 		if(deductionDocItem.getDoc()!=null && !StringUtils.isBlank(deductionDocItem.getDoc().getId())){
 			deductionDocItem.setDoc(deductionDocService.get(deductionDocItem.getDoc().getId()));
+		
 		}
+		
 		model.addAttribute("deductionDocItem", deductionDocItem);
+		
+		//get deduction item hint
+		
+		if(deductionDocItem != null && deductionDocItem.getItem()!=null){
+			String itemId = deductionDocItem.getItem().getId();
+			
+			String prjNum = deductionDocItem.getDoc().getPrjNum();
+			
+			String areaInOpinionBook = opinionBookItemService.getAreaInOpinionBook(itemId, prjNum);
+			
+			String areaDeducted = deductionDocItemService.getAreaDeducted(itemId, prjNum);
+			
+			StringBuffer buffer = new StringBuffer();
+			
+			buffer.append("意见书面积：");
+			
+			if(!StringUtils.isBlank(areaInOpinionBook)){
+				buffer.append(areaInOpinionBook).append("平米");
+			}else{
+				buffer.append("平米");
+			}
+			
+			buffer.append("，已抵扣面积：");
+			
+			if(!StringUtils.isBlank(areaDeducted)){
+				buffer.append(areaDeducted).append("平米");
+			}else{
+				buffer.append("0平米");
+			}
+			
+			model.addAttribute("deductionItemHint", buffer.toString());			
+		}
+		
 		return "modules/charge/deductionDocItemForm";
 	}
 
@@ -76,6 +121,40 @@ public class DeductionDocItemController extends BaseController {
 		if (!beanValidator(model, deductionDocItem)){
 			return form(deductionDocItem, model);
 		}
+		
+		//check whether total deductions exceed the limit in opinion book
+		String itemId = deductionDocItem.getItem().getId();
+		String prjNum = deductionDocItem.getDoc().getPrjNum();
+		String areaInOpinionBookStr = opinionBookItemService.getAreaInOpinionBook(itemId, prjNum);
+		
+		float areaInOpinionBook = Util.getFloat(areaInOpinionBookStr);
+		
+		logger.debug("areaInOpinionBook: "+areaInOpinionBook);
+
+		if(areaInOpinionBook > 0){
+			String areaDeductedStr = deductionDocItemService.getAreaDeducted(itemId, prjNum);
+			float areaDeducted = Util.getFloat(areaDeductedStr);
+			
+			logger.debug("1 areaDeducted: "+areaDeducted);
+			//exclude the original item when do update operation
+			if(!StringUtils.isBlank(deductionDocItem.getId())){
+				DeductionDocItem originalEntity = deductionDocItemService.get(deductionDocItem.getId());
+				if(originalEntity != null){
+					areaDeducted -= Util.getFloat(originalEntity.getArea());
+				}
+			}
+			logger.debug("2 areaDeducted: "+areaDeducted);
+			//add area in this operation
+			areaDeducted += Util.getFloat(deductionDocItem.getArea());
+			
+			logger.debug("3 areaDeducted: "+areaDeducted);
+			
+			if(areaDeducted > areaInOpinionBook){
+				addMessage(model, "验证失败。累计抵扣面积超过条件意见书规定。");
+				return form(deductionDocItem, model);
+			}
+		}
+		
 		try{
 			deductionDocItemService.save(deductionDocItem);
 			addMessage(redirectAttributes, "保存设计院证明项目成功");
@@ -96,6 +175,23 @@ public class DeductionDocItemController extends BaseController {
 		deductionDocItemService.delete(deductionDocItem);
 		addMessage(redirectAttributes, "删除设计院证明项目成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/deductionDocTab/?repage";
+	}
+	
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "deductionSummary")
+	public Map<String, Object> deductionSummary(@RequestParam(required=true) String itemId, @RequestParam(required=true) String prjNum, HttpServletResponse response) {
+		Map<String, Object> map = Maps.newHashMap();
+		
+		String areaInOpinionBook = opinionBookItemService.getAreaInOpinionBook(itemId, prjNum);
+		
+		String areaDeducted = deductionDocItemService.getAreaDeducted(itemId, prjNum);
+		
+		map.put("areaInOpinionBook", areaInOpinionBook);
+		
+		map.put("areaDeducted", areaDeducted);
+
+		return map;
 	}
 
 }

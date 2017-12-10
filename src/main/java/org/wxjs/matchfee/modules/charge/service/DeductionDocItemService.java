@@ -5,12 +5,18 @@ package org.wxjs.matchfee.modules.charge.service;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
+import org.wxjs.matchfee.common.utils.Util;
+import org.wxjs.matchfee.modules.base.entity.DeductionItem;
+import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
+import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
+import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 import org.wxjs.matchfee.modules.charge.dao.DeductionDocItemDao;
 
@@ -25,6 +31,9 @@ public class DeductionDocItemService extends CrudService<DeductionDocItemDao, De
 	
 	@Autowired
 	private ChargeDao chargeDao;	
+	
+	@Autowired
+	private OpinionBookItemService opinionBookItemService;
 
 	public DeductionDocItem get(String id) {
 		return super.get(id);
@@ -55,6 +64,35 @@ public class DeductionDocItemService extends CrudService<DeductionDocItemDao, De
 		super.delete(deductionDocItem);
 		//refresh calMoney in charge
 		chargeDao.refreshCalMoney(deductionDocItem.getDoc().getCharge());
+	}
+	
+	@Transactional(readOnly = true)
+	public String getAreaDeducted(String itemId, String prjNum) {
+
+		List<DeductionDocItem> list = this.getAreaDeductions(itemId, prjNum);
+		
+		String rst = "";
+		
+		if(list != null){
+			for(DeductionDocItem entity : list){
+				if(entity.getItem().getId().equals(itemId)){
+					rst = entity.getArea();
+					break;
+				}
+			}
+		}
+		
+		return rst;
+	}
+	
+	@Transactional(readOnly = true)
+	public List<DeductionDocItem> getAreaDeductions(String itemId, String prjNum) {
+		DeductionDocItem deductionDocItem = new DeductionDocItem();
+		DeductionDoc doc = new DeductionDoc();
+		doc.setPrjNum(prjNum);
+		deductionDocItem.setDoc(doc);
+
+		return this.sumDeductions(deductionDocItem);
 	}
 	
 }

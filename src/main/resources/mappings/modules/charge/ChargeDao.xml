@@ -60,6 +60,15 @@
 			<if test="project != null and project.prjNum != null and project.prjNum != ''">
 				AND a.prj_num = #{project.prjNum}
 			</if>
+			<if test="project != null and project.prjName != null and project.prjName != ''">
+				AND b.prj_name like concat('%',#{project.prjName},'%') 
+			</if>	
+			<if test="project != null and project.buildCorpCode != null and project.buildCorpCode!= ''">
+				AND b.build_corp_code = #{project.buildCorpCode}
+			</if>
+			<if test="project != null and project.buildCorpName != null and project.buildCorpName != ''">
+				AND b.build_corp_name like concat('%',#{project.buildCorpName},'%') 
+			</if>					
 			<if test="reportStaff != null and reportStaff.id != null and reportStaff.id != ''">
 				AND a.report_staff = #{reportStaff.id}
 			</if>
