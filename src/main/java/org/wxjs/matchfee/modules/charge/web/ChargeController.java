@@ -29,6 +29,7 @@ import org.wxjs.matchfee.modules.base.utils.ExportSettlementList;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
+import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.entity.PayTicket;
@@ -39,6 +40,7 @@ import org.wxjs.matchfee.modules.charge.entity.SettlementList;
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocItemService;
 import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
+import org.wxjs.matchfee.modules.charge.service.LandPayTicketService;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookItemService;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
 import org.wxjs.matchfee.modules.charge.service.PayTicketService;
@@ -83,6 +85,9 @@ public class ChargeController extends BaseController {
 	
 	@Autowired
 	private ProjectService projectService;
+	
+	@Autowired
+	private LandPayTicketService landPayTicketService;
 	
 	@ModelAttribute
 	public Charge get(@RequestParam(required=false) String id) {
@@ -285,6 +290,12 @@ public class ChargeController extends BaseController {
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "defaultTab")
+	public String defaultTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
+		return this.projectLicenseTab(charge, httpSession, model, redirectAttributes);
+	}
+	
+	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "opinionBookTab")
 	public String opinionBookTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		
@@ -318,6 +329,35 @@ public class ChargeController extends BaseController {
 		
 		return "modules/charge/opinionBookTab";
 	}
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "landPayTicketTab")
+	public String landPayTicketTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
+		
+		String chargeId = (String)httpSession.getAttribute("chargeId");
+		
+		logger.debug("charge==null: "+(charge==null)+", chargeId: "+chargeId);
+		if(charge!=null){
+			logger.debug(charge.toString());
+		}
+		
+		if(this.isChargeEmpty(charge) && !StringUtils.isBlank(chargeId)){
+			charge = chargeService.get(new Charge(chargeId));
+		}
+		
+		LandPayTicket landPayTicketParam = new LandPayTicket();
+		landPayTicketParam.setPrjNum(charge.getProject().getPrjNum());
+		
+		charge.setLandPayTicketList(this.landPayTicketService.findList(landPayTicketParam));
+		
+		model.addAttribute("charge", charge);
+		
+		httpSession.setAttribute("chargeId", charge.getId());
+		
+		model.addAttribute("project", charge.getProject());
+		
+		return "modules/charge/landPayTicketTab";
+	}	
 	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "projectLicenseTab")

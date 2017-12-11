@@ -22,12 +22,7 @@
     <sys:message content="${message}"/>
     <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>
 
-	<ul class="nav nav-tabs">
-		<li class="active"><a href="${ctx}/charge/charge/opinionBookTab">条件意见书</a></li>
-		<li><a href="${ctx}/charge/charge/projectLicenseTab">规划许可证</a></li>
-		<li><a href="${ctx}/charge/charge/deductionDocTab">设计院证明</a></li>
-		<li><a href="${ctx}/charge/charge/projectDeductionTab">其他减项</a></li>
-	</ul>
+	<matchfee:chargeTabController tab="2"></matchfee:chargeTabController>
 
 <c:if test="${empty charge.opinionBookList}">
   

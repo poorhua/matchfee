@@ -62,7 +62,7 @@
 				<shiro:hasPermission name="charge:charge:edit"><td>
 				   <c:choose>
 				      <c:when test="${charge.status eq '10' || charge.status eq '20'}">
-				        <a href="${ctx}/charge/charge/opinionBookTab?id=${charge.id}">进入</a>
+				        <a href="${ctx}/charge/charge/defaultTab?id=${charge.id}">进入</a>
 		   			  </c:when>
 				      <c:when test="${charge.status eq '30'}">
 				        <a href="${ctx}/charge/charge/payTicketTab?id=${charge.id}">进入</a>

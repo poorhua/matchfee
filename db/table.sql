@@ -243,3 +243,27 @@ CREATE TABLE `tpay_ticket` (
   UNIQUE(`ticket_no`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '缴费凭证';
+
+-- ----------------------------
+-- Table structure for tland_pay_ticket
+-- ----------------------------
+DROP TABLE IF EXISTS `tland_pay_ticket`;
+CREATE TABLE `tland_pay_ticket` (
+  `id` int(11) NOT NULL auto_increment COMMENT '代码',
+  `name` varchar(64) NULL COMMENT '名称',
+  `prj_num` varchar(64) NOT NULL COMMENT '项目代码',
+  `ticket_no` varchar(64) NOT NULL COMMENT '票据号',
+  `path` varchar(256) NOT NULL COMMENT '保存路径',
+  `agency_agreement` varchar(256) NOT NULL COMMENT '代收费协议',
+  `area` decimal(10,2) NOT NULL COMMENT '面积（平米）',
+  `money` decimal(10,2) NOT NULL COMMENT '金额（元）',
+  `pay_date` datetime NOT NULL COMMENT '缴费日期',
+  `create_by` varchar(32) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(32) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remarks` varchar(64) DEFAULT NULL COMMENT '备注信息',
+  `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
+  UNIQUE(`ticket_no`),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '国土已缴费';

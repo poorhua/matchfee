@@ -63,6 +63,8 @@ public class Charge extends DataEntity<Charge> {
 	
 	private List<PayTicket> payTicketList;
 	
+	private List<LandPayTicket> landPayTicketList;
+	
 	public Charge() {
 		super();
 	}
@@ -314,8 +316,16 @@ public class Charge extends DataEntity<Charge> {
 
 	public void setPayTicketList(List<PayTicket> payTicketList) {
 		this.payTicketList = payTicketList;
-	}
+	}	
 	
+	public List<LandPayTicket> getLandPayTicketList() {
+		return landPayTicketList;
+	}
+
+	public void setLandPayTicketList(List<LandPayTicket> landPayTicketList) {
+		this.landPayTicketList = landPayTicketList;
+	}
+
 	public float getMoneyGap(){
 		return Util.getFloat(this.payMoney) - Util.getFloat(this.calMoney);
 	}

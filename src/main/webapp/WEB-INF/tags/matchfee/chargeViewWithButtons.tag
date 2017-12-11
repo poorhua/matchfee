@@ -130,15 +130,15 @@
 		   			<c:when test="${charge.status eq '10'}">
 		   				<table>
 		   				  <tr>
-		   				    <td>审批意见：<br>
+		   				    <td>意见：<br>
 		   				      <textarea id="calMemo" name="calMemo" rows="3" cols="20"></textarea>    
 		   				    </td>
 		   				  </tr>
 		   				  <tr>
 		   				    <td align="center">
-		   				      <input id="btnYes" class="btn btn-primary" type="button" value=" 批 准 "  onclick="calculatePass()"/>
+		   				      <input id="btnYes" class="btn btn-primary" type="button" value="测算通过 "  onclick="calculatePass()"/>
 		   				      <input id="btnNo" class="btn btn-warning" type="button" value=" 退 回 " onclick="calculateReject()"/>
-		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="结算清单" onclick="showSettlementList()"/>
+		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   				    </td>
 		   				  </tr>
 		   				</table>
@@ -146,25 +146,25 @@
 		   			<c:when test="${charge.status eq '20'}">
 		   				<table>
 		   				  <tr>
-		   				    <td>审批意见：<br>
+		   				    <td>意见：<br>
 		   				      <textarea id="approveMemo" name="approveMemo" rows="3" cols="20"></textarea>    
 		   				    </td>
 		   				  </tr>
 		   				  <tr>
 		   				    <td align="center">
-		   				      <input id="btnYes" class="btn btn-primary" type="button" value=" 批 准 "  onclick="approvePass()"/>
+		   				      <input id="btnYes" class="btn btn-primary" type="button" value="审核通过"  onclick="approvePass()"/>
 		   				      <input id="btnNo" class="btn btn-warning" type="button" value=" 退 回 " onclick="approveReject()"/>
-		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="结算清单" onclick="showSettlementList()"/>
+		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   				    </td>
 		   				  </tr>
 		   				</table>
 		   			</c:when>	
 		   			<c:when test="${charge.status eq '30'}">
 		   				<input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
-		   				<input id="btnSettle" class="btn btn-primary" type="button" value="结算清单" onclick="showSettlementList()"/>
+		   				<input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   			</c:when>		   				   				   				   					   					   			
 		   			<c:otherwise>
-		   			    <input id="btnSettle" class="btn btn-primary" type="button" value="结算清单" onclick="showSettlementList()"/>
+		   			    <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   			</c:otherwise>
 		   		  </c:choose>
 			    </shiro:hasPermission>	    
