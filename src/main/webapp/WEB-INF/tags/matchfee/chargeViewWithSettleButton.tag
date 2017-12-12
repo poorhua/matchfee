@@ -4,15 +4,7 @@
 
 <%@ attribute name="charge" type="org.wxjs.matchfee.modules.charge.entity.Charge" required="true"%>
 
-	<script type="text/javascript">
-	    
-	    function exportPdf(){
 
-			$("#chargeForm").attr("action","${ctx}/charge/charge/exportSettlementList");
-			$("#chargeForm").submit();
-	    	
-	    }
-	</script>
 	
 <form:form id="chargeForm" class="form-horizontal">
     <input id="id" name="id" type="hidden" value="${charge.id}"/>

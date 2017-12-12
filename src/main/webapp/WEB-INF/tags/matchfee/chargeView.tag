@@ -7,7 +7,7 @@
 <form:form id="chargeForm" class="form-horizontal">
     <input id="id" name="id" type="hidden" value="${charge.id}"/>
 	<fieldset>
-		<strong>申报信息</strong>
+		<div style="text-align:left"><strong>申报信息</strong></div>
 		<table class="table-form">
 
 			<tr>

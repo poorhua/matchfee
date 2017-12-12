@@ -23,12 +23,57 @@
 				}
 			});
 		});
+		
+	    function exportPdf(){
+
+			$("#chargeForm").attr("action","${ctx}/charge/charge/exportSettlementList");
+			$("#chargeForm").submit();
+	    	
+	    }
+	    
+	    function exportExcel(){
+
+			$("#chargeForm").attr("action","${ctx}/charge/charge/exportSettlementList");
+			$("#chargeForm").submit();
+	    	
+	    }		    
+	    
+	    function myprint(){
+	    	var printpage = document.getElementById("printDiv");
+	    	var newstr = printpage.innerHTML; 
+	    	var oldstr = document.body.innerHTML; 
+	    	document.body.innerHTML =newstr; 
+	    	window.print(); 
+	    	document.body.innerHTML=oldstr; 
+	    	return false; 	    	
+	    }
 
 	</script>
+	
+	<style>
+	body{
+	  text-align:center;
+	  width:100%
+	}
+	</style>
+	
+	
 </head>
 <body>
-	<legend>结算清单</legend>
-	<matchfee:chargeViewWithSettleButton charge="${settementList.charge}"></matchfee:chargeViewWithSettleButton><br>
+  <div style="width:210mm; align:center; margin: 0 auto">
+    <c:if test="${settementList.charge.status eq '40'}">
+    <div style="margin:10px 30px 10px 10px; text-align:right">
+    <input id="btnPrint" class="btn btn-primary" type="button" value=" 打 印 " onclick="myprint()"/>&nbsp;&nbsp;&nbsp;
+    <input id="btnExportPdf" class="btn btn-primary" type="button" value="导出PDF " onclick="exportPdf()"/>&nbsp;&nbsp;&nbsp;
+    <input id="btnExportExcel" class="btn btn-primary" type="button" value="导出Excel" onclick="exportExcel()"/>
+    </div>    
+    </c:if>
+    <div id="printDiv" style="margin:20px 20px 20px 20px">
+      <div style="align:center; margin: 0 auto;width:100%">
+      <font size="5" color="blue">无锡市城市基础设施配套费结算清单</font>
+      </div>
+	
+	<matchfee:chargeView charge="${settementList.charge}"></matchfee:chargeView><br>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
@@ -125,6 +170,8 @@
 				<td></td>
 			</tr>				
 		</tbody>
-	</table>
+	</table>    
+    </div>
+  </div>
 </body>
 </html>
