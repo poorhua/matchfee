@@ -21,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.utils.DateUtils;
+import org.wxjs.matchfee.common.utils.ExportExcelFile;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.common.utils.excel.ExportExcel;
@@ -635,8 +636,8 @@ public class ChargeController extends BaseController {
 	}
 	
 	@RequiresPermissions("charge:charge:view")
-	@RequestMapping(value = "exportSettlementList")
-	public String exportSettlementList(Charge charge, HttpServletResponse response,  Model model, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "exportPDFSettlementList")
+	public String exportPDFSettlementList(Charge charge, HttpServletResponse response,  Model model, RedirectAttributes redirectAttributes) {
 		
 		SettlementList settementList = chargeService.settle(charge.getId());
 		
@@ -652,6 +653,25 @@ public class ChargeController extends BaseController {
 			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
 		}		
 
+		return "modules/charge/settlementList";
+	}
+	
+	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = "exportExcelSettlementList")
+	public String exportExcelSettlementList(Charge charge, HttpServletResponse response,  Model model, RedirectAttributes redirectAttributes) {
+		
+		SettlementList settementList = chargeService.settle(charge.getId());
+		
+		model.addAttribute("settementList", settementList);
+		
+		try {
+            String fileName = "结算清单"+DateUtils.getDate("yyyyMMddHHmmss")+".xls";
+            ExportExcelFile.write(fileName, settementList, response);
+    		return null;
+		} catch (Exception e) {
+			logger.error("导出失败", e);
+			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
+		}		
 		return "modules/charge/settlementList";
 	}
 
