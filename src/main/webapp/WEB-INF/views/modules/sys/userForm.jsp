@@ -40,6 +40,7 @@
 	<form:form id="inputForm" modelAttribute="user" action="${ctx}/sys/user/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
 		<sys:message content="${message}"/>
+		<!--  
 		<div class="control-group">
 			<label class="control-label">头像:</label>
 			<div class="controls">
@@ -47,6 +48,7 @@
 				<sys:ckfinder input="nameImage" type="images" uploadPath="/photo" selectMultiple="false" maxWidth="100" maxHeight="100"/>
 			</div>
 		</div>
+		-->
 		<div class="control-group">
 			<label class="control-label">部门:</label>
 			<div class="controls">
@@ -90,12 +92,14 @@
 				<c:if test="${empty user.id}"><span class="help-inline"><font color="red">*</font> </span></c:if>
 			</div>
 		</div>
+		<!--  
 		<div class="control-group">
 			<label class="control-label">邮箱:</label>
 			<div class="controls">
 				<form:input path="email" htmlEscape="false" maxlength="100" class="email"/>
 			</div>
 		</div>
+		-->
 		<div class="control-group">
 			<label class="control-label">电话:</label>
 			<div class="controls">
