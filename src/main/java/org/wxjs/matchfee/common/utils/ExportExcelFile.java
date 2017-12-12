@@ -1,8 +1,6 @@
 package org.wxjs.matchfee.common.utils;
 
 import java.awt.Color;
-import java.io.FileOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,6 @@ import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.entity.SettlementList;
 
-import com.sun.mail.handlers.text_html;
 
 public class ExportExcelFile {
 	public static void write(String fileName, SettlementList settementList, HttpServletResponse response) {
@@ -38,22 +35,22 @@ public class ExportExcelFile {
 			cell = row.createCell(j);// 根据表格行创建单元格
 			cell.setCellValue(String.valueOf(title[j]));
 			if (j % 2 == 0) {
-				fontGenerate(wb, cell, row, sheet, column, 50, 25, true, false, true);
+				fontGenerate(wb, cell, row, sheet, column, 30, 15, true, false, true);
 			} else {
-				fontGenerate(wb, cell, row, sheet, column, 50, 25, false, false, true);
+				fontGenerate(wb, cell, row, sheet, column, 30, 15, false, false, true);
 			}
 		}
 		column += 3;
 
 		// 项目主体信息
 		Object[][] titleContent = {
-				{ "申报代码", settementList.getCharge().getId(), "申报日期",
+				{ "申报代码：", settementList.getCharge().getId(), "申报日期：",
 						settementList.getCharge().getReportDateYYYYMMDD() },
-				{ "项目编号", settementList.getCharge().getProject().getPrjNum(), "项目名称",
+				{ "项目编号：", settementList.getCharge().getProject().getPrjNum(), "项目名称：",
 						settementList.getCharge().getProject().getPrjName() },
-				{ "建设单位代码", settementList.getCharge().getProject().getBuildCorpCode(), "建设单位名称",
+				{ "建设单位代码：", settementList.getCharge().getProject().getBuildCorpCode(), "建设单位名称：",
 						settementList.getCharge().getProject().getBuildCorpName() },
-				{ "项目地址", settementList.getCharge().getProject().getPrjAddress(), "状态",
+				{ "项目地址：", settementList.getCharge().getProject().getPrjAddress(), "状态：",
 						settementList.getCharge().getStatusLabel() } };
 		for (int i = 0; i < titleContent.length; i++) {
 			row = sheet.createRow(column);
@@ -61,9 +58,9 @@ public class ExportExcelFile {
 				cell = row.createCell(j);// 根据表格行创建单元格
 				cell.setCellValue(String.valueOf(titleContent[i][j]));
 				if (j % 2 == 0) {
-					fontGenerate(wb, cell, row, sheet, column, 20, 14, true, false, true);
+					fontGenerate(wb, cell, row, sheet, column, 15, 8, true, false, true);
 				} else {
-					fontGenerate(wb, cell, row, sheet, column, 20, 14, false, false, true);
+					fontGenerate(wb, cell, row, sheet, column, 15, 8, false, false, true);
 				}
 			}
 			column++;
@@ -76,7 +73,7 @@ public class ExportExcelFile {
 		for (int j = 0; j < 4; j++) {
 			cell = row.createCell(j);// 根据表格行创建单元格
 			cell.setCellValue(String.valueOf(mainProTitle[j]));
-			fontGenerate(wb, cell, row, sheet, column, 20, 14, true, true, true);
+			fontGenerate(wb, cell, row, sheet, column, 15, 8, true, true, true);
 		}
 		column++;
 
@@ -86,7 +83,7 @@ public class ExportExcelFile {
 		for (int j = 0; j < 4; j++) {
 			cell = row.createCell(j);// 根据表格行创建单元格
 			cell.setCellValue(String.valueOf(payProTitle[j]));
-			fontGenerate(wb, cell, row, sheet, column, 20, 14, true, true, false);
+			fontGenerate(wb, cell, row, sheet, column,15, 8, true, true, false);
 		}
 		column++;
 
@@ -100,7 +97,7 @@ public class ExportExcelFile {
 			for (int j = 0; j < 4; j++) {
 				cell = row.createCell(j);// 根据表格行创建单元格
 				cell.setCellValue(String.valueOf(items.get(i)[j]));
-				fontGenerate(wb, cell, row, sheet, column, 20, 14, false, true, true);
+				fontGenerate(wb, cell, row, sheet, column, 15, 8, false, true, true);
 			}
 			column++;
 		}
@@ -111,7 +108,7 @@ public class ExportExcelFile {
 		for (int j = 0; j < 4; j++) {
 			cell = row.createCell(j);// 根据表格行创建单元格
 			cell.setCellValue(String.valueOf(deductionTitle[j]));
-			fontGenerate(wb, cell, row, sheet, column, 20, 14, true, true, false);
+			fontGenerate(wb, cell, row, sheet, column, 15, 8, true, true, false);
 		}
 		column++;
 		
@@ -124,7 +121,7 @@ public class ExportExcelFile {
 			for (int j = 0; j < 4; j++) {
 				cell = row.createCell(j);// 根据表格行创建单元格
 				cell.setCellValue(String.valueOf(items.get(i)[j]));
-				fontGenerate(wb, cell, row, sheet, column, 20, 14, false, true, true);
+				fontGenerate(wb, cell, row, sheet, column, 15, 8, false, true, true);
 			}
 			column++;
 		}
@@ -137,7 +134,7 @@ public class ExportExcelFile {
 		for (int j = 0; j < 4; j++) {
 			cell = row.createCell(j);// 根据表格行创建单元格
 			cell.setCellValue(String.valueOf(otherDeductionTitle[j]));
-			fontGenerate(wb, cell, row, sheet, column, 20, 14, true, true, false);
+			fontGenerate(wb, cell, row, sheet, column, 15, 8, true, true, false);
 		}
 		column++;
 		
@@ -151,7 +148,7 @@ public class ExportExcelFile {
 			for (int j = 0; j < 4; j++) {
 				cell = row.createCell(j);// 根据表格行创建单元格
 				cell.setCellValue(String.valueOf(items.get(i)[j]));
-				fontGenerate(wb, cell, row, sheet, column, 20, 14, false, true, true);
+				fontGenerate(wb, cell, row, sheet, column, 15, 8, false, true, true);
 			}
 			column++;
 		}
@@ -164,7 +161,7 @@ public class ExportExcelFile {
 		for (int j = 0; j < 4; j++) {
 			cell = row.createCell(j);// 根据表格行创建单元格
 			cell.setCellValue(String.valueOf(moneyTitle[j]));
-			fontGenerate(wb, cell, row, sheet, column, 20, 14, true, true, false);
+			fontGenerate(wb, cell, row, sheet, column, 15, 8, true, true, false);
 		}
 
 		int moneyLine = column;
@@ -175,7 +172,7 @@ public class ExportExcelFile {
 		for (int j = 0; j < 4; j++) {
 			cell = row.createCell(j);// 根据表格行创建单元格
 			cell.setCellValue(String.valueOf(needPayPro[j]));
-			fontGenerate(wb, cell, row, sheet, column, 20, 14, false, true, false);
+			fontGenerate(wb, cell, row, sheet, column, 15,8, false, true, false);
 		}
 		column++;
 
@@ -189,7 +186,7 @@ public class ExportExcelFile {
 			for (int j = 0; j < 4; j++) {
 				cell = row.createCell(j);// 根据表格行创建单元格
 				cell.setCellValue(String.valueOf(items.get(i)[j]));
-				fontGenerate(wb, cell, row, sheet, column, 20, 14, false, true, true);
+				fontGenerate(wb, cell, row, sheet, column, 15, 8, false, true, true);
 			}
 			column++;
 		}
@@ -205,7 +202,7 @@ public class ExportExcelFile {
 			for (int j = 0; j < 4; j++) {
 				cell = row.createCell(j);// 根据表格行创建单元格
 				cell.setCellValue(String.valueOf(littlePro[i][j]));
-				fontGenerate(wb, cell, row, sheet, column, 20, 14, false, true, true);
+				fontGenerate(wb, cell, row, sheet, column, 15, 8, false, true, true);
 			}
 			column++;
 		}
@@ -291,9 +288,9 @@ public class ExportExcelFile {
 		row = sheet.getRow(column);
 		row.setHeightInPoints(height);// 设置行高
 
-		sheet.setColumnWidth(0, MSExcelUtil.pixel2WidthUnits(300));
-		sheet.setColumnWidth(1, MSExcelUtil.pixel2WidthUnits(200));
-		sheet.setColumnWidth(2, MSExcelUtil.pixel2WidthUnits(200));
-		sheet.setColumnWidth(3, MSExcelUtil.pixel2WidthUnits(600));
+		sheet.setColumnWidth(0, MSExcelUtil.pixel2WidthUnits(120));
+		sheet.setColumnWidth(1, MSExcelUtil.pixel2WidthUnits(115));
+		sheet.setColumnWidth(2, MSExcelUtil.pixel2WidthUnits(75));
+		sheet.setColumnWidth(3, MSExcelUtil.pixel2WidthUnits(310));
 	}
 }
