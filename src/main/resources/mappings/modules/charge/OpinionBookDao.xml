@@ -77,7 +77,7 @@
 		</choose>
 	</select>
 	
-	<insert id="insert">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.wxjs.matchfee.modules.charge.entity.OpinionBook">
 		INSERT INTO topinion_book(
 			name,
 			prj_num,

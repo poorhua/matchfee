@@ -19,7 +19,7 @@
 	    
 	    function calculatePass(){
 		
-			top.$.jBox.confirm("确认批准吗？","系统提示",function(v,h,f){
+			top.$.jBox.confirm("确认通过吗？","系统提示",function(v,h,f){
 				if(v=="ok"){
 					$("#chargeForm").attr("action","${ctx}/charge/charge/calculatePass");
 					$("#chargeForm").submit();
@@ -31,7 +31,7 @@
 	    function calculateReject(){
 	    	
 	    	var memo = $("#calMemo").val();
-	    	if(memo.equals("")){
+	    	if(memo == ""){
 	    		alert("退回操作，请填写审批意见！");
 	    		return;
 	    	}
@@ -58,7 +58,7 @@
 	    
 	    function approveReject(){
 	    	var memo = $("#approveMemo").val();
-	    	if(memo.equals("")){
+	    	if(memo == ""){
 	    		alert("退回操作，请填写审批意见！");
 	    		return;
 	    	}	    	
@@ -112,12 +112,20 @@
 					<td class="tit">建设单位名称：</td><td>${charge.project.buildCorpName}</td>
 				</tr>
 				<tr>
-					<td class="tit">项目地址：</td>
-					<td>
-						${charge.project.prjAddress}
-					</td>
 					<td class="tit">状态：</td><td>${fns:getDictLabel(charge.status, 'charge_status', '')}</td>
-				</tr>		      
+					<td class="tit">结算金额（元）：</td>
+					<td>
+					    ${charge.calMoney}
+					</td>				
+				</tr>	
+				<c:if test="${charge.status gt '30' }">
+				<tr>
+					<td class="tit">缴费金额（元）：</td><td>${charge.payMoney}</td>
+					<td class="tit">待清算金额（元）：</td>
+					<td> ${charge.moneyGapDisplay}
+					</td>				
+				</tr>	
+				</c:if> 		      
 		      </table>
 		    </td>
 		    <td width="20%" align="center">
@@ -160,7 +168,10 @@
 		   				</table>
 		   			</c:when>	
 		   			<c:when test="${charge.status eq '30'}">
-		   				<input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
+		   			   <c:if test="${fns:getUser().shy}">
+		   			    <input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
+		   			   </c:if>
+		   				
 		   				<input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   			</c:when>		   				   				   				   					   					   			
 		   			<c:otherwise>

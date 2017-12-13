@@ -25,10 +25,10 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import org.wxjs.matchfee.common.beanvalidator.BeanValidators;
 import org.wxjs.matchfee.common.mapper.JsonMapper;
 import org.wxjs.matchfee.common.utils.DateUtils;
+import org.wxjs.matchfee.modules.base.service.OperationLogService;
 
 /**
  * 控制器支持类
@@ -41,6 +41,9 @@ public abstract class BaseController {
 	 * 日志对象
 	 */
 	protected Logger logger = LoggerFactory.getLogger(getClass());
+	
+	@Autowired
+	protected OperationLogService operationLogService;
 
 	/**
 	 * 管理基础路径

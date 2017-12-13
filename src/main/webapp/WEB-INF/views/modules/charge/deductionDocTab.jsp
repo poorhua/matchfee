@@ -59,6 +59,8 @@
 		<hr style="border:1px dotted #036" />
 		
 	</c:forEach>
+	
+	<matchfee:logListView chargeId="${charge.id}"></matchfee:logListView>
 
 </body>
 </html>

@@ -11,7 +11,9 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.validation.constraints.NotNull;
 
+import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.common.utils.Util;
 
 /**
  * 缴费凭证Entity
@@ -72,7 +74,7 @@ public class PayTicket extends DataEntity<PayTicket> {
 	}
 	
 	public String getMoney() {
-		return money;
+		return Util.formatDecimal(money, Global.DecimalFormat);
 	}
 
 	public void setMoney(String money) {

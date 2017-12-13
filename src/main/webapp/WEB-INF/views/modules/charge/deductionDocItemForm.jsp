@@ -39,6 +39,7 @@
 	            success: function(data) {
 	            	var areaInOpinionBook = data.areaInOpinionBook;
 	            	var areaDeducted = data.areaDeducted;
+	            	var areaRemained = data.areaRemained +"平米"
 	            	if(areaInOpinionBook == ""){
 	            		areaInOpinionBook = "无"
 	            	}else{
@@ -52,7 +53,8 @@
 	            	
 	            	//alert("areaInOpinionBook: "+areaInOpinionBook+", areaDeducted: "+areaDeducted);
 	            	
-	                document.getElementById("deductionItemHint").innerHTML="意见书面积："+areaInOpinionBook+"，已抵扣面积："+areaDeducted;
+	                document.getElementById("deductionItemHint").innerHTML="意见书面积："+areaInOpinionBook
+	                +"，已抵扣面积："+areaDeducted  +"，剩余面积："+areaRemained;
 	            	//$("#deductionItemHint").innerHTML="意见书面积："+areaInOpinionBook+"，已抵扣面积："+areaDeducted;
 	            },     
 	            error: function(err) {     

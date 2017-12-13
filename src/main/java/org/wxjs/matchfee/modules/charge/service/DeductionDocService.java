@@ -8,11 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
+import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.dao.DeductionDocDao;
 import org.wxjs.matchfee.modules.charge.dao.DeductionDocItemDao;
 
@@ -44,7 +44,15 @@ public class DeductionDocService extends CrudService<DeductionDocDao, DeductionD
 	
 	@Transactional(readOnly = false)
 	public void save(DeductionDoc deductionDoc) {
+		boolean isNew = deductionDoc.getIsNewRecord();
 		super.save(deductionDoc);
+		
+		//initial item list
+		if(isNew){
+			DeductionDocItem deductionDocItem = new DeductionDocItem();
+			deductionDocItem.setDoc(deductionDoc);
+			deductionDocItemDao.initialItemList(deductionDocItem);
+		}
 	}
 	
 	@Transactional(readOnly = false)

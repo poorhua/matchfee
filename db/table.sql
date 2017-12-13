@@ -267,3 +267,20 @@ CREATE TABLE `tland_pay_ticket` (
   UNIQUE(`ticket_no`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '国土已缴费';
+
+-- ----------------------------
+-- Table structure for toperation_log
+-- ----------------------------
+DROP TABLE IF EXISTS `toperation_log`;
+CREATE TABLE `toperation_log` (
+  `id` int(11) NOT NULL auto_increment COMMENT '代码',
+  `charge_id` varchar(64) NULL COMMENT '征收代码',
+  `content` varchar(256) NULL COMMENT '内容',
+  `create_by` varchar(32) DEFAULT NULL COMMENT '创建者',
+  `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_by` varchar(32) DEFAULT NULL COMMENT '更新者',
+  `update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
+  `remarks` varchar(64) DEFAULT NULL COMMENT '备注信息',
+  `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '操作日志';

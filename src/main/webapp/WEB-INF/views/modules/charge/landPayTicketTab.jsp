@@ -79,5 +79,6 @@
 		</c:forEach>
 		</tbody>
 	</table>
+	<matchfee:logListView chargeId="${charge.id}"></matchfee:logListView>
 </body>
 </html>

@@ -4,11 +4,16 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
 import org.hibernate.validator.constraints.Length;
+
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotNull;
 
+import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.common.utils.Util;
 
 /**
  * 项目抵扣项Entity
@@ -90,19 +95,21 @@ public class ProjectDeduction extends DataEntity<ProjectDeduction> {
 	}
 	
 	public String getArea() {
-		return area;
+		return Util.formatDecimal(area, Global.DecimalFormat);
 	}
 
 	public void setArea(String area) {
 		this.area = area;
+		
 	}
 	
 	public String getMoney() {
-		return money;
+		return Util.formatDecimal(money, Global.DecimalFormat);
 	}
 
 	public void setMoney(String money) {
 		this.money = money;
+		
 	}
 	
 	@Length(min=1, max=1, message="抵扣方式长度必须介于 1 和 1 之间")

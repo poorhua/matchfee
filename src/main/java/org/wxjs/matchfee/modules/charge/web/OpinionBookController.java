@@ -82,7 +82,7 @@ public class OpinionBookController extends BaseController {
 			return form(opinionBook, model);
 		}
 		opinionBookService.save(opinionBook);
-		addMessage(redirectAttributes, "保存OpinonBook成功");
+		addMessage(redirectAttributes, "保存条件意见书成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/opinionBookTab?repage";
 	}
 	
@@ -90,8 +90,8 @@ public class OpinionBookController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(OpinionBook opinionBook, RedirectAttributes redirectAttributes) {
 		opinionBookService.delete(opinionBook);
-		addMessage(redirectAttributes, "删除OpinonBook成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/opinionBookTab/?repage";
+		addMessage(redirectAttributes, "删除条件意见书成功");
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/opinionBookTab/?repage";
 	}
 
 }

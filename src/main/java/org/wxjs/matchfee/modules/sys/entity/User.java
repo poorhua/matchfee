@@ -344,6 +344,24 @@ public class User extends DataEntity<User> {
 		return "3".equals(this.id);
 	}
 	
+	/**
+	 * 是否审核员
+	 * @return
+	 */
+	public boolean isShy(){
+		boolean flag = false;
+		List<String> roleIds = this.getRoleIdList();
+		
+		for(String roleId : roleIds){
+			if("4".equals(roleId) || "1".equals(roleId)){
+				flag = true;
+				break;
+			}
+		}
+		
+		return flag;
+	}
+	
 	@Override
 	public String toString() {
 		return id;

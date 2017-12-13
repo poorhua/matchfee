@@ -20,6 +20,7 @@ import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.entity.PayTicket;
+import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.entity.SettlementList;
@@ -106,10 +107,27 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 	public SettlementList settle(String chargeId) {
 		SettlementList settlementList = new SettlementList();
 		
+		
 		float calMoney = 0; //结算金额
 		float payMoney = 0; //缴费金额
 		
 		Charge charge = this.get(chargeId);
+		
+		//calculate previous remain
+		String prjNum = charge.getProject().getPrjNum();
+		Charge chargeParam = new Charge();
+		Project project = new Project();
+		project.setPrjNum(prjNum);
+		chargeParam.setProject(project);
+		List<Charge> charges = this.findList(chargeParam);
+		int temp = 0;
+		for(Charge item: charges){
+			int itemId = Util.getInteger(item.getId());
+			if(itemId > temp && itemId < Util.getInteger(chargeId)){
+				temp = itemId;
+				charge.setPreviousRemain(item.getMoneyGap());
+			}
+		}
 		
 		settlementList.setCharge(charge);
 		

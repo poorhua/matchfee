@@ -81,6 +81,9 @@ public class PayTicketController extends BaseController {
 		
 		try{
 			payTicketService.save(payTicket);
+			
+			//operationLogService.log(payTicket.getCharge().getId(), "删除规划许可证", "成功");
+			
 			addMessage(redirectAttributes, "保存缴费凭证成功");			
 		}catch(DuplicateKeyException e1){
 			addMessage(redirectAttributes, "保存失败。重复！");
@@ -99,6 +102,9 @@ public class PayTicketController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(PayTicket payTicket, RedirectAttributes redirectAttributes) {
 		payTicketService.delete(payTicket);
+		
+		//operationLogService.log(payTicket.getCharge().getId(), "删除规划许可证", "成功");
+		
 		addMessage(redirectAttributes, "删除缴费凭证成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/payTicket/?repage";
 	}

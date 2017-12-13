@@ -23,12 +23,20 @@
 				<td class="tit">建设单位名称：</td><td>${charge.project.buildCorpName}</td>
 			</tr>
 			<tr>
-				<td class="tit">项目地址：</td>
-				<td>
-					${charge.project.prjAddress}
-				</td>
 				<td class="tit">状态：</td><td>${fns:getDictLabel(charge.status, 'charge_status', '')}</td>
-			</tr>		      
+				<td class="tit">结算金额（元）：</td>
+				<td>
+				    ${charge.calMoney}
+				</td>				
+			</tr>	
+			<c:if test="${charge.status gt '30' }">
+			<tr>
+				<td class="tit">缴费金额（元）：</td><td>${charge.payMoney}</td>
+				<td class="tit">待清算金额（元）：</td>
+				<td> ${charge.moneyGapDisplay}
+				</td>				
+			</tr>	
+			</c:if> 			      
 			
 		</table>
 	</fieldset>		

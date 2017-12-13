@@ -134,4 +134,11 @@
 		</choose>
 	</update>
 	
+	<update id="initialItemList">
+		insert into tdeduction_doc_item(doc_id,item_id, area, money)
+		select #{doc.id}, id, 0, 0
+		from tdeduction_item
+		where del_flag=#{DEL_FLAG_NORMAL}	
+	</update>	
+	
 </mapper>

@@ -17,4 +17,6 @@ import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 @MyBatisDao
 public interface OpinionBookItemDao extends CrudDao<OpinionBookItem> {
 	
+	public void initialItemList(OpinionBookItem item);
+	
 }

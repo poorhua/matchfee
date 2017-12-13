@@ -23,6 +23,19 @@
 				}
 			});
 		});
+		
+		function areaOnkeyup(obj){
+			obj.value=obj.value.replace(/[^\d.]/g,'');
+			var upArea = 0;
+			if($('#upArea').val() != ''){
+				upArea = parseFloat($('#upArea').val());
+			}
+			var downArea = 0;
+			if($('#downArea').val() != ''){
+				downArea = parseFloat($('#downArea').val());
+			}
+			$('#totalAreaDisplay').text(upArea + downArea);
+		}
 	</script>
 </head>
 <body>
@@ -69,7 +82,8 @@
 		<div class="control-group">
 			<label class="control-label">地上面积（平米）：</label>
 			<div class="controls">
-				<form:input path="upArea" htmlEscape="false" class="input-xlarge required"  onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+				<form:input path="upArea" htmlEscape="false" class="input-xlarge required"  
+				 onkeyup="areaOnkeyup(this)"
                  onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
@@ -77,11 +91,18 @@
 		<div class="control-group">
 			<label class="control-label">地下面积（平米）：</label>
 			<div class="controls">
-				<form:input path="downArea" htmlEscape="false" class="input-xlarge required"  onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
+				<form:input path="downArea" htmlEscape="false" class="input-xlarge required"  
+				 onkeyup="areaOnkeyup(this)"
                  onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">总面积（平米）：</label>
+			<div id ="totalAreaDisplay" class="controls">
+			   ${projectLicense.totalAreaDisplay}
+			</div>
+		</div>		
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">

@@ -4,7 +4,9 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
 
+import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.base.entity.DeductionItem;
 
 /**
@@ -54,7 +56,7 @@ public class DeductionDocItem extends DataEntity<DeductionDocItem> {
 	}
 
 	public String getArea() {
-		return area;
+		return Util.formatDecimal(area, Global.DecimalFormat);
 	}
 
 	public void setArea(String area) {
@@ -62,7 +64,7 @@ public class DeductionDocItem extends DataEntity<DeductionDocItem> {
 	}
 	
 	public String getMoney() {
-		return money;
+		return Util.formatDecimal(money, Global.DecimalFormat);
 	}
 
 	public void setMoney(String money) {

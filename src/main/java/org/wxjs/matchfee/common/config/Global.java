@@ -190,5 +190,7 @@ public class Global {
     public static final String CHARGE_STATUS_TO_CONFIRM = "30";
     public static final String CHARGE_STATUS_CONFIRMED = "40";
     public static final String CHARGE_STATUS_CLOSE = "90";
+    
+    public static final String DecimalFormat = "0.00";
 	
 }

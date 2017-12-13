@@ -77,13 +77,26 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>条目</th>
-				<th>建筑面积（平米）</th>
-				<th>金额（元）</th>
-				<th>备注</th>
+				<th align="center">条目</th>
+				<th align="center">建筑面积（平米）</th>
+				<th align="center">金额（元）</th>
+				<th align="center">备注</th>
 			</tr>
 		</thead>
 		<tbody>
+			<tr>
+				<td class="tit">
+					<strong>*待清算金额（元）</strong>
+				</td>
+				<td>
+				</td>
+				<td>
+					${settementList.charge.previousRemainDisplay}
+				</td>
+				<td>
+					
+				</td>
+			</tr>		    
 		    <tr><td colspan="4" class="tit"><strong>*结算项目</strong></td></tr>
 		<c:forEach items="${settementList.projectLicenses}" var="projectLicense">
 			<tr>
@@ -91,10 +104,10 @@
 					${projectLicense.name}
 				</td>
 				<td>
-					${projectLicense.totalArea}
+					${projectLicense.totalAreaDisplay}
 				</td>
 				<td>
-					${projectLicense.totalMoney}
+					${projectLicense.totalMoneyDisplay}
 				</td>
 				<td>
 					${projectLicense.remarks}
@@ -166,7 +179,7 @@
 			  </c:otherwise>
 			</c:choose>
 				<td></td>
-				<td>${settementList.charge.moneyGap}</td>
+				<td>${settementList.charge.moneyGapDisplay}</td>
 				<td></td>
 			</tr>				
 		</tbody>

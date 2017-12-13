@@ -190,6 +190,10 @@ public class DeductionDocItemController extends BaseController {
 		map.put("areaInOpinionBook", areaInOpinionBook);
 		
 		map.put("areaDeducted", areaDeducted);
+		
+		float areaRemained = Util.getFloat(areaInOpinionBook) - Util.getFloat(areaDeducted);
+		
+		map.put("areaRemained", Util.formatDecimal(areaRemained, Global.DecimalFormat));
 
 		return map;
 	}

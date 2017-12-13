@@ -115,19 +115,21 @@ public class ChargeController extends BaseController {
 		
 		User user = UserUtils.getUser();
 		
-		charge.setProject(user.getProject());
-		
-		charge.setStatus(Global.CHARGE_STATUS_EDIT
-				 + "," + Global.CHARGE_STATUS_REJECT);
-		
 		if(user.getProject()==null){
 			logger.debug("user.getProject()==null");
 		}else{
 			logger.debug(user.getProject().toString());
 		}
 		
+		Charge chargeParam = new Charge();
+		Project projectParam = new Project();
+		projectParam.setPrjNum(user.getProject().getPrjNum());
+		chargeParam.setProject(projectParam);
+		chargeParam.setStatus(Global.CHARGE_STATUS_EDIT
+				 + "," + Global.CHARGE_STATUS_REJECT);
 		
-		List<Charge> list = chargeService.findList(charge); 
+		
+		List<Charge> list = chargeService.findList(chargeParam); 
 		model.addAttribute("list", list);
 		return "modules/charge/myChargeList_enterprise";
 	}	
@@ -192,10 +194,6 @@ public class ChargeController extends BaseController {
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"confirmlist"})
 	public String confirmlist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
-		
-		//User user = UserUtils.getUser();
-		
-		//charge.setReportStaff(user);
 		
 		charge.setStatus(Global.CHARGE_STATUS_TO_CONFIRM);
 		
@@ -299,7 +297,7 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = "opinionBookTab")
 	public String opinionBookTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		
-		String chargeId = (String)httpSession.getAttribute("chargeId");
+		String chargeId = this.getChargeId(charge, httpSession);
 		
 		logger.debug("charge==null: "+(charge==null)+", chargeId: "+chargeId);
 		if(charge!=null){
@@ -334,7 +332,7 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = "landPayTicketTab")
 	public String landPayTicketTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		
-		String chargeId = (String)httpSession.getAttribute("chargeId");
+		String chargeId = this.getChargeId(charge, httpSession);
 		
 		logger.debug("charge==null: "+(charge==null)+", chargeId: "+chargeId);
 		if(charge!=null){
@@ -363,7 +361,7 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = "projectLicenseTab")
 	public String projectLicenseTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		
-		String chargeId = (String)httpSession.getAttribute("chargeId");
+		String chargeId = this.getChargeId(charge, httpSession);
 		
 		logger.debug("charge==null: "+(charge==null)+", chargeId: "+chargeId);
 		if(charge!=null){
@@ -392,7 +390,7 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = "projectDeductionTab")
 	public String projectDeductionTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		
-		String chargeId = (String)httpSession.getAttribute("chargeId");
+		String chargeId = this.getChargeId(charge, httpSession);
 		
 		if(this.isChargeEmpty(charge) && !StringUtils.isBlank(chargeId)){
 			charge = chargeService.get(new Charge(chargeId));
@@ -416,7 +414,7 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = "deductionDocTab")
 	public String deductionDocTab(Charge charge, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		
-		String chargeId = (String)httpSession.getAttribute("chargeId");
+		String chargeId = this.getChargeId(charge, httpSession);
 		
 		logger.debug("charge==null: "+(charge==null)+", chargeId: "+chargeId);
 		if(this.isChargeEmpty(charge) && !StringUtils.isBlank(chargeId)){
@@ -424,7 +422,7 @@ public class ChargeController extends BaseController {
 		}
 		
 		DeductionDoc deductionDocParam = new DeductionDoc();
-		deductionDocParam.setPrjNum(charge.getProject().getPrjNum());
+		deductionDocParam.setCharge(new Charge(chargeId));
 		
 		charge.setDeductionDocList(this.deductionDocService.findList(deductionDocParam));
 		
@@ -467,18 +465,30 @@ public class ChargeController extends BaseController {
 		return "modules/charge/payTicketTab";
 	}
 	
+	private String getChargeId(Charge charge, HttpSession httpSession){
+		String chargeId = charge.getId();
+		if(StringUtils.isBlank(chargeId)){
+			chargeId = Util.getString(httpSession.getAttribute("chargeId"));
+		}
+		return chargeId;
+	}
+	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "reportSave")
 	public String reportSave(Charge charge, Model model, RedirectAttributes redirectAttributes) {
 		charge.setStatus(Global.CHARGE_STATUS_EDIT);
-		return this.report(charge, model, redirectAttributes);
+		String result = this.report(charge, model, redirectAttributes);
+		operationLogService.logApprove(charge.getId(), "保存征收申报", "成功");
+		return result;
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "reportSubmit")
 	public String reportSubmit(Charge charge, Model model, RedirectAttributes redirectAttributes) {
 		charge.setStatus(Global.CHARGE_STATUS_TO_CALCULATE);
-		return this.report(charge, model, redirectAttributes);
+		String result = this.report(charge, model, redirectAttributes);
+		operationLogService.logApprove(charge.getId(), "提交征收申报", "成功");
+		return result;
 	}
 	
 	private String report(Charge charge, Model model, RedirectAttributes redirectAttributes) {
@@ -496,6 +506,7 @@ public class ChargeController extends BaseController {
 		charge.setReportDate(Calendar.getInstance().getTime());
 		
 		chargeService.updateReport(charge);
+		
 		addMessage(redirectAttributes, "保存征收成功");
 		
 		if(user.isQyUser()){
@@ -509,14 +520,18 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = "calculateReject")
 	public String calculateReject(Charge charge, Model model, RedirectAttributes redirectAttributes) {
 		charge.setStatus(Global.CHARGE_STATUS_REJECT);
-		return this.calculate(charge, model, redirectAttributes);
+		String result = this.calculate(charge, model, redirectAttributes);
+		operationLogService.logApprove(charge.getId(), "测算", "退回, "+charge.getCalMemo());
+		return result;
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "calculatePass")
 	public String calculatePass(Charge charge, Model model, RedirectAttributes redirectAttributes) {
 		charge.setStatus(Global.CHARGE_STATUS_TO_APPROVE);
-		return this.calculate(charge, model, redirectAttributes);
+		String result = this.calculate(charge, model, redirectAttributes);
+		operationLogService.logApprove(charge.getId(), "测算", "通过");
+		return result;
 	}
 	
 	private String calculate(Charge charge, Model model, RedirectAttributes redirectAttributes) {
@@ -549,6 +564,9 @@ public class ChargeController extends BaseController {
 		charge.setStatus(Global.CHARGE_STATUS_TO_CONFIRM);
 		
 		chargeService.updateApprove(charge);
+		
+		operationLogService.logApprove(charge.getId(), "审核", "通过");
+		
 		addMessage(redirectAttributes, "保存征收成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/approvelist?repage";
 	}
@@ -568,6 +586,9 @@ public class ChargeController extends BaseController {
 		charge.setStatus(Global.CHARGE_STATUS_REJECT);
 		
 		chargeService.updateApprove(charge);
+		
+		operationLogService.logApprove(charge.getId(), "审核", "退回，"+charge.getApproveMemo());
+		
 		addMessage(redirectAttributes, "保存征收成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/approvelist?repage";
 	}
@@ -587,6 +608,9 @@ public class ChargeController extends BaseController {
 		charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
 		
 		chargeService.updateConfirm(charge);
+		
+		operationLogService.logApprove(charge.getId(), "缴费确认", "");
+		
 		addMessage(redirectAttributes, "保存征收成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/confirmlist?repage";
 	}
@@ -601,6 +625,9 @@ public class ChargeController extends BaseController {
 		charge.setStatus(Global.CHARGE_STATUS_CLOSE);
 		
 		chargeService.updateStatus(charge);
+		
+		operationLogService.logApprove(charge.getId(), "关闭", "");
+		
 		addMessage(redirectAttributes, "保存征收成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
 	}

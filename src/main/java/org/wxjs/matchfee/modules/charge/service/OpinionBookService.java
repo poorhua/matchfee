@@ -45,7 +45,19 @@ public class OpinionBookService extends CrudService<OpinionBookDao, OpinionBook>
 	
 	@Transactional(readOnly = false)
 	public void save(OpinionBook opinionBook) {
+		
+		boolean isNew = opinionBook.getIsNewRecord();
+		
 		super.save(opinionBook);
+		
+		logger.debug("opinionBook.getId(): "+opinionBook.getId() +", opinionBook.getIsNewRecord(): "+opinionBook.getIsNewRecord());
+		
+		//initial item list
+		if(isNew){
+			OpinionBookItem opinionBookItem = new OpinionBookItem();
+			opinionBookItem.setDoc(opinionBook);
+			opinionBookItemDao.initialItemList(opinionBookItem);
+		}
 	}
 	
 	@Transactional(readOnly = false)

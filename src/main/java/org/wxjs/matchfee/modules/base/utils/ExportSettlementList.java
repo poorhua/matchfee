@@ -146,10 +146,10 @@ public class ExportSettlementList {
 				items.add(new String[]{"缴费", "", item.getMoney() +"", item.getRemarks()});
 			}
 			String gapHint = "多缴费";
-			if(settlementList.getCharge().getMoneyGap()<0){
+			if(settlementList.getCharge().getMoneyGap()<0){ 
 				gapHint = "少缴费";
 			}
-			items.add(new String[]{gapHint, "", settlementList.getCharge().getMoneyGap() +"", ""});
+			items.add(new String[]{gapHint, "", settlementList.getCharge().getMoneyGapDisplay() +"", ""});
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
 			document.add(table);

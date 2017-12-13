@@ -65,6 +65,8 @@ public class Charge extends DataEntity<Charge> {
 	
 	private List<LandPayTicket> landPayTicketList;
 	
+	private float previousRemain = 0;
+	
 	public Charge() {
 		super();
 	}
@@ -140,7 +142,7 @@ public class Charge extends DataEntity<Charge> {
 	}
 	
 	public String getCalMoney() {
-		return calMoney;
+		return Util.formatDecimal(calMoney, Global.DecimalFormat);
 	}
 
 	public void setCalMoney(String calMoney) {
@@ -148,7 +150,7 @@ public class Charge extends DataEntity<Charge> {
 	}
 	
 	public String getPayMoney() {
-		return payMoney;
+		return Util.formatDecimal(payMoney, Global.DecimalFormat);
 	}
 
 	public void setPayMoney(String payMoney) {
@@ -327,7 +329,27 @@ public class Charge extends DataEntity<Charge> {
 	}
 
 	public float getMoneyGap(){
-		return Util.getFloat(this.payMoney) - Util.getFloat(this.calMoney);
+		float gap = Util.getFloat(this.payMoney) - Util.getFloat(this.calMoney);
+		if(gap < 0.01 && gap > -0.01){
+			gap = 0;
+		}
+		return gap;
+	}
+	
+	public String getMoneyGapDisplay(){
+		return Util.formatDecimal(this.getMoneyGap(), Global.DecimalFormat);
+	}
+
+	public float getPreviousRemain() {
+		return previousRemain;
+	}
+	
+	public String getPreviousRemainDisplay() {
+		return Util.formatDecimal(previousRemain, Global.DecimalFormat);
+	}
+
+	public void setPreviousRemain(float previousRemain) {
+		this.previousRemain = previousRemain;
 	}
 	
 }

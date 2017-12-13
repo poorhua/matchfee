@@ -36,6 +36,7 @@
 				<th>文档日期</th>
 				<th>地上面积（平米）</th>
 				<th>地下面积（平米）</th>
+				<th>总面积（平米）</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
@@ -62,6 +63,9 @@
 				<td>
 					${projectLicense.downArea}
 				</td>
+				<td>
+					${projectLicense.totalAreaDisplay}
+				</td>				
 				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/projectLicense/form?id=${projectLicense.id}">修改</a>
 					<a href="${ctx}/charge/projectLicense/delete?id=${projectLicense.id}" onclick="return confirmx('确认要删除该规划许可证吗？', this.href)">删除</a>
@@ -70,5 +74,6 @@
 		</c:forEach>
 		</tbody>
 	</table>
+	<matchfee:logListView chargeId="${charge.id}"></matchfee:logListView>
 </body>
 </html>

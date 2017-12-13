@@ -20,6 +20,7 @@ import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
+import org.wxjs.matchfee.modules.base.service.OperationLogService;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
@@ -39,6 +40,7 @@ public class ProjectDeductionController extends BaseController {
 	
 	@Autowired
 	private ChargeService chargeService;
+	
 	
 	@ModelAttribute
 	public ProjectDeduction get(@RequestParam(required=false) String id) {
@@ -82,6 +84,9 @@ public class ProjectDeductionController extends BaseController {
 		}
 		try{
 			projectDeductionService.save(projectDeduction);
+			
+			//operationLogService.log(projectDeduction.getCharge().getId(), "保存规划许可证", "成功");
+			
 			addMessage(redirectAttributes, "保存成功");
 		}catch(DuplicateKeyException e1){
 			addMessage(redirectAttributes, "保存失败。重复！");
@@ -99,6 +104,9 @@ public class ProjectDeductionController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(ProjectDeduction projectDeduction, RedirectAttributes redirectAttributes) {
 		projectDeductionService.delete(projectDeduction);
+		
+		//operationLogService.log(projectDeduction.getCharge().getId(), "删除规划许可证", "成功");
+		
 		addMessage(redirectAttributes, "删除项目抵扣项成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/projectDeductionTab/?repage";
 	}

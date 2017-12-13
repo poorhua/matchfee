@@ -87,7 +87,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		this.path = path;
 	}
 	
-	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="文档日期不能为空")
 	public Date getDocumentDate() {
 		return documentDate;
@@ -114,10 +114,19 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 	}
 	
 	public float getTotalMoney(){
+		float totalArea = Util.getFloat(this.upArea) + Util.getFloat(this.downArea);
 		return this.getTotalArea() * Util.getFloat(Global.getConfig("matchfee.basis"));
+	}
+	
+	public String getTotalMoneyDisplay(){
+		return Util.formatDecimal(this.getTotalMoney(), Global.DecimalFormat);
 	}
 	
 	public float getTotalArea(){
 		return Util.getFloat(this.upArea) + Util.getFloat(this.downArea);
+	}
+	
+	public String getTotalAreaDisplay(){
+		return Util.formatDecimal(this.getTotalArea(), Global.DecimalFormat);
 	}
 }

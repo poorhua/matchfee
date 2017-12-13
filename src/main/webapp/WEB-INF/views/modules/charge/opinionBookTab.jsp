@@ -61,6 +61,8 @@
 	</c:forEach>	
 
 </c:if>
+
+<matchfee:logListView chargeId="${charge.id}"></matchfee:logListView>
     
 </body>
 </html>

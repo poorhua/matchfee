@@ -38,6 +38,9 @@
 		<include refid="landPayTicketJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="prjNum != null and prjNum != ''">
+				AND a.prj_num = #{prjNum}
+			</if>			
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

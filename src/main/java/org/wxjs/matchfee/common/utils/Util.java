@@ -296,6 +296,11 @@ public class Util {
 		return df.format(f);
 	}
 	
+	public static String formatDecimal(String floatStr, String pattern){
+		float f = Util.getFloat(floatStr);
+		return formatDecimal(f, pattern);
+	}
+	
 	public static String requestParamDecode(String param){
 		String rst = "";
 		try {

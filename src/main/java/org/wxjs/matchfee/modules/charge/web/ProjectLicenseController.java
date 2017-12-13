@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
+import org.wxjs.matchfee.modules.base.service.OperationLogService;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
@@ -82,6 +82,9 @@ public class ProjectLicenseController extends BaseController {
 		}
 		try{
 			projectLicenseService.save(projectLicense);
+			
+			//operationLogService.log(projectLicense.getCharge().getId(), "保存规划许可证", "成功");
+			
 			addMessage(redirectAttributes, "保存工程许可证成功");
 		}catch(DuplicateKeyException e1){
 			addMessage(redirectAttributes, "保存工程许可证失败。重复！");
@@ -97,6 +100,9 @@ public class ProjectLicenseController extends BaseController {
 	@RequestMapping(value = "delete")
 	public String delete(ProjectLicense projectLicense, RedirectAttributes redirectAttributes) {
 		projectLicenseService.delete(projectLicense);
+		
+		//operationLogService.log(projectLicense.getCharge().getId(), "删除规划许可证", "成功");
+		
 		addMessage(redirectAttributes, "删除工程许可证成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/projectLicenseTab/?repage";
 	}

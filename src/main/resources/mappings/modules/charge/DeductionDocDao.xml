@@ -79,7 +79,7 @@
 		</choose>
 	</select>
 	
-	<insert id="insert">
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.wxjs.matchfee.modules.charge.entity.DeductionDoc">
 		INSERT INTO tdeduction_doc(
 			charge_id,
 			name,

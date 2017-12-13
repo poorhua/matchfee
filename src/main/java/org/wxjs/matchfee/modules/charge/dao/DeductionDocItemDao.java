@@ -19,4 +19,6 @@ public interface DeductionDocItemDao extends CrudDao<DeductionDocItem> {
 	
 	public List<DeductionDocItem> sumDeductions(DeductionDocItem deductionDocItem);
 	
+	public void initialItemList(DeductionDocItem deductionDocItem);
+	
 }
