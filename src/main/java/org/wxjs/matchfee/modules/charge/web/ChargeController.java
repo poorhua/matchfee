@@ -207,11 +207,17 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = {"settlementlist"})
 	public String settlementlist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
 		
-		//User user = UserUtils.getUser();
+		User user = UserUtils.getUser();
 		
 		//charge.setReportStaff(user);
 		
-		charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
+		//charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
+		
+		if(user.getIsQyUser()){
+			Project project = new Project();
+			project.setPrjNum(charge.getProject().getPrjNum());
+			charge.setProject(project);
+		}
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
@@ -252,7 +258,7 @@ public class ChargeController extends BaseController {
 	public String toProjectList(Project project, Model model, RedirectAttributes redirectAttributes) {
 		
 		User user = UserUtils.getUser();
-		if(user.isQyUser()){
+		if(user.getIsQyUser()){
 			model.addAttribute("project", user.getProject());
 			return "modules/charge/projectForm";
 		}else{
@@ -278,9 +284,12 @@ public class ChargeController extends BaseController {
 		charge.setStatus(Global.CHARGE_STATUS_EDIT);
 		
 		chargeService.save(charge);
+		
+		operationLogService.logApprove(charge.getId(), "创建征收", "成功");
+		
 		addMessage(redirectAttributes, "保存征收成功");
 		
-		if(user.isQyUser()){
+		if(user.getIsQyUser()){
 			return "redirect:"+Global.getAdminPath()+"/charge/charge/enterpriselist?repage";
 		}else{
 			return "redirect:"+Global.getAdminPath()+"/charge/charge/mylist?repage";
@@ -510,7 +519,7 @@ public class ChargeController extends BaseController {
 		
 		addMessage(redirectAttributes, "保存征收成功");
 		
-		if(user.isQyUser()){
+		if(user.getIsQyUser()){
 			return "redirect:"+Global.getAdminPath()+"/charge/charge/enterpriselist?repage";
 		}else{
 			return "redirect:"+Global.getAdminPath()+"/charge/charge/mylist?repage";

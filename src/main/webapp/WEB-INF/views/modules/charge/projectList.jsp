@@ -29,7 +29,6 @@
 			<li><label>项目名称：</label>
 				<form:input path="prjName" htmlEscape="false" maxlength="128" class="input-large"/>
 			</li>
-			<li class="clearfix"></li>
 		</ul>
 		<ul class="ul-form">
 			<li><label>建设单位代码：</label>
@@ -38,7 +37,6 @@
 			<li><label>建设单位名称：</label>
 				<form:input path="buildCorpName" htmlEscape="false" maxlength="128" class="input-large"/>
 			</li>
-			<li class="clearfix"></li>
 		</ul>				
 		<ul class="ul-form">
 			<li><label>项目地址：</label>

@@ -16,8 +16,8 @@
 </head>
 <body>
     <sys:message content="${message}"/>
-    <c:if test="${fns:getUser().shy}"><legend>缴费确认</legend></c:if>
-    <c:if test="${!fns:getUser().shy}"><legend>上传缴费凭证</legend></c:if>
+    <c:if test="${fns:getUser().isShy}"><legend>缴费确认</legend></c:if>
+    <c:if test="${!fns:getUser().isShy}"><legend>上传缴费凭证</legend></c:if>
     <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>
 
 	<div style="margin:10px 60px 10px 0;width='100%'">

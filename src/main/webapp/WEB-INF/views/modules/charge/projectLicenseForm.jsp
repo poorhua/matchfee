@@ -65,8 +65,7 @@
 		<div class="control-group">
 			<label class="control-label">文件编号：</label>
 			<div class="controls">
-				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required" onkeyup="this.value=this.value.replace(/[^\d.]/g,'');"
-                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
+				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -74,8 +73,8 @@
 			<label class="control-label">文档日期：</label>
 			<div class="controls">
 				<input name="documentDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
-					value="<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd HH:mm:ss"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',isShowClear:false});"/>
+					value="<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>

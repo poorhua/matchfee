@@ -21,22 +21,24 @@
 	<form:form id="searchForm" modelAttribute="charge" action="${ctx}/report/report/search" method="post" class="breadcrumb form-search">
 		<input id="pageNo" name="pageNo" type="hidden" value="${page.pageNo}"/>
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>	
-		<ul class="ul-form">
-			<li><label>项目编号</label>
-			    <form:input path="project.prjNum" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
-			</li>
-			<li><label>项目名称：</label>
-				<form:input path="project.prjName" htmlEscape="false" maxlength="128" class="input-xlarge required"/>			
-			</li>				
-		</ul>	
-		<ul class="ul-form">
-			<li><label>建设单位代码：</label>
-			    <form:input path="project.buildCorpCode" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
-			</li>
-			<li><label>建设单位名称：</label>
-				<form:input path="project.buildCorpName" htmlEscape="false" maxlength="128" class="input-xlarge required"/>				
-			</li>				
-		</ul>					
+		<c:if test="${fns:getUser().isZfUser}">
+			<ul class="ul-form">
+				<li><label>项目编号</label>
+				    <form:input path="project.prjNum" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
+				</li>
+				<li><label>项目名称：</label>
+					<form:input path="project.prjName" htmlEscape="false" maxlength="128" class="input-xlarge required"/>			
+				</li>				
+			</ul>	
+			<ul class="ul-form">
+				<li><label>建设单位代码：</label>
+				    <form:input path="project.buildCorpCode" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
+				</li>
+				<li><label>建设单位名称：</label>
+					<form:input path="project.buildCorpName" htmlEscape="false" maxlength="128" class="input-xlarge required"/>				
+				</li>				
+			</ul>		
+		</c:if>			
 		<ul class="ul-form">	
 			<li>		
 			    <label>申报日期 ：</label>

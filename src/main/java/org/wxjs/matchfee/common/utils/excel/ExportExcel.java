@@ -444,7 +444,7 @@ public class ExportExcel {
 	 * 清理临时文件
 	 */
 	public ExportExcel dispose(){
-		wb.dispose();
+		//wb.dispose();
 		return this;
 	}
 	

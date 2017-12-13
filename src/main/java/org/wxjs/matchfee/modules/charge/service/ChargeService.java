@@ -11,6 +11,7 @@ import org.apache.commons.httpclient.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
 import org.wxjs.matchfee.common.utils.Util;
@@ -24,6 +25,7 @@ import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.entity.SettlementList;
+import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
 import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 
 /**
@@ -55,6 +57,9 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 	
 	@Autowired
 	private PayTicketService payTicketService;	
+	
+	@Autowired
+	private LandPayTicketService landPayTicketService;	
 
 	public Charge get(String id) {
 		return super.get(id);
@@ -129,6 +134,8 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			}
 		}
 		
+		calMoney -= charge.getPreviousRemain();
+		
 		settlementList.setCharge(charge);
 		
 		//OpinionBookItem
@@ -153,6 +160,27 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			calMoney += item.getTotalMoney();
 			item.setRemarks("规划许可证号: "+item.getDocumentNo());
 		}
+		
+		//LandPayTicket
+		LandPayTicket landPayTicket = new LandPayTicket();
+		landPayTicket.setPrjNum(prjNum);
+		List<LandPayTicket> landPayTickets = landPayTicketService.findList(landPayTicket);
+		
+		StringBuffer lptRemarks = new StringBuffer();
+		float lptTotal = 0;
+		for(LandPayTicket item : landPayTickets){
+			lptTotal += Util.getFloat(item.getMoney());
+			lptRemarks.append("金额（元）： " +item.getMoney());
+			lptRemarks.append(", 票据号： " +item.getTicketNo());
+			lptRemarks.append("/n/r");
+		}
+		lptRemarks.append("合计缴费金额（元）：");
+		lptRemarks.append(Util.formatDecimal(lptTotal, Global.DecimalFormat));
+		lptRemarks.append("/n/r");
+		
+		//deducted previously
+		
+		//TODO
 		
 		//DeductionDocItem
 		DeductionDocItem deductionDocItem = new DeductionDocItem();

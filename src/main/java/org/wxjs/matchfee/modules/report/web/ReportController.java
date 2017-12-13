@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
+import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
 import org.wxjs.matchfee.modules.report.dataModel.ReportData;
 import org.wxjs.matchfee.modules.report.entity.ReportParam;
@@ -89,6 +90,15 @@ public class ReportController extends BaseController {
 			Calendar cal=Calendar.getInstance();
 			charge.setDateTo(cal.getTime());
 		}
+		
+		User user = UserUtils.getUser();
+
+		if(user.getIsQyUser()){
+			Project projectParam = new Project();
+			projectParam.setPrjNum(user.getProject().getPrjNum());
+			charge.setProject(projectParam);			
+		}
+
 		
 		Page<Charge> page = chargeService.findPage(new Page<Charge>(request, response), charge);
 		

@@ -48,6 +48,7 @@ public class Charge extends DataEntity<Charge> {
 	private String payTicketPath;		// 付款凭证保存路径
 	private String calMoney;		// 测算金额
 	private String payMoney;		// 付款金额
+	private String landPayMoney;    //国土缴费在本期抵扣金额
 	private String status;		// 状态
 	
 	private Date dateFrom;		// 时间 从
@@ -157,6 +158,14 @@ public class Charge extends DataEntity<Charge> {
 		this.payMoney = payMoney;
 	}
 	
+	public String getLandPayMoney() {
+		return landPayMoney;
+	}
+
+	public void setLandPayMoney(String landPayMoney) {
+		this.landPayMoney = landPayMoney;
+	}
+
 	public String getReportMemo() {
 		return reportMemo;
 	}

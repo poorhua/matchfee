@@ -6,6 +6,7 @@ public class SettlementList {
 	
 	private Charge charge;
 	private List<ProjectLicense> projectLicenses;
+	private List<LandPayTicket> landPayTickets;
 	private List<OpinionBookItem> opinionBookItems;
 	private List<DeductionDocItem> deductionDocItems;
 	private List<ProjectDeduction> projectDeductions;
@@ -22,6 +23,12 @@ public class SettlementList {
 	}
 	public void setProjectLicenses(List<ProjectLicense> projectLicenses) {
 		this.projectLicenses = projectLicenses;
+	}
+	public List<LandPayTicket> getLandPayTickets() {
+		return landPayTickets;
+	}
+	public void setLandPayTickets(List<LandPayTicket> landPayTickets) {
+		this.landPayTickets = landPayTickets;
 	}
 	public List<OpinionBookItem> getOpinionBookItems() {
 		return opinionBookItems;

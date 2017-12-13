@@ -332,15 +332,15 @@ public class User extends DataEntity<User> {
 	 * 是否政府用户
 	 * @return
 	 */
-	public boolean isZFUser(){
-		return !this.isQyUser();
+	public boolean getIsZfUser(){
+		return !this.getIsQyUser();
 	}
 	
 	/**
 	 * 是否企业用户
 	 * @return
 	 */
-	public boolean isQyUser(){
+	public boolean getIsQyUser(){
 		return "3".equals(this.id);
 	}
 	
@@ -348,7 +348,7 @@ public class User extends DataEntity<User> {
 	 * 是否审核员
 	 * @return
 	 */
-	public boolean isShy(){
+	public boolean getIsShy(){
 		boolean flag = false;
 		List<String> roleIds = this.getRoleIdList();
 		

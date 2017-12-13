@@ -97,7 +97,7 @@
 		<div style="text-align:left"><strong>申报信息</strong></div>
 		<table class="table-form">
 		  <tr>
-		    <td width="80%">
+		    <td width="70%">
 		      <table width="100%">
 				<tr>
 					<td class="tit">申报代码：</td><td>${charge.id}</td>
@@ -128,7 +128,7 @@
 				</c:if> 		      
 		      </table>
 		    </td>
-		    <td width="20%" align="center">
+		    <td width="30%" align="center">
 			    <shiro:hasPermission name="charge:charge:edit">
 		          <c:choose>
 		   			<c:when test="${charge.status eq '00' || charge.status eq '05'}">
@@ -136,10 +136,10 @@
 		   				<input id="btnSettle" class="btn btn-primary" type="button" value="结算清单" onclick="showSettlementList()"/>
 		   			</c:when>
 		   			<c:when test="${charge.status eq '10'}">
-		   				<table>
+		   				<table width="100%">
 		   				  <tr>
 		   				    <td>意见：<br>
-		   				      <textarea id="calMemo" name="calMemo" rows="3" cols="20"></textarea>    
+		   				      <textarea id="calMemo" name="calMemo" rows="3" cols="40"></textarea>    
 		   				    </td>
 		   				  </tr>
 		   				  <tr>
@@ -152,10 +152,10 @@
 		   				</table>
 		   			</c:when>	
 		   			<c:when test="${charge.status eq '20'}">
-		   				<table>
+		   				<table width="100%">
 		   				  <tr>
 		   				    <td>意见：<br>
-		   				      <textarea id="approveMemo" name="approveMemo" rows="3" cols="20"></textarea>    
+		   				      <textarea id="approveMemo" name="approveMemo" rows="3" cols="40"></textarea>    
 		   				    </td>
 		   				  </tr>
 		   				  <tr>
@@ -168,7 +168,7 @@
 		   				</table>
 		   			</c:when>	
 		   			<c:when test="${charge.status eq '30'}">
-		   			   <c:if test="${fns:getUser().shy}">
+		   			   <c:if test="${fns:getUser().isShy}">
 		   			    <input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
 		   			   </c:if>
 		   				

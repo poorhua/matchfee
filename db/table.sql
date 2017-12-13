@@ -60,6 +60,7 @@ CREATE TABLE `tcharge` (
   `pay_ticket_path` varchar(256)  NULL COMMENT '付款凭证保存路径',
   `cal_money` decimal(10,2) NULL COMMENT '测算金额',
   `pay_money` decimal(10,2) NULL COMMENT '付款金额',
+  `land_pay_money` decimal(10,2) NULL COMMENT '国土缴费本次抵扣金额',
   `status` varchar(8) NOT NULL COMMENT '状态',
   `create_by` varchar(32) DEFAULT NULL COMMENT '创建者',
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',

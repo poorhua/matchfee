@@ -44,7 +44,7 @@ public class OperationLogService extends CrudService<OperationLogDao, OperationL
 	public void logApprove(String chargeId, String operation, String result) {
 		User user = UserUtils.getUser();
 		String operator = user.getLoginName();
-		if(user.isQyUser()){
+		if(user.getIsQyUser()){
 			operator = user.getProject().getBuildCorpName();
 		}
 		OperationLog log = new OperationLog(chargeId, operator, operation, result);
@@ -56,7 +56,7 @@ public class OperationLogService extends CrudService<OperationLogDao, OperationL
 	public void log(String chargeId, String operation, String result) {
 		User user = UserUtils.getUser();
 		String operator = user.getLoginName();
-		if(user.isQyUser()){
+		if(user.getIsQyUser()){
 			operator = user.getProject().getBuildCorpName();
 		}
 		OperationLog log = new OperationLog(chargeId, operator, operation, result);
