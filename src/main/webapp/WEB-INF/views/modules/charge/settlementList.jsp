@@ -26,14 +26,14 @@
 		
 	    function exportPdf(){
 
-			$("#chargeForm").attr("action","${ctx}/charge/charge/exportSettlementList");
+			$("#chargeForm").attr("action","${ctx}/charge/charge/exportPDFSettlementList");
 			$("#chargeForm").submit();
 	    	
 	    }
 	    
 	    function exportExcel(){
 
-			$("#chargeForm").attr("action","${ctx}/charge/charge/exportSettlementList");
+			$("#chargeForm").attr("action","${ctx}/charge/charge/exportExcelSettlementList");
 			$("#chargeForm").submit();
 	    	
 	    }		    
