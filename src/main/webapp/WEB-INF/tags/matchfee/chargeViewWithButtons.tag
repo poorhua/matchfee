@@ -90,7 +90,8 @@
 	    	
 	    }
 	</script>
-	
+
+<legend>配套费征收</legend>	
 <form:form id="chargeForm" class="form-horizontal">
     <input id="id" name="id" type="hidden" value="${charge.id}"/>
 	<fieldset>

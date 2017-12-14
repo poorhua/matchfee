@@ -33,6 +33,7 @@
 		<form:hidden path="email" htmlEscape="false" maxlength="255" class="input-xlarge"/>
 		<sys:ckfinder input="email" type="files" uploadPath="/mytask" selectMultiple="false"/> --%>
 		<sys:message content="${message}"/>
+		<!--  
 		<div class="control-group">
 			<label class="control-label">头像:</label>
 			<div class="controls">
@@ -40,12 +41,19 @@
 				<sys:ckfinder input="nameImage" type="images" uploadPath="/photo" selectMultiple="false" maxWidth="100" maxHeight="100"/>
 			</div>
 		</div>
+		-->
 		<div class="control-group">
 			<label class="control-label">部门:</label>
 			<div class="controls">
 				<label class="lbl">${user.office.name}</label>
 			</div>
 		</div>
+		<div class="control-group">
+			<label class="control-label">登录名:</label>
+			<div class="controls">
+				<form:input path="loginName" htmlEscape="false" maxlength="50" class="required" readonly="true"/>
+			</div>
+		</div>		
 		<div class="control-group">
 			<label class="control-label">姓名:</label>
 			<div class="controls">

@@ -83,10 +83,13 @@ public class ProjectController extends BaseController {
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "form")
 	public String form(Project project, Model model) {
-		String prjNum = project.getPrjNum();
-		project = projectService.getByPrjNum(prjNum);
-		if(project == null){
-			project = projectService.getByPrjNum_Remote(prjNum);
+		String prjNum = "";
+		if(project!=null && !StringUtils.isBlank(project.getPrjNum())){
+			prjNum = project.getPrjNum();
+			project = projectService.getByPrjNum(prjNum);
+			if(project == null){
+				project = projectService.getByPrjNum_Remote(prjNum);
+			}			
 		}
 		
 		model.addAttribute("project", project);
