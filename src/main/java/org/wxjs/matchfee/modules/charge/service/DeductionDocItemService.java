@@ -5,18 +5,14 @@ package org.wxjs.matchfee.modules.charge.service;
 
 import java.util.List;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
-import org.wxjs.matchfee.common.utils.Util;
-import org.wxjs.matchfee.modules.base.entity.DeductionItem;
+
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
-import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
-import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 import org.wxjs.matchfee.modules.charge.dao.DeductionDocItemDao;
 

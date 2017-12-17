@@ -5,12 +5,14 @@ package org.wxjs.matchfee.modules.charge.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
+import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
+import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 import org.wxjs.matchfee.modules.charge.dao.LandPayTicketDao;
 
 /**
@@ -21,6 +23,9 @@ import org.wxjs.matchfee.modules.charge.dao.LandPayTicketDao;
 @Service
 @Transactional(readOnly = true)
 public class LandPayTicketService extends CrudService<LandPayTicketDao, LandPayTicket> {
+	
+	@Autowired
+	private ChargeDao chargeDao;	
 
 	public LandPayTicket get(String id) {
 		return super.get(id);
@@ -35,13 +40,19 @@ public class LandPayTicketService extends CrudService<LandPayTicketDao, LandPayT
 	}
 	
 	@Transactional(readOnly = false)
-	public void save(LandPayTicket landPayTicket) {
+	public void save(LandPayTicket landPayTicket, Charge charge) {
 		super.save(landPayTicket);
+		
+		//refresh land pay money
+		chargeDao.refreshLandPayMoney(charge);
 	}
 	
 	@Transactional(readOnly = false)
-	public void delete(LandPayTicket landPayTicket) {
+	public void delete(LandPayTicket landPayTicket, Charge charge) {
 		super.delete(landPayTicket);
+		
+		//refresh land pay money
+		chargeDao.refreshLandPayMoney(charge);
 	}
 	
 }

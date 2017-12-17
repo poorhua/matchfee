@@ -126,8 +126,11 @@ public class ChargeController extends BaseController {
 		Project projectParam = new Project();
 		projectParam.setPrjNum(user.getProject().getPrjNum());
 		chargeParam.setProject(projectParam);
+		
+		/*
 		chargeParam.setStatus(Global.CHARGE_STATUS_EDIT
 				 + "," + Global.CHARGE_STATUS_REJECT);
+		*/
 		
 		
 		List<Charge> list = chargeService.findList(chargeParam); 
@@ -215,13 +218,13 @@ public class ChargeController extends BaseController {
 		
 		if(user.getIsQyUser()){
 			Project project = new Project();
-			project.setPrjNum(charge.getProject().getPrjNum());
+			project.setPrjNum(user.getProject().getPrjNum());
 			charge.setProject(project);
 		}
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
-		return "modules/charge/myChargeList_postSubmit";
+		return "modules/charge/myChargeList_settlement";
 	}
 	
 	@RequiresPermissions("charge:charge:view")

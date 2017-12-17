@@ -5,6 +5,7 @@ package org.wxjs.matchfee.modules.charge.web;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +15,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
+import org.wxjs.matchfee.common.utils.Util;
+import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
+import org.wxjs.matchfee.modules.charge.entity.Project;
 import org.wxjs.matchfee.modules.charge.service.LandPayTicketService;
 
 /**
@@ -63,19 +66,33 @@ public class LandPayTicketController extends BaseController {
 
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "save")
-	public String save(LandPayTicket landPayTicket, Model model, RedirectAttributes redirectAttributes) {
+	public String save(LandPayTicket landPayTicket, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, landPayTicket)){
 			return form(landPayTicket, model);
 		}
-		landPayTicketService.save(landPayTicket);
+		
+		String chargeId = Util.getString(httpSession.getAttribute("chargeId"));
+		Charge charge = new Charge(chargeId);
+		Project project = new Project();
+		project.setPrjNum(landPayTicket.getPrjNum());
+		charge.setProject(project);
+		
+		landPayTicketService.save(landPayTicket, charge); 
 		addMessage(redirectAttributes, "保存国土缴费凭证成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/landPayTicketTab?repage";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "delete")
-	public String delete(LandPayTicket landPayTicket, RedirectAttributes redirectAttributes) {
-		landPayTicketService.delete(landPayTicket);
+	public String delete(LandPayTicket landPayTicket, HttpSession httpSession, RedirectAttributes redirectAttributes) {
+		
+		String chargeId = Util.getString(httpSession.getAttribute("chargeId"));
+		Charge charge = new Charge(chargeId);
+		Project project = new Project();
+		project.setPrjNum(landPayTicket.getPrjNum());
+		charge.setProject(project);
+		
+		landPayTicketService.delete(landPayTicket, charge);
 		addMessage(redirectAttributes, "删除国土已缴费成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/landPayTicketTab/?repage";
 	}

@@ -130,7 +130,7 @@
 					${charge.remarks}
 				</td>
 				<td>
-    				<a href="${ctx}/charge/charge/opinionBookTab?id=${charge.id}">查看</a>
+    				<a href="${ctx}/report/report/searchInfo?id=${charge.id}">查看</a>
 				</td>
 			</tr>
 		</c:forEach>

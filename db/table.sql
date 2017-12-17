@@ -121,7 +121,7 @@ CREATE TABLE `tdeduction_doc` (
   `charge_id` int(11) NOT NULL COMMENT '征收代码',
   `name` varchar(64) NOT NULL COMMENT '名称',
   `prj_num` varchar(64) NOT NULL COMMENT '项目代码',
-  `document_no` varchar(64) NOT NULL COMMENT '文件编号',
+  `document_no` varchar(64) NULL COMMENT '文件编号',
   `document_type` varchar(8) NULL COMMENT '文件类型',
   `path` varchar(256) NOT NULL COMMENT '保存路径',
   `document_date` datetime NOT NULL COMMENT '文档日期',

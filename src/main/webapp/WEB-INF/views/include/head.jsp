@@ -20,5 +20,8 @@
 <link rel="shortcut icon" href="${ctxStatic}/favicon.ico" type="image/x-icon" />
 
 <link href="${ctxStatic}/common/jeesite.css" type="text/css" rel="stylesheet" />
+
+<link href="${ctxStatic}/common/matchfee.css" type="text/css" rel="stylesheet" />
+
 <script src="${ctxStatic}/common/jeesite.js" type="text/javascript"></script>
 <script type="text/javascript">var ctx = '${ctx}', ctxStatic='${ctxStatic}';</script>

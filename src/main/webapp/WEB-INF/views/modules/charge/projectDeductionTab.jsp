@@ -16,9 +16,11 @@
 </head>
 <body>
     <sys:message content="${message}"/>
+    <legend>配套费征收</legend>	
     <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>
 
 	<matchfee:chargeTabController tab="5"></matchfee:chargeTabController>
+	<div class="docHint">*其他减项指滨湖区已缴费凭证、防空地下室批文、减免证明等。</div>
 	<div style="margin:10px 60px 10px 0;width='100%'">
 	   <div align="right">
 		    <shiro:hasPermission name="charge:charge:edit">
@@ -26,7 +28,7 @@
 		    </shiro:hasPermission>	   
 	   </div>
 	</div>
-	<sys:message content="${message}"/>
+
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>

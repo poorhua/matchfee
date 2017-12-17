@@ -131,6 +131,23 @@
 				</td>
 			</tr>
 		</c:forEach>	
+		    <tr><td colspan="4"><strong>*国土已缴费</strong></td></tr>
+		<c:forEach items="${settementList.landPayTickets}" var="landPayTicket">
+			<tr>
+				<td>
+					${landPayTicket.name}
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					${landPayTicket.money}
+				</td>
+				<td>
+					${landPayTicket.remarks}
+				</td>
+			</tr>
+		</c:forEach>		
 		    <tr><td colspan="4"><strong>*其他减项</strong></td></tr>
 		<c:forEach items="${settementList.projectDeductions}" var="projectDeduction">
 			<tr>

@@ -38,6 +38,7 @@ import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.entity.PayTicket;
 import org.wxjs.matchfee.modules.charge.entity.SettlementList;
+import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
 
 public class ExportSettlementList {
 	
@@ -123,6 +124,17 @@ public class ExportSettlementList {
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
 			document.add(table);
+			
+			table = PdfUtil.generateTable(new String[]{"*国土已缴费"}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), new float[]{1f}, tableWidth);
+			document.add(table);
+			
+			items.clear();
+			for(LandPayTicket item : settlementList.getLandPayTickets()){
+				items.add(new String[]{item.getName(), "", item.getMoney() +"", item.getRemarks()});
+			}
+			
+			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
+			document.add(table);			
 			
 			
 			table = PdfUtil.generateTable(new String[]{"*其他减项"}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), new float[]{1f}, tableWidth);

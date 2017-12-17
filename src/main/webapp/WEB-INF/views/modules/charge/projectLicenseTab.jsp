@@ -16,6 +16,7 @@
 </head>
 <body>
     <sys:message content="${message}"/>
+    <legend>配套费征收</legend>	
     <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>
 	
 	<matchfee:chargeTabController tab="1"></matchfee:chargeTabController>

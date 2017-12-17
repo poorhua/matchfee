@@ -227,7 +227,12 @@
 		union
 		select CONCAT('pd',c.id), (0-c.money) money, c.del_flag
 		from tproject_deduction c
-		where c.charge_id=#{id}) u
+		where c.charge_id=#{id}
+		union
+		select CONCAT('lpm',d.id), (0-d.land_pay_money) money, '0'
+		from tcharge d
+		where d.id=#{id}		
+		) u
 		where u.del_flag = '0')
 		where id=#{id}
 	</update>	
@@ -240,8 +245,12 @@
 		where a.del_flag = '0'
 		and a.charge_id=#{id})
 		where id=#{id}
-	</update>	
-	
+	</update>
+		
+    <update id="refreshLandPayMoney">
+		call proc_refresh_land_pay_money(#{id},#{project.prjNum},#{MatchfeeBasis}, @aaa);
+	</update>
+		
     <update id="updateLandPayMoney">
 		update tcharge 
 		set land_pay_money = #{landPayMoney}

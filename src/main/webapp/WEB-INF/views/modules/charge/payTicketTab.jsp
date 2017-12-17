@@ -16,6 +16,7 @@
 </head>
 <body>
     <sys:message content="${message}"/>
+    <legend>配套费征收</legend>	
     <c:if test="${fns:getUser().isShy}"><legend>缴费确认</legend></c:if>
     <c:if test="${!fns:getUser().isShy}"><legend>上传缴费凭证</legend></c:if>
     <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>

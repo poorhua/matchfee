@@ -21,8 +21,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
+import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
+import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
+import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
+import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
+import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
+import org.wxjs.matchfee.modules.charge.entity.PayTicket;
 import org.wxjs.matchfee.modules.charge.entity.Project;
+import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
+import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
+import org.wxjs.matchfee.modules.charge.service.DeductionDocItemService;
+import org.wxjs.matchfee.modules.charge.service.DeductionDocService;
+import org.wxjs.matchfee.modules.charge.service.LandPayTicketService;
+import org.wxjs.matchfee.modules.charge.service.OpinionBookItemService;
+import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
+import org.wxjs.matchfee.modules.charge.service.PayTicketService;
+import org.wxjs.matchfee.modules.charge.service.ProjectDeductionService;
+import org.wxjs.matchfee.modules.charge.service.ProjectLicenseService;
+import org.wxjs.matchfee.modules.charge.service.ProjectService;
 import org.wxjs.matchfee.modules.report.dataModel.ReportData;
 import org.wxjs.matchfee.modules.report.entity.ReportParam;
 import org.wxjs.matchfee.modules.report.service.ReportService;
@@ -46,6 +63,30 @@ public class ReportController extends BaseController {
 	
 	@Autowired
 	ChargeService chargeService;
+	
+	@Autowired
+	private DeductionDocService deductionDocService;
+	
+	@Autowired
+	private DeductionDocItemService  deductionDocItemService;
+	
+	@Autowired
+	private OpinionBookService opinionBookService;
+	
+	@Autowired
+	private OpinionBookItemService opinionBookItemService;
+	
+	@Autowired
+	private ProjectDeductionService projectDeductionService;
+	
+	@Autowired
+	private ProjectLicenseService projectLicenseService;
+	
+	@Autowired
+	private PayTicketService payTicketService;
+	
+	@Autowired
+	private LandPayTicketService landPayTicketService;
 	
 	@RequiresPermissions("report:report:view")
 	@RequestMapping(value = {"query"})
@@ -107,6 +148,70 @@ public class ReportController extends BaseController {
 		model.addAttribute("charge", charge);
 		
 		return "modules/report/queryChargeList";
+	}
+	
+	@RequiresPermissions("report:report:view")
+	@RequestMapping(value = {"searchInfo"})
+	public String searchInfo(Charge entity, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		Charge charge = chargeService.get(entity);
+		
+		
+		//OpinionBook
+		OpinionBook opinionBookParam = new OpinionBook();
+		opinionBookParam.setPrjNum(charge.getProject().getPrjNum());
+		
+		charge.setOpinionBookList(this.opinionBookService.findList(opinionBookParam));
+		
+		for(OpinionBook item : charge.getOpinionBookList()){
+			OpinionBookItem opinionBookItemParam = new OpinionBookItem();
+			opinionBookItemParam.setDoc(item);
+			item.setOpinionBookItemList(opinionBookItemService.findList(opinionBookItemParam));
+		}
+		
+		//LandPayTicket
+		LandPayTicket landPayTicketParam = new LandPayTicket();
+		landPayTicketParam.setPrjNum(charge.getProject().getPrjNum());
+		
+		charge.setLandPayTicketList(this.landPayTicketService.findList(landPayTicketParam));
+		
+		//ProjectLicense
+		ProjectLicense projectLicenseParam = new ProjectLicense();
+		projectLicenseParam.setCharge(entity);
+		
+		charge.setProjectLicenseList(this.projectLicenseService.findList(projectLicenseParam));
+		
+		
+		//ProjectDeduction
+		ProjectDeduction projectDeductionParam = new ProjectDeduction();
+		projectDeductionParam.setCharge(entity);
+		
+		charge.setProjectDeductionList(this.projectDeductionService.findList(projectDeductionParam));
+		
+		//DeductionDoc
+		DeductionDoc deductionDocParam = new DeductionDoc();
+		deductionDocParam.setCharge(entity);
+		
+		charge.setDeductionDocList(this.deductionDocService.findList(deductionDocParam));
+		
+		for(DeductionDoc item : charge.getDeductionDocList()){
+			DeductionDocItem deductionDocItemParam = new DeductionDocItem();
+			deductionDocItemParam.setDoc(item);
+			item.setDeductionDocItemList(deductionDocItemService.findList(deductionDocItemParam));
+			item.setCharge(charge);
+		}
+		
+		//PayTicket
+		PayTicket payTicketParam = new PayTicket();
+		
+		payTicketParam.setCharge(entity);
+		
+		charge.setPayTicketList(this.payTicketService.findList(payTicketParam));
+		
+		
+		model.addAttribute("charge", charge);
+		
+		return "modules/report/queryChargeInfo";
 	}
 	
 	@RequiresPermissions("report:report:view")

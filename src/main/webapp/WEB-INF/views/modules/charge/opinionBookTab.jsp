@@ -20,9 +20,12 @@
 </head>
 <body>
     <sys:message content="${message}"/>
+    <legend>配套费征收</legend>	
     <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>
 
 	<matchfee:chargeTabController tab="2"></matchfee:chargeTabController>
+	
+	<div class="docHint">*住宅项目请上传无锡市项目建设条件意见书，非住宅项目不需上传。</div>
 
 <c:if test="${empty charge.opinionBookList}">
   
@@ -56,7 +59,7 @@
 	   <div align="right"><input id="btnAddItem" class="btn btn-primary" type="button" value="添加项目" onclick="toNewItem(${opinionBook.id})"/></div>
 	</div>
 	
-	<matchfee:opinionBookItemView opinionBook="${opinionBook}"></matchfee:opinionBookItemView>	
+	<matchfee:opinionBookItemView opinionBook="${opinionBook}" withOperation="1"></matchfee:opinionBookItemView>	
 	
 	</c:forEach>	
 

@@ -112,7 +112,7 @@ public class DeductionDocItemController extends BaseController {
 			float areaRemained = Util.getFloat(areaInOpinionBook) - Util.getFloat(areaDeducted);
 			
 			buffer.append(", 剩余面积： ");
-			buffer.append(Util.formatDecimal(areaRemained, Global.DecimalFormat)+"平方");
+			buffer.append(Util.formatDecimal(areaRemained, Global.DecimalFormat)+"平米");
 			
 			model.addAttribute("deductionItemHint", buffer.toString());			
 		}

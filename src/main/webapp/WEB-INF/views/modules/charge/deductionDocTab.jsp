@@ -20,9 +20,12 @@
 </head>
 <body>
 	<sys:message content="${message}" />
+    <legend>配套费征收</legend>	
 	<matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons>
 	<br>
 	<matchfee:chargeTabController tab="3"></matchfee:chargeTabController>
+	
+	<div class="docHint">*本期工建配套证明。</div>
 
 	<div style="margin: 10px 60px 10px 0;width='100%'">
 		<div align="right">
@@ -55,7 +58,7 @@
 			</div>
 		</div>
 		
-		<matchfee:deductionDocItemView deductionDoc="${deductionDoc}"></matchfee:deductionDocItemView>
+		<matchfee:deductionDocItemView deductionDoc="${deductionDoc}" withOperation="0"></matchfee:deductionDocItemView>
 		<hr style="border:1px dotted #036" />
 		
 	</c:forEach>

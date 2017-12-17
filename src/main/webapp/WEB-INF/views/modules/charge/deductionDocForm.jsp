@@ -51,8 +51,7 @@
 		<div class="control-group">
 			<label class="control-label">文件编号：</label>
 			<div class="controls">
-				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="control-group">

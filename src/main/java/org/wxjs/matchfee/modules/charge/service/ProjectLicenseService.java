@@ -42,16 +42,24 @@ public class ProjectLicenseService extends CrudService<ProjectLicenseDao, Projec
 	public void save(ProjectLicense projectLicense) {
 		super.save(projectLicense);
 		
+		//refresh land pay money
+		chargeDao.refreshLandPayMoney(projectLicense.getCharge());
+		
 		//refresh calMoney in charge
 		chargeDao.refreshCalMoney(projectLicense.getCharge());
+
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(ProjectLicense projectLicense) {
 		super.delete(projectLicense);
 		
+		//refresh land pay money
+		chargeDao.refreshLandPayMoney(projectLicense.getCharge());
+		
 		//refresh calMoney in charge
 		chargeDao.refreshCalMoney(projectLicense.getCharge());
+
 	}
 	
 }

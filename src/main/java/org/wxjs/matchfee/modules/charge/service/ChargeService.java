@@ -28,6 +28,8 @@ import org.wxjs.matchfee.modules.charge.entity.SettlementList;
 import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
 import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 
+import com.google.common.collect.Lists;
+
 /**
  * 征收Service
  * @author GLQ
@@ -118,13 +120,18 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		
 		Charge charge = this.get(chargeId);
 		
-		//calculate previous remain
+		//calculate previous remain, previous land pay money
+		
 		String prjNum = charge.getProject().getPrjNum();
 		Charge chargeParam = new Charge();
 		Project project = new Project();
 		project.setPrjNum(prjNum);
 		chargeParam.setProject(project);
 		List<Charge> charges = this.findList(chargeParam);
+		
+		StringBuffer landPayMoneyHistory = new StringBuffer();
+		float landPayMoneyTotal = 0;
+		
 		int temp = 0;
 		for(Charge item: charges){
 			int itemId = Util.getInteger(item.getId());
@@ -132,7 +139,16 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 				temp = itemId;
 				charge.setPreviousRemain(item.getMoneyGap());
 			}
+			
+			if(itemId < Util.getInteger(chargeId)){
+				landPayMoneyHistory.append("征收"+itemId)
+				.append(", 抵扣 ")
+				.append(item.getLandPayMoney() +"元/r/n");
+				landPayMoneyTotal += Util.getFloat(item.getLandPayMoney());
+			}
 		}
+		
+		landPayMoneyHistory.append("累计已抵扣"+Util.formatDecimal(landPayMoneyTotal, Global.DecimalFormat)+"元");
 		
 		calMoney -= charge.getPreviousRemain();
 		
@@ -172,15 +188,24 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			lptTotal += Util.getFloat(item.getMoney());
 			lptRemarks.append("金额（元）： " +item.getMoney());
 			lptRemarks.append(", 票据号： " +item.getTicketNo());
-			lptRemarks.append("/n/r");
+			lptRemarks.append("<br>");
 		}
-		lptRemarks.append("合计缴费金额（元）：");
+		lptRemarks.append("合计已缴费金额（元）：");
 		lptRemarks.append(Util.formatDecimal(lptTotal, Global.DecimalFormat));
-		lptRemarks.append("/n/r");
+		lptRemarks.append("<br>");
 		
 		//deducted previously
+		lptRemarks.append(landPayMoneyHistory);
 		
-		//TODO
+		landPayTicket.setName("国土已缴费抵扣");
+		landPayTicket.setMoney(charge.getLandPayMoney());
+		landPayTicket.setRemarks(lptRemarks.toString());
+		List<LandPayTicket> landPayTicketList = Lists.newArrayList();
+		landPayTicketList.add(landPayTicket);
+		
+		settlementList.setLandPayTickets(landPayTicketList);
+		
+		calMoney -= Util.getFloat(charge.getLandPayMoney());
 		
 		//DeductionDocItem
 		DeductionDocItem deductionDocItem = new DeductionDocItem();

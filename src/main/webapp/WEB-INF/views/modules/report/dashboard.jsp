@@ -33,6 +33,16 @@
 					<td>用户工号：</td>
 					<td>${user.no }</td>
 				</tr>
+				<c:if test="${user.isQyUser}">
+				<tr>
+					<td>建设单位代码：</td>
+					<td>${user.project.buildCorpCode}</td>
+				</tr>
+				<tr>
+					<td>建设单位名称：</td>
+					<td>${user.project.buildCorpName}</td>
+				</tr>								
+				</c:if>
 			</table>
 		</fieldset>
 	</div>
