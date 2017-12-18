@@ -74,7 +74,7 @@
 				<th>确认时间</th>
 				<th>测算金额</th>
 				<th>付款金额</th>
-				<th>备注信息</th>
+				<th>状态</th>
 				<th>操作</th>
 			</tr>
 		</thead>
@@ -127,7 +127,7 @@
 					${charge.payMoney}
 				</td>
 				<td>
-					${charge.remarks}
+					${charge.statusLabel}
 				</td>
 				<td>
     				<a href="${ctx}/report/report/searchInfo?id=${charge.id}">查看</a>

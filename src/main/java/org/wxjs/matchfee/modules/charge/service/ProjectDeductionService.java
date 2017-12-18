@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
+import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
 import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 import org.wxjs.matchfee.modules.charge.dao.ProjectDeductionDao;
@@ -43,7 +44,8 @@ public class ProjectDeductionService extends CrudService<ProjectDeductionDao, Pr
 		super.save(projectDeduction);
 		
 		//refresh calMoney in charge
-		chargeDao.refreshCalMoney(projectDeduction.getCharge());
+		Charge charge = chargeDao.get(projectDeduction.getCharge());
+		chargeDao.refreshCalMoney(charge);
 	}
 	
 	@Transactional(readOnly = false)
@@ -51,7 +53,8 @@ public class ProjectDeductionService extends CrudService<ProjectDeductionDao, Pr
 		super.delete(projectDeduction);
 		
 		//refresh calMoney in charge
-		chargeDao.refreshCalMoney(projectDeduction.getCharge());
+		Charge charge = chargeDao.get(projectDeduction.getCharge());
+		chargeDao.refreshCalMoney(charge);
 	}
 	
 }

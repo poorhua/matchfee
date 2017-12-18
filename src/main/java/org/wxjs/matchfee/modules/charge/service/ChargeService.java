@@ -143,7 +143,7 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			if(itemId < Util.getInteger(chargeId)){
 				landPayMoneyHistory.append("征收"+itemId)
 				.append(", 抵扣 ")
-				.append(item.getLandPayMoney() +"元/r/n");
+				.append(Util.getFloat(item.getLandPayMoney()) +"元<br>");
 				landPayMoneyTotal += Util.getFloat(item.getLandPayMoney());
 			}
 		}

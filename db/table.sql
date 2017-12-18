@@ -193,7 +193,7 @@ CREATE TABLE `tproject_deduction` (
   `document_date` datetime NOT NULL COMMENT '文档日期',
   `area` decimal(10,2) NOT NULL COMMENT '面积（平米）',
   `money` decimal(10,2) NOT NULL COMMENT '金额（元）',
-  `deduction_type` char(1) DEFAULT '0' NOT NULL COMMENT '抵扣方式',
+  `deduction_type` char(1) DEFAULT '0' NULL COMMENT '抵扣方式',
   `create_by` varchar(32) DEFAULT NULL COMMENT '创建者',
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(32) DEFAULT NULL COMMENT '更新者',

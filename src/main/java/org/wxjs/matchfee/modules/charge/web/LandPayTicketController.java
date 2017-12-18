@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -77,8 +78,18 @@ public class LandPayTicketController extends BaseController {
 		project.setPrjNum(landPayTicket.getPrjNum());
 		charge.setProject(project);
 		
-		landPayTicketService.save(landPayTicket, charge); 
-		addMessage(redirectAttributes, "保存国土缴费凭证成功");
+		try{
+			landPayTicketService.save(landPayTicket, charge); 
+			addMessage(redirectAttributes, "保存国土缴费凭证成功");
+		}catch(DuplicateKeyException e1){
+			addMessage(redirectAttributes, "保存失败。重复！");
+			logger.error("save error", e1);
+		}catch(Exception e2){
+			addMessage(redirectAttributes, "保存失败。");
+			logger.error("save error", e2);
+		}
+		
+		
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/landPayTicketTab?repage";
 	}
 	

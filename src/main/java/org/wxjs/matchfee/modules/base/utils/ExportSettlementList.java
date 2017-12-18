@@ -96,14 +96,17 @@ public class ExportSettlementList {
             String[] headers = new String[]{"条目","建筑面积（平米）","金额（元）","备注"};
     		
             float[] widths = new float[]{0.24f, 0.18f, 0.18f ,0.4f};
+            
+            List<String[]> items = new ArrayList<String[]>();
 			
 			table = PdfUtil.generateTable(headers, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), widths, tableWidth);
 			document.add(table);	
 			
-			table = PdfUtil.generateTable(new String[]{"*结算项目"}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), new float[]{1f}, tableWidth);
+			table = PdfUtil.generateTable(new String[]{"*上期待清算金额（元）", "", settlementList.getCharge().getPreviousRemainDisplay(), ""}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), widths, tableWidth);
 			document.add(table);
 			
-			List<String[]> items = new ArrayList<String[]>();
+			table = PdfUtil.generateTable(new String[]{"*结算项目"}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), new float[]{1f}, tableWidth);
+			document.add(table);
 			
 			items.clear();
 			for(ProjectLicense item : settlementList.getProjectLicenses()){
@@ -207,6 +210,15 @@ public class ExportSettlementList {
         
         table.addCell(this.getLabelCell("状态:"));
         table.addCell(this.getContentCell(this.settlementList.getCharge().getStatusLabel()));
+        
+        if("40".equals(this.settlementList.getCharge().getStatus())){
+            table.addCell(this.getLabelCell("缴费金额（元）:"));
+            table.addCell(this.getContentCell(this.settlementList.getCharge().getPayMoney()));
+            
+            table.addCell(this.getLabelCell("待清算金额（元）:"));
+            table.addCell(this.getContentCell(this.settlementList.getCharge().getMoneyGapDisplay()));
+        	
+        }
         
         return table;
 		

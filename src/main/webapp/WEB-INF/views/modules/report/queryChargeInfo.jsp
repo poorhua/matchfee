@@ -1,18 +1,18 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+
 <html>
 <head>
-	<title>规划许可证管理</title>
+	<title>配套费征收</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			
-		});
-		
-	    function toNewPage(){
-		       window.location.replace("${ctx}/charge/projectLicense/form");
-	    }		
+		});		
 	</script>
+	<style type="text/css">
+		.docTypeLabel {margin: 10px 0 10px 20px;color: blue;font-size: 18px;font-weight:bold;}
+	</style>
 </head>
 <body>
     <sys:message content="${message}"/>
@@ -150,7 +150,7 @@
 				<th>文档日期</th>
 				<th>面积（平米）</th>
 				<th>金额（元）</th>
-				<th>抵扣方式</th>
+				<!-- <th>抵扣方式</th>-->
 				<th>备注信息</th>
 			</tr>
 		</thead>
@@ -176,9 +176,11 @@
 				<td>
 					${projectDeduction.money}
 				</td>
+				<!-- 
 				<td>
 					${fns:getDictLabel(projectDeduction.deductionType, 'deduction_type', '')}
 				</td>
+				-->
 				<td>
 					${projectDeduction.remarks}
 				</td>

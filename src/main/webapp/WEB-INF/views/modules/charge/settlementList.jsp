@@ -86,7 +86,7 @@
 		<tbody>
 			<tr>
 				<td class="tit">
-					<strong>*待清算金额（元）</strong>
+					<strong>*上期待清算金额（元）</strong>
 				</td>
 				<td>
 				</td>

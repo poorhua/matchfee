@@ -45,6 +45,9 @@ public class LandPayTicketService extends CrudService<LandPayTicketDao, LandPayT
 		
 		//refresh land pay money
 		chargeDao.refreshLandPayMoney(charge);
+		
+		//refresh cal money
+		chargeDao.refreshCalMoney(charge);
 	}
 	
 	@Transactional(readOnly = false)
@@ -53,6 +56,9 @@ public class LandPayTicketService extends CrudService<LandPayTicketDao, LandPayT
 		
 		//refresh land pay money
 		chargeDao.refreshLandPayMoney(charge);
+		
+		//refresh cal money
+		chargeDao.refreshCalMoney(charge);
 	}
 	
 }

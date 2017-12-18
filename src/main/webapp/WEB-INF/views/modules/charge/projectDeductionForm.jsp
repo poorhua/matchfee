@@ -82,6 +82,7 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>		
+		<!--  
 		<div class="control-group">
 			<label class="control-label">抵扣方式：</label>
 			<div class="controls">
@@ -92,6 +93,7 @@
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
+		-->
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">

@@ -38,7 +38,7 @@
 				<th>文档日期</th>
 				<th>面积（平米）</th>
 				<th>金额（元）</th>
-				<th>抵扣方式</th>
+				<!-- <th>抵扣方式</th>-->
 				<th>备注信息</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -65,9 +65,11 @@
 				<td>
 					${projectDeduction.money}
 				</td>
+				<!-- 
 				<td>
 					${fns:getDictLabel(projectDeduction.deductionType, 'deduction_type', '')}
 				</td>
+				 -->
 				<td>
 					${projectDeduction.remarks}
 				</td>

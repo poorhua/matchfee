@@ -58,7 +58,7 @@
 			</div>
 		</div>
 		
-		<matchfee:deductionDocItemView deductionDoc="${deductionDoc}" withOperation="0"></matchfee:deductionDocItemView>
+		<matchfee:deductionDocItemView deductionDoc="${deductionDoc}" withOperation="1"></matchfee:deductionDocItemView>
 		<hr style="border:1px dotted #036" />
 		
 	</c:forEach>

@@ -43,7 +43,7 @@
 				<c:if test="${charge.status gt '30' }">
 				<tr>
 					<td class="tit">缴费金额（元）：</td><td>${charge.payMoney}</td>
-					<td class="tit">待清算金额（元）：</td>
+					<td class="tit">本期待清算金额（元）：</td>
 					<td> ${charge.moneyGapDisplay}
 					</td>				
 				</tr>	

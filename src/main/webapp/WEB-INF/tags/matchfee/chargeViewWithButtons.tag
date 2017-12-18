@@ -121,7 +121,7 @@
 				<c:if test="${charge.status gt '30' }">
 				<tr>
 					<td class="tit">缴费金额（元）：</td><td>${charge.payMoney}</td>
-					<td class="tit">待清算金额（元）：</td>
+					<td class="tit">本期待清算金额（元）：</td>
 					<td> ${charge.moneyGapDisplay}
 					</td>				
 				</tr>	
@@ -133,7 +133,7 @@
 		          <c:choose>
 		   			<c:when test="${charge.status eq '00' || charge.status eq '05'}">
 		   				<input id="btnYes" class="btn btn-primary" type="button" value=" 提 交 " onclick="reportSubmit()"/>
-		   				<input id="btnSettle" class="btn btn-primary" type="button" value="结算清单" onclick="showSettlementList()"/>
+		   				<input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   			</c:when>
 		   			<c:when test="${charge.status eq '10'}">
 		   				<table width="100%">

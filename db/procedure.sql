@@ -74,10 +74,10 @@ BEGIN
 	
 	select sum(u.money) into calMoney from
 	(
-    select CONCAT('pre',p.id), (p.pay_money-p.cal_money) money, '0'
+    select CONCAT('pre',p.id), (p.cal_money - p.pay_money) money, '0' del_flag
 	from tcharge p
-    where p.prj_num='3202021511020101'
-    and p.id = (select max(id) from tcharge q where q.prj_num='3202021511020101' and q.id<8)
+    where p.prj_num=prjNum
+    and p.id = (select max(id) from tcharge q where q.prj_num=prjNum and q.id<chargeId)
 	union	
 	select CONCAT('pl',a.id), (a.up_area+a.down_area)*matchfeeBasis money, a.del_flag
 	from tproject_license a
@@ -92,7 +92,7 @@ BEGIN
 	from tproject_deduction c
 	where c.charge_id=chargeId
 	union
-	select CONCAT('lpm',d.id), (0-d.land_pay_money) money, '0'
+	select CONCAT('lpm',d.id), (0-d.land_pay_money) money, '0' del_flag
 	from tcharge d
 	where d.id=chargeId		
 	) u

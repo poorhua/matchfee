@@ -213,28 +213,7 @@
 	</update>
 	
     <update id="refreshCalMoney">
-		update tcharge 
-		set cal_money = 
-		(select sum(u.money) from
-		(select CONCAT('pl',a.id), (a.up_area+a.down_area)*#{MatchfeeBasis} money, a.del_flag
-		from tproject_license a
-		where a.charge_id=#{id}
-		union
-		select CONCAT('dd',b.id), (0-b.money) money, b.del_flag
-		from tdeduction_doc_item b
-		left join tdeduction_doc doc on doc.id=b.doc_id
-		where doc.charge_id=#{id}
-		union
-		select CONCAT('pd',c.id), (0-c.money) money, c.del_flag
-		from tproject_deduction c
-		where c.charge_id=#{id}
-		union
-		select CONCAT('lpm',d.id), (0-d.land_pay_money) money, '0'
-		from tcharge d
-		where d.id=#{id}		
-		) u
-		where u.del_flag = '0')
-		where id=#{id}
+		call proc_refresh_cal_money(#{id},#{project.prjNum},#{MatchfeeBasis}, @aaa)
 	</update>	
 	
     <update id="refreshPayMoney">
@@ -248,7 +227,7 @@
 	</update>
 		
     <update id="refreshLandPayMoney">
-		call proc_refresh_land_pay_money(#{id},#{project.prjNum},#{MatchfeeBasis}, @aaa);
+		call proc_refresh_land_pay_money(#{id},#{project.prjNum},#{MatchfeeBasis}, @aaa)
 	</update>
 		
     <update id="updateLandPayMoney">
