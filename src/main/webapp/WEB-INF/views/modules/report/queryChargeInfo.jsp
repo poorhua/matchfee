@@ -37,8 +37,8 @@
 		<c:forEach items="${charge.projectLicenseList}" var="projectLicense">
 			<tr>
 				<td>
-				<input type="hidden" id="path${projectLicense.id}" name="path${projectLicense.id}" value="${projectLicense.path}">
-				<sys:ckfinder input="path${projectLicense.id}" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false" readonly="true"/>					
+				<input type="hidden" id="pathlicense${projectLicense.id}" name="pathlicense${projectLicense.id}" value="${projectLicense.path}">
+				<sys:ckfinder input="pathlicense${projectLicense.id}" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false" readonly="true"/>					
 				</td>			
 				<td>
 					${projectLicense.name}
@@ -109,8 +109,8 @@
 		<c:forEach items="${charge.landPayTicketList}" var="landPayTicket">
 			<tr>
 				<td>
-				<input type="hidden" id="path${landPayTicket.id}" name="path${landPayTicket.id}" value="${landPayTicket.path}">
-				<sys:ckfinder input="path${landPayTicket.id}" type="files" uploadPath="/配套费/国土缴费凭证" selectMultiple="false" readonly="true"/>						
+				<input type="hidden" id="pathlpt${landPayTicket.id}" name="pathlpt${landPayTicket.id}" value="${landPayTicket.path}">
+				<sys:ckfinder input="pathlpt${landPayTicket.id}" type="files" uploadPath="/配套费/国土缴费凭证" selectMultiple="false" readonly="true"/>						
 				</td>
 				<td>
 				<input type="hidden" id="aapath${landPayTicket.id}" name="aapath${landPayTicket.id}" value="${landPayTicket.agencyAgreement}">
@@ -158,8 +158,8 @@
 		<c:forEach items="${charge.projectDeductionList}" var="projectDeduction">
 			<tr>
 				<td>
-				<input type="hidden" id="path${projectDeduction.id}" name="path${projectDeduction.id}" value="${projectDeduction.path}">
-				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/配套费/减项证明" selectMultiple="false" readonly="true"/>					
+				<input type="hidden" id="pathpd${projectDeduction.id}" name="pathpd${projectDeduction.id}" value="${projectDeduction.path}">
+				<sys:ckfinder input="pathpd${projectDeduction.id}" type="files" uploadPath="/配套费/减项证明" selectMultiple="false" readonly="true"/>					
 				</td>			
 				<td>
 					${projectDeduction.name}
@@ -206,8 +206,8 @@
 		<c:forEach items="${charge.payTicketList}" var="payTicket">
 			<tr>
 				<td>
-				<input type="hidden" id="path${payTicket.id}" name="path${payTicket.id}" value="${payTicket.path}">
-				<sys:ckfinder input="path${payTicket.id}" type="files" uploadPath="/配套费/缴费票据" selectMultiple="false" readonly="true"/>					
+				<input type="hidden" id="pathpt${payTicket.id}" name="pathpt${payTicket.id}" value="${payTicket.path}">
+				<sys:ckfinder input="pathpt${payTicket.id}" type="files" uploadPath="/配套费/缴费票据" selectMultiple="false" readonly="true"/>					
 				</td>
 				<td>
 					${payTicket.money}
