@@ -618,8 +618,12 @@ public class ChargeController extends BaseController {
 		
 		charge.setConfirmDate(Calendar.getInstance().getTime());
 		
-		charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
-		
+		if(charge.getMoneyGap()==0){
+			charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
+		}else{
+			charge.setStatus(Global.CHARGE_STATUS_CONFIRMED_TODO);
+		}
+			
 		chargeService.updateConfirm(charge);
 		
 		operationLogService.logApprove(charge.getId(), "缴费确认", "");

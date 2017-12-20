@@ -65,6 +65,10 @@ public class OpinionBookController extends BaseController {
 	public String form(OpinionBook opinionBook, Model model) {
 		model.addAttribute("opinionBook", opinionBook);
 		
+		if(opinionBook.getIsNewRecord() && StringUtils.isBlank(opinionBook.getDocumentNo())){
+			opinionBook.setDocumentNo(Global.getConfig("OPINION_BOOK_FORMAT"));
+		}
+		
 		Project project = projectService.getByPrjNum(opinionBook.getPrjNum());
 		
 		logger.debug("opinionBook.getPrjNum(): "+opinionBook.getPrjNum());

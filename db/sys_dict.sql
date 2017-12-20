@@ -32,7 +32,8 @@ VALUES
 ('charge_status_10', '10', '已申报待测算', 'charge_status', 'charge_status', 10, '0','1',now(),'1',now()),
 ('charge_status_20', '20', '已测算待审核', 'charge_status', 'charge_status', 20, '0','1',now(),'1',now()),
 ('charge_status_30', '30', '已审核待缴费', 'charge_status', 'charge_status', 30, '0','1',now(),'1',now()),
-('charge_status_40', '40', '已缴费', 'charge_status', 'charge_status', 40, '0','1',now(),'1',now()),
+('charge_status_40', '40', '已缴清', 'charge_status', 'charge_status', 40, '0','1',now(),'1',now()),
+('charge_status_50', '50', '待清算', 'charge_status', 'charge_status', 50, '0','1',now(),'1',now()),
 ('charge_status_90', '90', '关闭', 'charge_status', 'charge_status', 90, '0','1',now(),'1',now());
 
 

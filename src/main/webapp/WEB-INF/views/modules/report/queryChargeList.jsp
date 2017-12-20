@@ -49,6 +49,11 @@
 				<input name="dateTo" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${charge.dateTo}" pattern="yyyy-MM-dd"/>"
 					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<label>状态 ：</label>
+				<form:select path="status" class="input-large required">
+				    <form:option value="" label="全部"/>
+					<form:options items="${fns:getDictList('charge_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>				
 			</li>			
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 			</li>
