@@ -52,7 +52,7 @@
 			<div class="controls">
 				<form:hidden id="path" path="path" htmlEscape="false" maxlength="256" class="input-xlarge"/>
 				<sys:ckfinder input="path" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<span class="help-inline"><font color="red">*</font> &nbsp;&nbsp;&nbsp;如果是多页，请做成一个pdf文件 。</span>
 			</div>
 		</div>		
 		<div class="control-group">

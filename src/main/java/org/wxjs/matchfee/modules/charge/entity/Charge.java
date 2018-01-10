@@ -204,7 +204,17 @@ public class Charge extends DataEntity<Charge> {
 	}
 	
 	public String getStatusLabel() {
-		return DictUtils.getDictLabel(this.status, "charge_status", "");
+		String label = DictUtils.getDictLabel(this.status, "charge_status", "");
+		
+		if("40".equals(this.status)){
+			if(this.getMoneyGap() == 0){
+				label = "已缴费（已缴清）";
+			}else{
+				label = "已缴费（待清算）";
+			}
+		}
+		
+		return label;
 	}
 
 	public void setStatus(String status) {

@@ -13,6 +13,10 @@
 		       window.location.replace("${ctx}/charge/projectDeduction/form");
 	    }		
 	</script>
+	
+	<style type="text/css">
+		.docHint {margin: 10px 0 10px 20px;font-size: 16px;font-weight:bold;}
+	</style>
 </head>
 <body>
     <sys:message content="${message}"/>
