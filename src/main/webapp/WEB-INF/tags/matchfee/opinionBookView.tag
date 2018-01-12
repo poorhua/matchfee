@@ -8,12 +8,13 @@
 		<fieldset>			
 			<table class="table-form">
 				<tr>
-					<td class="tit">链接：</td><td>
-				<input type="hidden" id="path" name="path" value="${opinionBook.path}">
-				<sys:ckfinder input="path" type="files" uploadPath="/配套费/条件意见书" selectMultiple="false" readonly="true"/>					
-					</td>				
-					
-					<td class="tit">名称：</td><td>${opinionBook.name}</td>
+					<td class="tit" width="15%">文件：</td>
+					<td width="35%">	
+                     <a href="${opinionBook.path}" target="_blank">${opinionBook.filename}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <input class="btn btn-default" type="button" value="显示" onclick="$('#opinionBook_${opinionBook.id}').show()"/>	&nbsp;&nbsp;
+				     <input class="btn btn-default" type="button" value="隐藏" onclick="$('#opinionBook_${opinionBook.id}').hide()"/>	
+					</td>
+					<td class="tit" width="15%">名称：</td><td width="35%">${opinionBook.name}</td>
 				</tr>
 				<tr>
 				    <td class="tit">文档编号：</td><td>${opinionBook.documentNo}</td>
@@ -31,3 +32,7 @@
 			</table>
 		</fieldset>		
 	</form:form>
+	
+	<div style="margin:10px 0 10px 0;text-align:center">
+		<embed id="opinionBook_${opinionBook.id}" width="800" height="600" src="${opinionBook.path}"  style="display:none"> </embed>
+	</div>

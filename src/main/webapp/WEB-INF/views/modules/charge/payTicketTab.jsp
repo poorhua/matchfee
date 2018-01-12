@@ -21,12 +21,10 @@
     <c:if test="${!fns:getUser().isShy}"><legend>上传缴费凭证</legend></c:if>
     <matchfee:chargeViewWithButtons charge="${charge}"></matchfee:chargeViewWithButtons><br>
 
-	<div style="margin:10px 60px 10px 0;width='100%'">
-	   <div align="right">
-		    <shiro:hasPermission name="charge:charge:edit">
-		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加缴费凭证" onclick="toNew()"/>
-		    </shiro:hasPermission>	   
-	   </div>
+	<div style="margin:10px 60px 10px 0;text-align:right">
+	    <shiro:hasPermission name="charge:charge:edit">
+	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加缴费凭证" onclick="toNew()"/>
+	    </shiro:hasPermission>	   
 	</div>
 
 <c:if test="${not empty charge.payTicketList}">
@@ -45,8 +43,7 @@
 		<c:forEach items="${charge.payTicketList}" var="payTicket">
 			<tr>
 				<td>
-				<input type="hidden" id="path${payTicket.id}" name="path${payTicket.id}" value="${payTicket.path}">
-				<sys:ckfinder input="path${payTicket.id}" type="files" uploadPath="/配套费/缴费票据" selectMultiple="false" readonly="true"/>					
+				<a href="${payTicket.path}" target="_blank">${payTicket.filename}</a>				
 				</td>
 				<td>
 					${payTicket.money}

@@ -25,12 +25,10 @@
 
 	<matchfee:chargeTabController tab="5"></matchfee:chargeTabController>
 	<div class="docHint">*其他减项指滨湖区已缴费凭证、防空地下室批文、减免证明等。</div>
-	<div style="margin:10px 60px 10px 0;width='100%'">
-	   <div align="right">
-		    <shiro:hasPermission name="charge:charge:edit">
-		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNew()"/>
-		    </shiro:hasPermission>	   
-	   </div>
+	<div style="margin:10px 60px 10px 0;text-align:right">
+	    <shiro:hasPermission name="charge:charge:edit">
+	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNew()"/>
+	    </shiro:hasPermission>	  
 	</div>
 
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -51,8 +49,7 @@
 		<c:forEach items="${charge.projectDeductionList}" var="projectDeduction">
 			<tr>
 				<td>
-				<input type="hidden" id="path${projectDeduction.id}" name="path${projectDeduction.id}" value="${projectDeduction.path}">
-				<sys:ckfinder input="path${projectDeduction.id}" type="files" uploadPath="/配套费/减项证明" selectMultiple="false" readonly="true"/>					
+				<a href="${projectDeduction.path}" target="_blank">${projectDeduction.filename}</a>					
 				</td>			
 				<td>
 					${projectDeduction.name}

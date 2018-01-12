@@ -76,6 +76,10 @@ public class LandPayTicket extends DataEntity<LandPayTicket> {
 		this.path = path;
 	}
 	
+	public String getFilename(){
+		return Util.getFilename(this.path);
+	}
+	
 	@Length(min=1, max=256, message="代收费协议长度必须介于 1 和 256 之间")
 	public String getAgencyAgreement() {
 		return agencyAgreement;
@@ -83,6 +87,10 @@ public class LandPayTicket extends DataEntity<LandPayTicket> {
 
 	public void setAgencyAgreement(String agencyAgreement) {
 		this.agencyAgreement = agencyAgreement;
+	}
+	
+	public String getAgencyAgreementFilename(){
+		return Util.getFilename(this.agencyAgreement);
 	}
 	
 	public String getArea() {

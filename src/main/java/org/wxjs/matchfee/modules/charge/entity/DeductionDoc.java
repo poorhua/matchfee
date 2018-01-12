@@ -8,8 +8,10 @@ import java.util.List;
 
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.Length;
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.common.utils.Util;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.google.common.collect.Lists;
@@ -89,6 +91,10 @@ public class DeductionDoc extends DataEntity<DeductionDoc> {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	public String getFilename(){
+		return Util.getFilename(this.path);
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

@@ -14,8 +14,8 @@
 <body>
 	<legend>征收列表</legend>	
 	
-	<div style="margin:10px 60px 10px 0;width='100%'">
-	   <div align="right"><input id="btnAdd" class="btn btn-primary" type="button" value="新申报" onclick="location.href='${ctx}/charge/charge/toProjectList'"/></div>
+	<div style="margin:10px 60px 10px 0;text-align:right">
+	   <input id="btnAdd" class="btn btn-primary" type="button" value="新申报" onclick="location.href='${ctx}/charge/charge/toProjectList'"/>
 	</div>	
 	
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">

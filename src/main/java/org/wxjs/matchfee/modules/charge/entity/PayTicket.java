@@ -73,6 +73,10 @@ public class PayTicket extends DataEntity<PayTicket> {
 		this.path = path;
 	}
 	
+	public String getFilename(){
+		return Util.getFilename(this.path);
+	}
+	
 	public String getMoney() {
 		return Util.formatDecimal(money, Global.DecimalFormat);
 	}

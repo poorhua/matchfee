@@ -21,12 +21,10 @@
 
     <matchfee:chargeTabController tab="4"></matchfee:chargeTabController>
 	
-	<div style="margin:10px 60px 10px 0;width='100%'">
-	   <div align="right">
-		    <shiro:hasPermission name="charge:charge:edit">
-		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNewPage()"/>
-		    </shiro:hasPermission>	   
-	   </div>
+	<div style="margin:10px 60px 10px 0;text-align:right">
+	    <shiro:hasPermission name="charge:charge:edit">
+	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNewPage()"/>
+	    </shiro:hasPermission>	   
 	</div>
 
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -47,12 +45,10 @@
 		<c:forEach items="${charge.landPayTicketList}" var="landPayTicket">
 			<tr>
 				<td>
-				<input type="hidden" id="path${landPayTicket.id}" name="path${landPayTicket.id}" value="${landPayTicket.path}">
-				<sys:ckfinder input="path${landPayTicket.id}" type="files" uploadPath="/配套费/国土缴费凭证" selectMultiple="false" readonly="true"/>						
+				<a href="${landPayTicket.path}" target="_blank">${landPayTicket.filename}</a>				
 				</td>
 				<td>
-				<input type="hidden" id="aapath${landPayTicket.id}" name="aapath${landPayTicket.id}" value="${landPayTicket.agencyAgreement}">
-				<sys:ckfinder input="aapath${landPayTicket.id}" type="files" uploadPath="/配套费/国土缴费凭证" selectMultiple="false" readonly="true"/>						
+				<a href="${landPayTicket.agencyAgreement}" target="_blank">${landPayTicket.agencyAgreementFilename}</a>					
 				</td>			
 				<td>
 					${landPayTicket.name}

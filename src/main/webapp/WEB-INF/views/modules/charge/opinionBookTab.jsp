@@ -34,7 +34,7 @@
 
 <c:if test="${empty charge.opinionBookList}">
   
-	<div style="margin:10px 60px 10px 0;width='100%'">
+	<div style="margin:10px 60px 10px 0;width:100%">
 	   <div align="right">
 		    <shiro:hasPermission name="charge:charge:edit">
 		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加文件" onclick="toNewOpinonBook()"/>
@@ -52,37 +52,39 @@
 	<div>
 
 		<legend>条件意见书</legend>
-		<div style="margin:10px 60px 10px 0;width='100%'">
-		<div align="right">
-		<shiro:hasPermission name="charge:charge:edit">
-	 				<a href="${ctx}/charge/opinionBook/form?id=${opinionBook.id}">修改</a>
-			<a href="${ctx}/charge/opinionBook/delete?id=${opinionBook.id}" onclick="return confirmx('确认要删除该条件意见书吗？', this.href)">删除</a>
-		</shiro:hasPermission>			
-		</div>			
+		<div style="margin:10px 60px 10px 0;text-align:right">
+			<shiro:hasPermission name="charge:charge:edit">
+		 		<a href="${ctx}/charge/opinionBook/form?id=${opinionBook.id}">修改</a>
+				<a href="${ctx}/charge/opinionBook/delete?id=${opinionBook.id}" onclick="return confirmx('确认要删除该条件意见书吗？', this.href)">删除</a>
+			</shiro:hasPermission>					
 		</div>	
 		
-		<matchfee:opinionBookView opinionBook="${opinionBook}"></matchfee:opinionBookView>	
+		<matchfee:opinionBookView opinionBook="${opinionBook}"></matchfee:opinionBookView>
 		
-		<div style="margin:10px 60px 10px 0;width='100%'">
-		   <div align="right"><input id="btnAddItem" class="btn btn-primary" type="button" value="添加项目" onclick="toNewItem(${opinionBook.id})"/></div>
-		</div>
-		
-		
-	  <div style="width='50%'">
-	    <embed width="800" height="600" src="${opinionBook.path}"> </embed> 
-	  </div>
-	  <div style="width='50%'">		
-		<matchfee:opinionBookItemView opinionBook="${opinionBook}" withOperation="1"></matchfee:opinionBookItemView>	
-		
-	  </div>
+		<div style="margin:10px 60px 10px 0;text-align:right">
+			<input id="btnAddItem" class="btn btn-primary" type="button" value="添加项目" onclick="toNewItem(${opinionBook.id})"/>
+		</div>	      
+	    <matchfee:opinionBookItemView opinionBook="${opinionBook}" withOperation="1"></matchfee:opinionBookItemView>
+<!--  
+	  <table style="text-align:top;width:100%" cellspacing="10">
+	    <tr>
+	      <td style="text-align:top;width:49%">
+			<div style="margin:10px 60px 10px 0;width:100%">
+			   <div align="right"><input id="btnAddItem" class="btn btn-primary" type="button" value="添加项目" onclick="toNewItem(${opinionBook.id})"/></div>
+			</div>	      
+	      <matchfee:opinionBookItemView opinionBook="${opinionBook}" withOperation="1"></matchfee:opinionBookItemView>
+	      </td>
+	      <td width="1%"></td>
+	      <td width="50%">
+	      <embed width="800" height="600" src="${opinionBook.path}"> </embed>
+	      </td>
+	    </tr>
+	  </table>
+-->	
     </div>
-	
 	</c:forEach>		
 
-</c:if>  
-
-
-
+</c:if>
 
 <matchfee:logListView chargeId="${charge.id}"></matchfee:logListView>
     

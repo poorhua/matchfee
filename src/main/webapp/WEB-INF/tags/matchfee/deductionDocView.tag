@@ -8,11 +8,13 @@
 		<fieldset>			
 			<table class="table-form">
 				<tr>
-					<td class="tit">文件：</td><td>
-				<input type="hidden" id="path${deductionDoc.id}" name="path${deductionDoc.id}" value="${deductionDoc.path}">
-				<sys:ckfinder input="path${deductionDoc.id}" type="files" uploadPath="/配套费/设计院证明" selectMultiple="false" readonly="true"/>					
+					<td class="tit" width="15%">文件：</td>
+					<td width="35%">
+                     <a href="${deductionDoc.path}" target="_blank">${deductionDoc.filename}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                     <input class="btn btn-default" type="button" value="显示" onclick="$('#deductionDoc_${deductionDoc.id}').show()"/>&nbsp;&nbsp;	
+				     <input class="btn btn-default" type="button" value="隐藏" onclick="$('#deductionDoc_${deductionDoc.id}').hide()"/>									
 					</td>
-					<td class="tit">名称：</td><td>${deductionDoc.name}</td>
+					<td class="tit" width="15%">名称：</td><td width="35%">${deductionDoc.name}</td>
 				</tr>
 				<tr>
 				    <td class="tit">文件编号：</td><td>${deductionDoc.documentNo}</td>
@@ -31,3 +33,7 @@
 			</table>
 		</fieldset>		
 	</form:form>
+
+	<div style="margin:10px 0 10px 0;text-align:center">
+		<embed id="deductionDoc_${deductionDoc.id}" width="800" height="600" src="${deductionDoc.path}"  style="display:none"> </embed>
+	</div>

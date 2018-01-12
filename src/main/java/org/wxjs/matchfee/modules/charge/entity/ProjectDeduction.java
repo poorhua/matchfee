@@ -84,6 +84,10 @@ public class ProjectDeduction extends DataEntity<ProjectDeduction> {
 		this.path = path;
 	}
 	
+	public String getFilename(){
+		return Util.getFilename(this.path);
+	}
+	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@NotNull(message="文档日期不能为空")
 	public Date getDocumentDate() {

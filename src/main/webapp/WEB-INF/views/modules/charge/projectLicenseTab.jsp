@@ -21,12 +21,10 @@
 	
 	<matchfee:chargeTabController tab="1"></matchfee:chargeTabController>
 	
-	<div style="margin:10px 60px 10px 0;width='100%'">
-	   <div align="right">
-		    <shiro:hasPermission name="charge:charge:edit">
-		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNewPage()"/>
-		    </shiro:hasPermission>	   
-	   </div>
+	<div style="margin:10px 60px 10px 0;text-align:right">
+	    <shiro:hasPermission name="charge:charge:edit">
+	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNewPage()"/>
+	    </shiro:hasPermission>	   
 	</div>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
@@ -44,9 +42,8 @@
 		<tbody>
 		<c:forEach items="${charge.projectLicenseList}" var="projectLicense">
 			<tr>
-				<td>
-				<input type="hidden" id="path${projectLicense.id}" name="path${projectLicense.id}" value="${projectLicense.path}">
-				<sys:ckfinder input="path${projectLicense.id}" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false" readonly="true"/>					
+				<td>	
+				<a href="${projectLicense.path}" target="_blank">${projectLicense.filename}</a>				
 				</td>			
 				<td>
 					${projectLicense.name}

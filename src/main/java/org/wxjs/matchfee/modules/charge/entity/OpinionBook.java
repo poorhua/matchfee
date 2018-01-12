@@ -4,13 +4,19 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
 import org.hibernate.validator.constraints.Length;
+
 import java.util.Date;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.validation.constraints.NotNull;
+
 import java.util.List;
+
 import com.google.common.collect.Lists;
 
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.common.utils.Util;
 
 /**
  * 条件意见书Entity
@@ -79,6 +85,10 @@ public class OpinionBook extends DataEntity<OpinionBook> {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+	
+	public String getFilename(){
+		return Util.getFilename(this.path);
 	}
 	
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

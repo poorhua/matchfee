@@ -87,6 +87,10 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		this.path = path;
 	}
 	
+	public String getFilename(){
+		return Util.getFilename(this.path);
+	}
+	
 	@JsonFormat(pattern = "yyyy-MM-dd")
 	@NotNull(message="文档日期不能为空")
 	public Date getDocumentDate() {

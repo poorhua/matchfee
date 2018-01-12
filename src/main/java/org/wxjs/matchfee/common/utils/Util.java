@@ -1,7 +1,10 @@
 package org.wxjs.matchfee.common.utils;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.text.DecimalFormat;
+
+import org.apache.commons.lang3.StringUtils;
 
 
 public class Util {
@@ -282,6 +285,24 @@ public class Util {
 	 */
 	public static double getDouble(Object obj){
 		return getDouble(obj,0);
+	}
+	
+	public static String getFilename(String path){
+		String rst = "";
+		if(!StringUtils.isBlank(path)){
+			String pathDe = "";
+			try {
+				pathDe = URLDecoder.decode(path, "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			int index = pathDe.lastIndexOf("/");
+			if(index > 0){
+				rst = pathDe.substring(index + 1);
+			}
+		}
+		return rst;
 	}
 	
 	/**
