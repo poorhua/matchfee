@@ -23,6 +23,9 @@ public class Project extends DataEntity<Project> {
 	
 	private String mobile;
 	
+	//for query param
+	private String projectLicense;
+	
 	public Project(){
 		
 	}
@@ -89,6 +92,14 @@ public class Project extends DataEntity<Project> {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public String getProjectLicense() {
+		return projectLicense;
+	}
+
+	public void setProjectLicense(String projectLicense) {
+		this.projectLicense = projectLicense;
 	}
 
 	@Override

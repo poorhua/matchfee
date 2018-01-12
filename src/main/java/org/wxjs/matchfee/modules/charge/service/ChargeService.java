@@ -15,6 +15,7 @@ import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
 import org.wxjs.matchfee.common.utils.Util;
+import org.wxjs.matchfee.modules.base.entity.DeductionItem;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
@@ -167,14 +168,33 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			opinionBookItemMap.put(item.getItem().getId(), item.getArea());
 		}
 		
+		float totalArea = 0;
+		float totalUpArea = 0;
+		float totalDownArea = 0;
+		float totalMoney = 0;
+		
 		//ProjectLicense
 		ProjectLicense projectLicense = new ProjectLicense();
 		projectLicense.setCharge(charge);
 		settlementList.setProjectLicenses(this.projectLicenseService.findList(projectLicense));
 		
+		totalUpArea = 0;
+		totalDownArea = 0;
+		
 		for(ProjectLicense item : settlementList.getProjectLicenses()){
 			calMoney += item.getTotalMoney();
 			item.setRemarks("规划许可证号: "+item.getDocumentNo());
+			
+			totalUpArea += Util.getFloat(item.getUpArea());
+			totalDownArea += Util.getFloat(item.getDownArea());
+		}
+		
+		if(settlementList.getProjectLicenses()!=null && settlementList.getProjectLicenses().size()>1){
+			projectLicense = new ProjectLicense();
+			projectLicense.setName("<小计>");
+			projectLicense.setUpArea(totalUpArea + "");
+			projectLicense.setDownArea(totalDownArea + "");
+			settlementList.getProjectLicenses().add(projectLicense);
 		}
 		
 		//LandPayTicket
@@ -216,13 +236,16 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		deductionDocItem.setDoc(deductionDoc);
 		
 		settlementList.setDeductionDocItems(this.deductionDocItemService.findList(deductionDocItem));
-		
+
 		//get settled item till this charge
 		List<DeductionDocItem> settledItemList = this.deductionDocItemService.sumDeductions(deductionDocItem);
 		Map<String, String> settledItemMap = new HashMap<String, String>();
 		for(DeductionDocItem item : settledItemList){
 			settledItemMap.put(item.getItem().getId(), item.getArea());
 		}
+		
+		totalArea = 0;
+		totalMoney = 0;
 		
 		for(DeductionDocItem item : settlementList.getDeductionDocItems()){
 			
@@ -245,6 +268,20 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			sb.append("，至本期共抵扣: ").append(settledValue);
 			
 			item.setRemarks(sb.toString());
+			
+			totalArea += Util.getFloat(item.getArea());
+			totalMoney += Util.getFloat(item.getMoney());
+		}
+		
+		if(settlementList.getDeductionDocItems()!=null && settlementList.getDeductionDocItems().size() > 1){
+			deductionDocItem = new DeductionDocItem();
+			DeductionItem deductionItem = new DeductionItem();
+			deductionItem.setName("<小计>");
+			deductionDocItem.setItem(deductionItem);
+			deductionDocItem.setArea(totalArea + "");
+			deductionDocItem.setMoney(totalMoney + "");
+			
+			settlementList.getDeductionDocItems().add(deductionDocItem);
 		}
 		
 		//ProjectDeduction
@@ -253,8 +290,22 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		
 		settlementList.setProjectDeductions(this.projectDeductionService.findList(projectDeduction));
 		
+		totalArea = 0;
+		totalMoney = 0;
+		
 		for(ProjectDeduction item : settlementList.getProjectDeductions()){
 			calMoney -= Util.getFloat(item.getMoney());
+			
+			totalArea += Util.getFloat(item.getArea());
+			totalMoney += Util.getFloat(item.getMoney());
+		}
+		
+		if(settlementList.getProjectDeductions()!=null && settlementList.getProjectDeductions().size()>1){
+			projectDeduction = new ProjectDeduction();
+			projectDeduction.setName("<小计>");
+			projectDeduction.setArea(totalArea + "");
+			projectDeduction.setMoney(totalMoney + "");
+			settlementList.getProjectDeductions().add(projectDeduction);
 		}
 		
 		

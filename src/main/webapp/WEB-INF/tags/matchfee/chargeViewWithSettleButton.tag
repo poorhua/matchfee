@@ -34,7 +34,7 @@
 					<td class="tit">建设单位名称：</td><td>${charge.project.buildCorpName}</td>
 				</tr>
 				<tr>
-					<td class="tit">状态：</td><td>${fns:getDictLabel(charge.status, 'charge_status', '')}</td>
+					<td class="tit">状态：</td><td>${charge.statusLabel}</td>
 					<td class="tit">结算金额（元）：</td>
 					<td>
 					    ${charge.calMoney}

@@ -42,6 +42,15 @@
 	    LEFT JOIN sys_user u3 on u3.id=a.approve_staff
 	    LEFT JOIN sys_user u4 on u4.id=a.confirm_staff
 	</sql>
+	
+	<sql id="chargeJoinsEx">
+	    LEFT JOIN tproject b on b.prj_num=a.prj_num
+	    LEFT JOIN sys_user u1 on u1.id=a.report_staff
+	    LEFT JOIN sys_user u2 on u2.id=a.cal_staff
+	    LEFT JOIN sys_user u3 on u3.id=a.approve_staff
+	    LEFT JOIN sys_user u4 on u4.id=a.confirm_staff
+	    LEFT JOIN tproject_license pl on pl.charge_id=a.id
+	</sql>	
     
 	<select id="get" resultType="Charge">
 		SELECT 
@@ -53,9 +62,9 @@
 	
 	<select id="findList" resultType="Charge">
 		SELECT 
-			<include refid="chargeColumns"/>
+			distinct <include refid="chargeColumns"/>
 		FROM tcharge a
-		<include refid="chargeJoins"/>
+		<include refid="chargeJoinsEx"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="project != null and project.prjNum != null and project.prjNum != ''">
@@ -69,7 +78,10 @@
 			</if>
 			<if test="project != null and project.buildCorpName != null and project.buildCorpName != ''">
 				AND b.build_corp_name like concat('%',#{project.buildCorpName},'%') 
-			</if>					
+			</if>		
+			<if test="project != null and project.projectLicense != null and project.projectLicense != ''">
+				AND pl.document_no like concat('%',#{project.projectLicense},'%') 
+			</if>						
 			<if test="reportStaff != null and reportStaff.id != null and reportStaff.id != ''">
 				AND a.report_staff = #{reportStaff.id}
 			</if>
@@ -102,7 +114,7 @@
 				ORDER BY a.status, a.id DESC
 			</otherwise>
 		</choose>
-	</select>
+	</select>	
 	
 	<select id="findAllList" resultType="Charge">
 		SELECT 

@@ -48,7 +48,7 @@ input.btn:hover {*color:#333333}
 .form-search span label{margin-left:0;}
 .form-search .ul-form {margin:0;overflow:hidden;}
 .form-search .ul-form li{float:left;list-style:none;height:35px;line-height:35px;}
-.form-search .ul-form li label{width:100px;text-align:right;}
+.form-search .ul-form li label{width:120px;text-align:right;}
 .form-search .ul-form li span label{width:auto;}
 .form-search .ul-form li.clearfix{float:none;}
 .form-search .ul-form li.btns{padding-left:10px;}

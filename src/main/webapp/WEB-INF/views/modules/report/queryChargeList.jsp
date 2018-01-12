@@ -23,7 +23,7 @@
 		<input id="pageSize" name="pageSize" type="hidden" value="${page.pageSize}"/>	
 		<c:if test="${fns:getUser().isZfUser}">
 			<ul class="ul-form">
-				<li><label>项目编号</label>
+				<li><label>项目编号：</label>
 				    <form:input path="project.prjNum" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
 				</li>
 				<li><label>项目名称：</label>
@@ -37,7 +37,18 @@
 				<li><label>建设单位名称：</label>
 					<form:input path="project.buildCorpName" htmlEscape="false" maxlength="128" class="input-xlarge required"/>				
 				</li>				
-			</ul>		
+			</ul>	
+			<ul class="ul-form">
+				<li><label>规划许可证编号：</label>
+				    <form:input path="project.projectLicense" htmlEscape="false" maxlength="32" class="input-xlarge required"/>
+				</li>
+				<li><label>状态 ：</label>
+				<form:select path="status" class="input-large required">
+				    <form:option value="" label="全部"/>
+					<form:options items="${fns:getDictList('charge_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
+				</form:select>			
+				</li>				
+			</ul>				
 		</c:if>			
 		<ul class="ul-form">	
 			<li>		
@@ -48,12 +59,7 @@
 				<label>到：</label>
 				<input name="dateTo" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
 					value="<fmt:formatDate value="${charge.dateTo}" pattern="yyyy-MM-dd"/>"
-					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
-				<label>状态 ：</label>
-				<form:select path="status" class="input-large required">
-				    <form:option value="" label="全部"/>
-					<form:options items="${fns:getDictList('charge_status')}" itemLabel="label" itemValue="value" htmlEscape="false"/>
-				</form:select>				
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>				
 			</li>			
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
 			</li>
@@ -64,19 +70,12 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>代码</th>
 				<th>项目代码</th>
 				<th>项目名称</th>
 				<th>项目地址</th>
 				<th>申报人</th>
 				<th>申报单位</th>
 				<th>申报时间</th>
-				<th>测算人</th>
-				<th>测算时间</th>
-				<th>审核人</th>
-				<th>审核时间</th>
-				<th>确认人</th>
-				<th>确认时间</th>
 				<th>测算金额</th>
 				<th>付款金额</th>
 				<th>状态</th>
@@ -86,9 +85,6 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="charge">
 			<tr>
-				<td>
-					${charge.id}
-				</td>
 				<td>
 					${charge.project.prjNum}
 				</td>
@@ -106,24 +102,6 @@
 				</td>
 				<td>
 					<fmt:formatDate value="${charge.reportDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.calStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.calDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.approveStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.approveDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.confirmStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.confirmDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
 					${charge.calMoney}

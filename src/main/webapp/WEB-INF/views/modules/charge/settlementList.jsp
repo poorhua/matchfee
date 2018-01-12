@@ -65,7 +65,9 @@
     <div style="margin:10px 30px 10px 10px; text-align:right">
     <input id="btnPrint" class="btn btn-primary" type="button" value=" 打 印 " onclick="myprint()"/>&nbsp;&nbsp;&nbsp;
     <input id="btnExportPdf" class="btn btn-primary" type="button" value="导出PDF " onclick="exportPdf()"/>&nbsp;&nbsp;&nbsp;
+    <!--  
     <input id="btnExportExcel" class="btn btn-primary" type="button" value="导出Excel" onclick="exportExcel()"/>
+    -->
     </div>    
     </c:if>
     <div id="printDiv" style="margin:20px 20px 20px 20px">

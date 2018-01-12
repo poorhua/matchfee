@@ -38,7 +38,12 @@
 			<tr>
 				<td>
 				<input type="hidden" id="pathlicense${projectLicense.id}" name="pathlicense${projectLicense.id}" value="${projectLicense.path}">
-				<sys:ckfinder input="pathlicense${projectLicense.id}" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false" readonly="true"/>					
+				<sys:ckfinder input="pathlicense${projectLicense.id}" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false" readonly="true"/>		
+				
+				<!--  
+				<embed width="800" height="600" src="${projectLicense.path}"> </embed> 
+				-->
+							
 				</td>			
 				<td>
 					${projectLicense.name}
@@ -159,7 +164,8 @@
 			<tr>
 				<td>
 				<input type="hidden" id="pathpd${projectDeduction.id}" name="pathpd${projectDeduction.id}" value="${projectDeduction.path}">
-				<sys:ckfinder input="pathpd${projectDeduction.id}" type="files" uploadPath="/配套费/减项证明" selectMultiple="false" readonly="true"/>					
+				<sys:ckfinder input="pathpd${projectDeduction.id}" type="files" uploadPath="/配套费/减项证明" selectMultiple="false" readonly="true"/>	
+								
 				</td>			
 				<td>
 					${projectDeduction.name}
@@ -198,7 +204,6 @@
 			    <th>金额（元）</th>
 				<th>票据号</th>
 				<th>缴费日期</th>
-				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
 		</thead>
 		<tbody>
@@ -218,10 +223,6 @@
 				<td>
 					<fmt:formatDate value="${payTicket.payDate}" pattern="yyyy-MM-dd"/>
 				</td>
-				<shiro:hasPermission name="charge:charge:edit"><td>
-    				<a href="${ctx}/charge/payTicket/form?id=${payTicket.id}">修改</a>
-					<a href="${ctx}/charge/payTicket/delete?id=${payTicket.id}" onclick="return confirmx('确认要删除该缴费凭证吗？', this.href)">删除</a>
-				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>	
 		</tbody>
