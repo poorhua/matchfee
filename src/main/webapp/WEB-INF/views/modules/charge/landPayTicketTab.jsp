@@ -70,7 +70,7 @@
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/landPayTicket/form?id=${landPayTicket.id}">修改</a>
-					<a href="${ctx}/charge/landPayTicket/delete?id=${landPayTicket.id}&prjNum=${#charge.project.prjNum}" onclick="return confirmx('确认要删除该国土缴费凭证吗？', this.href)">删除</a>
+					<a href="${ctx}/charge/landPayTicket/delete?id=${landPayTicket.id}&prjNum=${charge.project.prjNum}" onclick="return confirmx('确认要删除该国土缴费凭证吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
