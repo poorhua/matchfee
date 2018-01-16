@@ -44,7 +44,7 @@
 		<div class="control-group">
 			<label class="control-label">金额（元）：</label>
 			<div class="controls">
-				<form:input path="money" htmlEscape="false" maxlength="8" class="input-xlarge required"
+				<form:input path="money" htmlEscape="false" maxlength="15" class="input-xlarge required"
 				onkeyup="this.value=this.value.replace(/[^\d.]/g,'')"
                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')" />
 				<span class="help-inline"><font color="red">*</font> </span>
@@ -69,7 +69,7 @@
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="64" class="input-xxlarge "/>
+				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="512" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">

@@ -90,7 +90,7 @@
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="2" maxlength="64" class="input-xxlarge "/>
+				<form:textarea path="remarks" htmlEscape="false" rows="2" maxlength="512" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">

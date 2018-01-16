@@ -78,7 +78,7 @@ public class OpinionBook extends DataEntity<OpinionBook> {
 		this.documentType = documentType;
 	}
 	
-	@Length(min=1, max=256, message="保存路径长度必须介于 1 和 256 之间")
+	@Length(min=1, max=512, message="保存路径长度必须介于 1 和 512 之间")
 	public String getPath() {
 		return path;
 	}

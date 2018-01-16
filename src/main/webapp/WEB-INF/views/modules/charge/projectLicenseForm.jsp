@@ -40,7 +40,7 @@
 </head>
 <body>
     <sys:message content="${message}"/>	
-    <legend>规划许可证</legend>
+    <legend>建设工程规划许可证</legend>
 	<matchfee:chargeView charge="${charge}"></matchfee:chargeView><br/>
 	<form:form id="inputForm" modelAttribute="projectLicense" action="${ctx}/charge/projectLicense/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -56,21 +56,21 @@
 			</div>
 		</div>		
 		<div class="control-group">
-			<label class="control-label">名称：</label>
+			<label class="control-label">项目名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<span class="help-inline"><font color="red">*</font> &nbsp;&nbsp;&nbsp;请按照规划许可证上的建设项目名称填写。</span>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">文件编号：</label>
+			<label class="control-label">规划许可证编号：</label>
 			<div class="controls">
 				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required" />
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">文档日期：</label>
+			<label class="control-label">发证日期：</label>
 			<div class="controls">
 				<input name="documentDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd"/>"
@@ -105,7 +105,7 @@
 		<div class="control-group">
 			<label class="control-label">备注信息：</label>
 			<div class="controls">
-				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="64" class="input-xxlarge "/>
+				<form:textarea path="remarks" htmlEscape="false" rows="4" maxlength="512" class="input-xxlarge "/>
 			</div>
 		</div>
 		<div class="form-actions">

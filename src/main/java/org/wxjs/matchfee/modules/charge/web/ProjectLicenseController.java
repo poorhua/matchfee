@@ -64,11 +64,16 @@ public class ProjectLicenseController extends BaseController {
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "form")
 	public String form(ProjectLicense projectLicense, HttpSession httpSession,Model model) {
-		model.addAttribute("projectLicense", projectLicense);
 		
 		String chargeId = (String)httpSession.getAttribute("chargeId");
 		
 		Charge charge = chargeService.get(chargeId);
+		
+		if(projectLicense.getIsNewRecord()){
+			projectLicense.setName(charge.getProject().getPrjName());
+		}
+		
+		model.addAttribute("projectLicense", projectLicense);
 		
 		model.addAttribute("charge", charge);
 		return "modules/charge/projectLicenseForm";

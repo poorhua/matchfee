@@ -69,7 +69,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 		this.updateDate = new Date();
 	}
 	
-	@Length(min=0, max=255)
+	@Length(min=0, max=512)
 	public String getRemarks() {
 		return remarks;
 	}
