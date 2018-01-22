@@ -183,7 +183,10 @@ public class SystemService extends BaseService implements InitializingBean {
 	@Transactional(readOnly = false)
 	public void updatePasswordById(String id, String loginName, String newPassword) {
 		User user = new User(id);
-		user.setPassword(entryptPassword(newPassword));
+		//user.setPassword(entryptPassword(newPassword));
+		
+		user.setPassword(newPassword);
+		
 		userDao.updatePasswordById(user);
 		// 清除用户缓存
 		user.setLoginName(loginName);
@@ -220,10 +223,15 @@ public class SystemService extends BaseService implements InitializingBean {
 	 * @return 验证成功返回true
 	 */
 	public static boolean validatePassword(String plainPassword, String password) {
+		
 		String plain = Encodes.unescapeHtml(plainPassword);
+		
+		/*
 		byte[] salt = Encodes.decodeHex(password.substring(0,16));
 		byte[] hashPassword = Digests.sha1(plain.getBytes(), salt, HASH_INTERATIONS);
 		return password.equals(Encodes.encodeHex(salt)+Encodes.encodeHex(hashPassword));
+		*/
+		return password.equals(plain);
 	}
 	
 	/**
