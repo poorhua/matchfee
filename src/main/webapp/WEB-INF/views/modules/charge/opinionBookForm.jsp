@@ -2,7 +2,7 @@
 <%@ include file="/WEB-INF/views/include/taglib.jsp"%>
 <html>
 <head>
-	<title>OpinonBook管理</title>
+	<title>项目建设条件意见书管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
 		$(document).ready(function() {
@@ -27,7 +27,7 @@
 	</script>
 </head>
 <body>
-	<legend>条件意见书</legend>
+	<legend>项目建设条件意见书</legend>
 	<matchfee:projectInfoView/><br>
 	<form:form id="inputForm" modelAttribute="opinionBook" action="${ctx}/charge/opinionBook/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
@@ -42,7 +42,7 @@
 			</div>
 		</div>		
 		<div class="control-group">
-			<label class="control-label">名称：</label>
+			<label class="control-label">文件名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
@@ -56,7 +56,7 @@
 			</div>
 		</div>
 		<div class="control-group">
-			<label class="control-label">文档日期：</label>
+			<label class="control-label">发文日期：</label>
 			<div class="controls">
 				<input name="documentDate" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate required"
 					value="<fmt:formatDate value="${opinionBook.documentDate}" pattern="yyyy-MM-dd"/>"

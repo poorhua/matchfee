@@ -45,6 +45,8 @@ public class ProjectDeductionService extends CrudService<ProjectDeductionDao, Pr
 		
 		//refresh calMoney in charge
 		Charge charge = chargeDao.get(projectDeduction.getCharge());
+		
+		chargeDao.refreshLandPayMoney(charge);
 		chargeDao.refreshCalMoney(charge);
 	}
 	
@@ -54,6 +56,8 @@ public class ProjectDeductionService extends CrudService<ProjectDeductionDao, Pr
 		
 		//refresh calMoney in charge
 		Charge charge = chargeDao.get(projectDeduction.getCharge());
+		
+		chargeDao.refreshLandPayMoney(charge);
 		chargeDao.refreshCalMoney(charge);
 	}
 	

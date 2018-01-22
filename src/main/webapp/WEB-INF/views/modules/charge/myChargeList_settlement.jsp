@@ -13,7 +13,22 @@
 </head>
 <body>
 	<legend>征收列表</legend>	
-	
+	<form:form id="searchForm" modelAttribute="charge" action="${ctx}/charge/charge/settlementlist" method="post" class="breadcrumb form-search">
+		<ul class="ul-form">
+		    <li>
+			    <label>缴费日期 ：</label>
+				<input name="dateFrom" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${charge.dateFrom}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+				<label>到：</label>
+				<input name="dateTo" type="text" readonly="readonly" maxlength="20" class="input-medium Wdate"
+					value="<fmt:formatDate value="${charge.dateTo}" pattern="yyyy-MM-dd"/>"
+					onclick="WdatePicker({dateFmt:'yyyy-MM-dd',isShowClear:false});"/>
+			</li>
+			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
+			<li class="clearfix"></li>
+		</ul>
+	</form:form>	
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
@@ -25,6 +40,7 @@
 				<th>申报时间</th>
 				<th>结算金额</th>
 				<th>缴费金额</th>
+				<th>缴费时间</th>
 				<th>状态</th>
 				<shiro:hasPermission name="charge:charge:edit"><th>操作</th></shiro:hasPermission>
 			</tr>
@@ -48,7 +64,7 @@
 					${charge.reportEntity}
 				</td>
 				<td>
-					<fmt:formatDate value="${charge.reportDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
+					<fmt:formatDate value="${charge.reportDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td>
 					${charge.calMoney}
@@ -56,6 +72,9 @@
 				<td>
 					${charge.payMoney}
 				</td>
+				<td>
+					<fmt:formatDate value="${charge.maxPayDate}" pattern="yyyy-MM-dd"/>
+				</td>				
 				<td>
 					${charge.statusLabel}
 				</td>

@@ -50,6 +50,7 @@
 	    LEFT JOIN sys_user u3 on u3.id=a.approve_staff
 	    LEFT JOIN sys_user u4 on u4.id=a.confirm_staff
 	    LEFT JOIN tproject_license pl on pl.charge_id=a.id
+	    LEFT JOIN (SELECT pt.charge_id charge_id, max(pt.pay_date) max_pay_date from tpay_ticket pt group by pt.charge_id) mpt on mpt.charge_id=a.id
 	</sql>	
     
 	<select id="get" resultType="Charge">
@@ -62,7 +63,7 @@
 	
 	<select id="findList" resultType="Charge">
 		SELECT 
-			distinct <include refid="chargeColumns"/>
+			distinct <include refid="chargeColumns"/>, mpt.max_pay_date AS "maxPayDate"
 		FROM tcharge a
 		<include refid="chargeJoinsEx"/>
 		<where>
@@ -84,13 +85,25 @@
 			</if>						
 			<if test="reportStaff != null and reportStaff.id != null and reportStaff.id != ''">
 				AND a.report_staff = #{reportStaff.id}
-			</if>
-			<if test="dateFrom != null and dateFrom != ''">
-				AND DATE_FORMAT(a.report_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{dateFrom},'%Y-%m-%d')
-			</if>
-			<if test="dateTo != null and dateTo != ''">
-				AND DATE_FORMAT(a.report_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{dateTo},'%Y-%m-%d')
-			</if> 			
+			</if>	
+            <choose>
+              <when test="dateType==1">  
+				<if test="dateFrom != null and dateFrom != ''">
+					AND DATE_FORMAT(mpt.max_pay_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{dateFrom},'%Y-%m-%d')
+				</if>
+				<if test="dateTo != null and dateTo != ''">
+					AND DATE_FORMAT(mpt.max_pay_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{dateTo},'%Y-%m-%d')
+				</if>				          
+              </when>
+              <otherwise>  
+				<if test="dateFrom != null and dateFrom != ''">
+					AND DATE_FORMAT(a.report_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{dateFrom},'%Y-%m-%d')
+				</if>
+				<if test="dateTo != null and dateTo != ''">
+					AND DATE_FORMAT(a.report_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{dateTo},'%Y-%m-%d')
+				</if>				          
+              </otherwise>              
+            </choose>						
 			<if test='status != null and status != ""'>
 				<choose>
 					<when test='isMultipleStatus == "0"'>
@@ -110,6 +123,9 @@
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
 				ORDER BY ${page.orderBy}
 			</when>
+			<when test="dateType==1">
+				ORDER BY a.status, mpt.max_pay_date DESC
+			</when>			
 			<otherwise>
 				ORDER BY a.status, a.id DESC
 			</otherwise>

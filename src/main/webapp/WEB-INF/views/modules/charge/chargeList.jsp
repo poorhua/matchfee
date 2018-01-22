@@ -32,13 +32,7 @@
 				<th>申报人</th>
 				<th>申报单位</th>
 				<th>申报时间</th>
-				<th>测算人</th>
-				<th>测算时间</th>
-				<th>审核人</th>
-				<th>审核时间</th>
-				<th>确认人</th>
-				<th>确认时间</th>
-				<th>付款凭证保存路径</th>
+
 				<th>测算金额</th>
 				<th>付款金额</th>
 				<th>备注信息</th>
@@ -70,27 +64,6 @@
 					<fmt:formatDate value="${charge.reportDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
 				</td>
 				<td>
-					${charge.calStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.calDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.approveStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.approveDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.confirmStaff.name}
-				</td>
-				<td>
-					<fmt:formatDate value="${charge.confirmDate}" pattern="yyyy-MM-dd HH:mm:ss"/>
-				</td>
-				<td>
-					${charge.payTicketPath}
-				</td>
-				<td>
 					${charge.calMoney}
 				</td>
 				<td>
@@ -100,7 +73,7 @@
 					${charge.remarks}
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
-    				<a href="${ctx}/charge/charge/opinionBookTab?id=${charge.id}">进入</a>
+    				<a href="${ctx}/charge/charge/defaultTab?id=${charge.id}">进入</a>
 					<a href="${ctx}/charge/charge/delete?id=${charge.id}" onclick="return confirmx('确认要删除该征收吗？', this.href)">删除</a>
 				</td></shiro:hasPermission>
 			</tr>

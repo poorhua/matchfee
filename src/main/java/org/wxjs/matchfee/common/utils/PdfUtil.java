@@ -78,7 +78,7 @@ public class PdfUtil {
             	phrase = new Phrase(header, headerFont);
             	cell = new PdfPCell(phrase);
             	cell.setBorderWidth(1);
-            	cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             	//cell.setBackgroundColor(Color.lightGray);
             	table.addCell(cell);
             }           	

@@ -71,9 +71,12 @@
 		   			  </c:when>
 				      <c:when test="${charge.status eq '40'}">
 				        <a href="${ctx}/charge/charge/showSettlementList?id=${charge.id}" target="_blank">结算清单</a>
-		   			  </c:when>			   			  		   			  
+		   			  </c:when>			   			  	   			  		   			  
 		   			  <c:otherwise></c:otherwise>		   			  
 				   </c:choose>
+    				<c:if test="${fns:getUser().isMatchfeeAdmin}">
+    				  <a href="${ctx}/charge/charge/approvedelete?id=${charge.id}" onclick="return confirmx('确认要删除该征收吗？', this.href)">删除</a>
+    				</c:if>				   
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

@@ -93,13 +93,13 @@ public class ExportSettlementList {
             
             document.add(PdfUtil.generateTable4Padding());
             
-            String[] headers = new String[]{"条目","建筑面积（平米）","金额（元）","备注"};
+            String[] headers = new String[]{"条目","面积（平米）","金额（元）","说明","备注"};
     		
-            float[] widths = new float[]{0.24f, 0.18f, 0.18f ,0.4f};
+            float[] widths = new float[]{0.26f, 0.12f, 0.12f ,0.25f ,0.25f};
             
             List<String[]> items = new ArrayList<String[]>();
 			
-			table = PdfUtil.generateTable(headers, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), widths, tableWidth);
+			table = PdfUtil.generateTable(headers, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(true), widths, tableWidth);
 			document.add(table);	
 			
 			table = PdfUtil.generateTable(new String[]{"*上期待清算金额（元）", "", settlementList.getCharge().getPreviousRemainDisplay(), ""}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -110,7 +110,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(ProjectLicense item : settlementList.getProjectLicenses()){
-				items.add(new String[]{item.getName(), item.getTotalArea() +"", item.getTotalMoney() +"", item.getRemarks()});
+				items.add(new String[]{item.getName(), item.getTotalArea() +"", item.getTotalMoney() +"", item.getDescription4Plain(), item.getRemarks()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -122,7 +122,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(DeductionDocItem item : settlementList.getDeductionDocItems()){
-				items.add(new String[]{item.getItem().getName(), item.getArea() +"", item.getMoney() +"", item.getRemarks()});
+				items.add(new String[]{item.getItem().getName(), item.getArea() +"", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -133,7 +133,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(LandPayTicket item : settlementList.getLandPayTickets()){
-				items.add(new String[]{item.getName(), "", item.getMoney() +"", item.getRemarks()});
+				items.add(new String[]{item.getName(), "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -145,7 +145,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(ProjectDeduction item : settlementList.getProjectDeductions()){
-				items.add(new String[]{item.getName(), item.getArea() +"", item.getMoney() +"", item.getRemarks()});
+				items.add(new String[]{item.getName(), item.getArea() +"", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -156,15 +156,19 @@ public class ExportSettlementList {
 			document.add(table);
 			
 			items.clear();
-			items.add(new String[]{"结算金额", "", settlementList.getCharge().getCalMoney() +"", ""});
+			items.add(new String[]{"结算金额", "", settlementList.getCharge().getCalMoney() +"", "", ""});
 			for(PayTicket item : settlementList.getPayTickets()){
-				items.add(new String[]{"缴费", "", item.getMoney() +"", item.getRemarks()});
+				items.add(new String[]{"缴费", "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks()});
 			}
+			
+			String gapHint = "待清算金额";
+			/*
 			String gapHint = "多缴费";
 			if(settlementList.getCharge().getMoneyGap()<0){ 
 				gapHint = "少缴费";
 			}
-			items.add(new String[]{gapHint, "", settlementList.getCharge().getMoneyGapDisplay() +"", ""});
+			*/
+			items.add(new String[]{gapHint, "", settlementList.getCharge().getMoneyGapDisplay() +"", "", ""});
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
 			document.add(table);
@@ -205,11 +209,11 @@ public class ExportSettlementList {
         table.addCell(this.getLabelCell("建设单位名称:"));
         table.addCell(this.getContentCell(this.settlementList.getCharge().getProject().getBuildCorpName()));
         
-        table.addCell(this.getLabelCell("项目地址:"));
-        table.addCell(this.getContentCell(this.settlementList.getCharge().getProject().getPrjAddress()));
-        
         table.addCell(this.getLabelCell("状态:"));
         table.addCell(this.getContentCell(this.settlementList.getCharge().getStatusLabel()));
+        
+        table.addCell(this.getLabelCell("结算金额（元）:"));
+        table.addCell(this.getContentCell(this.settlementList.getCharge().getCalMoney()));
         
         if("40".equals(this.settlementList.getCharge().getStatus())){
             table.addCell(this.getLabelCell("缴费金额（元）:"));

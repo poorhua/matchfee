@@ -14,11 +14,11 @@
                      <input class="btn btn-default" type="button" value="显示" onclick="$('#opinionBook_${opinionBook.id}').show()"/>	&nbsp;&nbsp;
 				     <input class="btn btn-default" type="button" value="隐藏" onclick="$('#opinionBook_${opinionBook.id}').hide()"/>	
 					</td>
-					<td class="tit" width="15%">名称：</td><td width="35%">${opinionBook.name}</td>
+					<td class="tit" width="15%">文件名称：</td><td width="35%">${opinionBook.name}</td>
 				</tr>
 				<tr>
-				    <td class="tit">文档编号：</td><td>${opinionBook.documentNo}</td>
-					<td class="tit">文档日期：</td><td><fmt:formatDate value="${opinionBook.documentDate}" pattern="yyyy-MM-dd"/></td>
+				    <td class="tit">文件编号：</td><td>${opinionBook.documentNo}</td>
+					<td class="tit">发文日期：</td><td><fmt:formatDate value="${opinionBook.documentDate}" pattern="yyyy-MM-dd"/></td>
 				</tr>
 				<tr>
 					<td class="tit">备注信息：</td>

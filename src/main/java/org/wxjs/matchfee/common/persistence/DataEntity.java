@@ -30,6 +30,8 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	protected Date updateDate;	// 更新日期
 	protected String delFlag; 	// 删除标记（0：正常；1：删除；2：审核）
 	
+	protected String description;	// 说明，临时保存，不持久化
+	
 	public DataEntity() {
 		super();
 		this.delFlag = DEL_FLAG_NORMAL;
@@ -124,4 +126,22 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 		this.delFlag = delFlag;
 	}
 
+	@JsonIgnore
+	public String getDescription() {
+		return description;
+	}
+	
+	@JsonIgnore
+	public String getDescription4Plain() {
+		if(!StringUtils.isBlank(this.description)){
+			return this.description.replaceAll("<br>", "/n/r").replace("<BR>", "/n/r");
+		}else{
+			return description;
+		}
+		
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

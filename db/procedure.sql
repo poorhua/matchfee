@@ -7,9 +7,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_refresh_land_pay_money`(IN cha
 IN prjNum CHAR(20), IN matchfeeBasis INT, OUT deductMoney decimal(10,2))
 BEGIN
 	
-	Declare landPayTicketTotal decimal(10,2) default 0;
-	Declare licenseUpAreaTotal decimal(10,2) default 0;
-	Declare previousDeductTotal decimal(10,2) default 0;
+	Declare landPayTicketTotal decimal(15,2) default 0;
+	Declare licenseUpAreaTotal decimal(15,2) default 0;
+	Declare previousDeductTotal decimal(15,2) default 0;
+    Declare sumMoneyExcludeLandPay decimal(15,2) default 0;
 	Declare deductRemain decimal(10,2) default 0;
 	
 	#国土总的缴费A
@@ -42,8 +43,31 @@ BEGIN
 	
 	IF previousDeductTotal is NULL THEN set previousDeductTotal=0;
 	END IF;
-	
-	
+
+  #本期其他抵扣项合计D
+
+	select sum(u.money) into sumMoneyExcludeLandPay from
+	(
+    select CONCAT('pre',p.id), (p.cal_money - p.pay_money) money, '0' del_flag
+	from tcharge p
+    where p.prj_num=prjNum
+    and p.id = (select max(id) from tcharge q where q.prj_num=prjNum and q.id<chargeId)
+	union	
+	select CONCAT('pl',a.id), (a.up_area+a.down_area)*matchfeeBasis money, a.del_flag
+	from tproject_license a
+	where a.charge_id=chargeId
+	union
+	select CONCAT('dd',b.id), (0-b.money) money, b.del_flag
+	from tdeduction_doc_item b
+	left join tdeduction_doc doc on doc.id=b.doc_id
+	where doc.charge_id=chargeId
+	union
+	select CONCAT('pd',c.id), (0-c.money) money, c.del_flag
+	from tproject_deduction c
+	where c.charge_id=chargeId	
+	) u
+	where u.del_flag = '0';
+
     set deductRemain = landPayTicketTotal - previousDeductTotal;
     
     set deductMoney = 0;
@@ -54,6 +78,11 @@ BEGIN
 	      set deductMoney = licenseUpAreaTotal;
 	   END IF;
 	END IF;
+
+  #deductMoney can't exceed sumMoneyExcludeLandPay
+  IF deductMoney>sumMoneyExcludeLandPay THEN
+     set deductMoney = sumMoneyExcludeLandPay;
+  END IF;
 	
 	UPDATE tcharge 
 	set land_pay_money = deductMoney

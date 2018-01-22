@@ -105,6 +105,21 @@ public class ChargeController extends BaseController {
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"list", ""})
 	public String list(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		charge.setStatus(Global.CHARGE_STATUS_EDIT
+				 + "," + Global.CHARGE_STATUS_REJECT);
+		
+		if(charge.getDateFrom() == null){
+			Calendar cal=Calendar.getInstance();
+			cal.add(Calendar.MONTH, -6);
+			charge.setDateFrom(cal.getTime());
+		}
+		
+		if(charge.getDateTo() == null){
+			Calendar cal=Calendar.getInstance();
+			charge.setDateTo(cal.getTime());			
+		}		
+		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
 		return "modules/charge/chargeList";
@@ -144,7 +159,9 @@ public class ChargeController extends BaseController {
 		
 		User user = UserUtils.getUser();
 		
-		charge.setReportStaff(user);
+		if(!user.getIsShy()){
+			charge.setReportStaff(user);
+		}
 		
 		charge.setStatus(Global.CHARGE_STATUS_EDIT
 				 + "," + Global.CHARGE_STATUS_REJECT);
@@ -184,16 +201,33 @@ public class ChargeController extends BaseController {
 	@RequestMapping(value = {"approvelist"})
 	public String approvelist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
 		
-		//User user = UserUtils.getUser();
+		User user = UserUtils.getUser();
 		
 		//charge.setReportStaff(user);
 		
-		charge.setStatus(Global.CHARGE_STATUS_TO_APPROVE);
+		if(user.getIsMatchfeeAdmin()){
+			charge.setStatus(Global.CHARGE_STATUS_EDIT
+					 + "," + Global.CHARGE_STATUS_REJECT
+					 + "," + Global.CHARGE_STATUS_TO_CALCULATE
+					 + "," + Global.CHARGE_STATUS_TO_APPROVE);
+		}else{
+			charge.setStatus(Global.CHARGE_STATUS_TO_APPROVE);
+		}
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
 		return "modules/charge/myChargeList_postSubmit";
 	}
+	
+	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = {"approvedelete"})
+	public String approvedelete(Charge charge, RedirectAttributes redirectAttributes) {
+		
+		chargeService.delete(charge);
+		addMessage(redirectAttributes, "删除征收成功");
+		
+		return "modules/charge/myChargeList_postSubmit";
+	}	
 	
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"confirmlist"})
@@ -214,12 +248,28 @@ public class ChargeController extends BaseController {
 		
 		//charge.setReportStaff(user);
 		
-		//charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
+		charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
 		
 		if(user.getIsQyUser()){
 			Project project = new Project();
 			project.setPrjNum(user.getProject().getPrjNum());
 			charge.setProject(project);
+		}
+		
+		//set search by max_pay_date
+		charge.setDateType("1");
+		
+		//set date condition to show current year items
+		if(charge.getDateFrom() == null){
+			Calendar cal=Calendar.getInstance();
+			cal.set(Calendar.MONTH, 0);
+			cal.set(Calendar.DAY_OF_MONTH, 1);
+			charge.setDateFrom(cal.getTime());
+		}
+		
+		if(charge.getDateTo() == null){
+			Calendar cal=Calendar.getInstance();
+			charge.setDateTo(cal.getTime());			
 		}
 		
 		List<Charge> list = chargeService.findList(charge); 
@@ -618,11 +668,7 @@ public class ChargeController extends BaseController {
 		
 		charge.setConfirmDate(Calendar.getInstance().getTime());
 		
-		if(charge.getMoneyGap()==0){
-			charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
-		}else{
-			charge.setStatus(Global.CHARGE_STATUS_CONFIRMED_TODO);
-		}
+		charge.setStatus(Global.CHARGE_STATUS_CONFIRMED);
 			
 		chargeService.updateConfirm(charge);
 		
@@ -646,7 +692,7 @@ public class ChargeController extends BaseController {
 		operationLogService.logApprove(charge.getId(), "关闭", "");
 		
 		addMessage(redirectAttributes, "保存征收成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/mylist?repage";
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
@@ -654,7 +700,7 @@ public class ChargeController extends BaseController {
 	public String delete(Charge charge, RedirectAttributes redirectAttributes) {
 		chargeService.delete(charge);
 		addMessage(redirectAttributes, "删除征收成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/charge/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/mylist?repage";
 	}
 	
 	private boolean isChargeEmpty(Charge charge){

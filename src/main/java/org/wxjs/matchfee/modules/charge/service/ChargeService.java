@@ -116,8 +116,8 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		SettlementList settlementList = new SettlementList();
 		
 		
-		float calMoney = 0; //结算金额
-		float payMoney = 0; //缴费金额
+		double calMoney = 0; //结算金额
+		double payMoney = 0; //缴费金额
 		
 		Charge charge = this.get(chargeId);
 		
@@ -183,7 +183,9 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		
 		for(ProjectLicense item : settlementList.getProjectLicenses()){
 			calMoney += item.getTotalMoney();
-			item.setRemarks("规划许可证号: "+item.getDocumentNo());
+			//item.setRemarks("规划许可证号: "+item.getDocumentNo());
+			
+			item.setDescription("规划许可证号: "+item.getDocumentNo());
 			
 			totalUpArea += Util.getFloat(item.getUpArea());
 			totalDownArea += Util.getFloat(item.getDownArea());
@@ -219,13 +221,16 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		
 		landPayTicket.setName("国土已缴费抵扣");
 		landPayTicket.setMoney(charge.getLandPayMoney());
-		landPayTicket.setRemarks(lptRemarks.toString());
+		
+		//landPayTicket.setRemarks(lptRemarks.toString());
+		landPayTicket.setDescription(lptRemarks.toString());
+		
 		List<LandPayTicket> landPayTicketList = Lists.newArrayList();
 		landPayTicketList.add(landPayTicket);
 		
 		settlementList.setLandPayTickets(landPayTicketList);
 		
-		calMoney -= Util.getFloat(charge.getLandPayMoney());
+		calMoney -= Util.getDouble(charge.getLandPayMoney());
 		
 		//DeductionDocItem
 		DeductionDocItem deductionDocItem = new DeductionDocItem();
@@ -249,7 +254,7 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		
 		for(DeductionDocItem item : settlementList.getDeductionDocItems()){
 			
-			calMoney -= Util.getFloat(item.getMoney());
+			calMoney -= Util.getDouble(item.getMoney());
 			
 			String opinionBookValue = opinionBookItemMap.get(item.getItem().getId());
 			if(opinionBookValue == null){
@@ -267,7 +272,8 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			sb.append("意见书总面积: ").append(opinionBookValue);
 			sb.append("，至本期共抵扣: ").append(settledValue);
 			
-			item.setRemarks(sb.toString());
+			//item.setRemarks(sb.toString());
+			item.setDescription(sb.toString());
 			
 			totalArea += Util.getFloat(item.getArea());
 			totalMoney += Util.getFloat(item.getMoney());
@@ -294,7 +300,7 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		totalMoney = 0;
 		
 		for(ProjectDeduction item : settlementList.getProjectDeductions()){
-			calMoney -= Util.getFloat(item.getMoney());
+			calMoney -= Util.getDouble(item.getMoney());
 			
 			totalArea += Util.getFloat(item.getArea());
 			totalMoney += Util.getFloat(item.getMoney());
@@ -316,12 +322,14 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		settlementList.setPayTickets(this.payTicketService.findList(payTicket));
 		
 		for(PayTicket item : settlementList.getPayTickets()){
-			payMoney += Util.getFloat(item.getMoney());
-			item.setRemarks("票据号: "+item.getTicketNo()+", 缴费日期: "+DateUtil.formatDate(item.getPayDate(), "yyyy-MM-dd"));
+			payMoney += Util.getDouble(item.getMoney());
+			//item.setRemarks("票据号: "+item.getTicketNo()+", 缴费日期: "+DateUtil.formatDate(item.getPayDate(), "yyyy-MM-dd"));
+			item.setDescription("票据号: "+item.getTicketNo()+", 缴费日期: "+DateUtil.formatDate(item.getPayDate(), "yyyy-MM-dd"));
 		}
 		
-		settlementList.getCharge().setCalMoney(calMoney + "");
-		settlementList.getCharge().setPayMoney(payMoney + "");
+		//已有结果，为避免计算精度导致差异，直接用原来的值
+		//settlementList.getCharge().setCalMoney(calMoney + "");
+		//settlementList.getCharge().setPayMoney(payMoney + "");
 		
 		return settlementList;
 	}

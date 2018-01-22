@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
-
+import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
@@ -52,14 +52,19 @@ public class DeductionDocItemService extends CrudService<DeductionDocItemDao, De
 		super.save(deductionDocItem);
 		
 		//refresh calMoney in charge
-		chargeDao.refreshCalMoney(deductionDocItem.getDoc().getCharge());
+		Charge charge = chargeDao.get(deductionDocItem.getDoc().getCharge());
+		chargeDao.refreshLandPayMoney(charge);
+		chargeDao.refreshCalMoney(charge);
 	}
 	
 	@Transactional(readOnly = false)
 	public void delete(DeductionDocItem deductionDocItem) {
 		super.delete(deductionDocItem);
+		
 		//refresh calMoney in charge
-		chargeDao.refreshCalMoney(deductionDocItem.getDoc().getCharge());
+		Charge charge = chargeDao.get(deductionDocItem.getDoc().getCharge());
+		chargeDao.refreshLandPayMoney(charge);
+		chargeDao.refreshCalMoney(charge);
 	}
 	
 	@Transactional(readOnly = true)

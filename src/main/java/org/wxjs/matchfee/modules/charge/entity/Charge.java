@@ -51,6 +51,10 @@ public class Charge extends DataEntity<Charge> {
 	private String landPayMoney;    //国土缴费在本期抵扣金额
 	private String status;		// 状态
 	
+	private Date maxPayDate;		// 缴费时间，最后一个缴费单据的日期
+	
+	private String dateType;    //日期类型， 1：按缴费时间查询， 其他：按申报日期查询
+	
 	private Date dateFrom;		// 时间 从
 	private Date dateTo;		// 时间 到
 	
@@ -281,7 +285,23 @@ public class Charge extends DataEntity<Charge> {
 			}
 		}
 		return rst;		
-	}	
+	}
+	
+	public Date getMaxPayDate() {
+		return maxPayDate;
+	}
+
+	public void setMaxPayDate(Date maxPayDate) {
+		this.maxPayDate = maxPayDate;
+	}
+
+	public String getDateType() {
+		return dateType;
+	}
+
+	public void setDateType(String dateType) {
+		this.dateType = dateType;
+	}
 
 	public Date getDateFrom() {
 		return dateFrom;
@@ -356,7 +376,7 @@ public class Charge extends DataEntity<Charge> {
 	}
 	
 	public String getMoneyGapDisplay(){
-		return Util.formatDecimal(this.getMoneyGap(), Global.DecimalFormat);
+		return Util.formatDecimal((0-this.getMoneyGap()), Global.DecimalFormat);
 	}
 
 	public float getPreviousRemain() {

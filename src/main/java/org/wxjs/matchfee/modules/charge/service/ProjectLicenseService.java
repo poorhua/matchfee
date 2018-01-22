@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
+import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
 import org.wxjs.matchfee.modules.charge.dao.ProjectLicenseDao;
@@ -43,10 +44,11 @@ public class ProjectLicenseService extends CrudService<ProjectLicenseDao, Projec
 		super.save(projectLicense);
 		
 		//refresh land pay money
-		chargeDao.refreshLandPayMoney(projectLicense.getCharge());
+		Charge charge = chargeDao.get(projectLicense.getCharge());
+		chargeDao.refreshLandPayMoney(charge);
 		
 		//refresh calMoney in charge
-		chargeDao.refreshCalMoney(projectLicense.getCharge());
+		chargeDao.refreshCalMoney(charge);
 
 	}
 	
@@ -55,10 +57,12 @@ public class ProjectLicenseService extends CrudService<ProjectLicenseDao, Projec
 		super.delete(projectLicense);
 		
 		//refresh land pay money
-		chargeDao.refreshLandPayMoney(projectLicense.getCharge());
+		
+		Charge charge = chargeDao.get(projectLicense.getCharge());
+		chargeDao.refreshLandPayMoney(charge);
 		
 		//refresh calMoney in charge
-		chargeDao.refreshCalMoney(projectLicense.getCharge());
+		chargeDao.refreshCalMoney(charge);
 
 	}
 	

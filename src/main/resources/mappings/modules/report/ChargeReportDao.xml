@@ -5,7 +5,7 @@
 	<sql id="variableFields">
 		<choose>
 			<when test="reportType == 'monthTimes'">DATE_FORMAT(a.report_date,'%Y-%m')</when>
-			<when test="reportType == 'monthMoney'">DATE_FORMAT(a.report_date,'%Y-%m')</when>
+			<when test="reportType == 'monthMoney'">DATE_FORMAT(mpt.max_pay_date,'%Y-%m')</when>
 			<otherwise></otherwise>
 		</choose>
 
@@ -22,20 +22,31 @@
 		</choose>
 		ITEMVALUE
 		from tcharge a
+		LEFT JOIN (SELECT pt.charge_id charge_id, max(pt.pay_date) max_pay_date from tpay_ticket pt group by pt.charge_id) mpt on mpt.charge_id=a.id
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="reportType == 'monthMoney'">
 				AND a.status in ('40')
 			</if>
-
+			<choose>
+				<when test="reportType == 'monthMoney'">
 			<if test="dateFrom != null and dateFrom != ''">
-				AND DATE_FORMAT(a.report_date,'%Y-%m') &gt;=
-				DATE_FORMAT(#{dateFrom},'%Y-%m')
+				AND DATE_FORMAT(mpt.max_pay_date,'%Y-%m') &gt;=DATE_FORMAT(#{dateFrom},'%Y-%m')
 			</if>
 			<if test="dateTo != null and dateTo != ''">
-				AND DATE_FORMAT(a.report_date,'%Y-%m') &lt;=
-				DATE_FORMAT(#{dateTo},'%Y-%m')
+				AND DATE_FORMAT(mpt.max_pay_date,'%Y-%m') &lt;=DATE_FORMAT(#{dateTo},'%Y-%m')
+			</if>				
+				</when>
+				<otherwise>
+			<if test="dateFrom != null and dateFrom != ''">
+				AND DATE_FORMAT(a.report_date,'%Y-%m') &gt;=DATE_FORMAT(#{dateFrom},'%Y-%m')
 			</if>
+			<if test="dateTo != null and dateTo != ''">
+				AND DATE_FORMAT(a.report_date,'%Y-%m') &lt;=DATE_FORMAT(#{dateTo},'%Y-%m')
+			</if>
+				</otherwise>
+			</choose>
+
 		</where>
 		GROUP BY
 		<include refid="variableFields" />

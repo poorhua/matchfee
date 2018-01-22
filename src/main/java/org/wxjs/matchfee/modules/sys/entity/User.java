@@ -328,6 +328,10 @@ public class User extends DataEntity<User> {
 		return id != null && "1".equals(id);
 	}
 	
+	public boolean getIsMatchfeeAdmin(){
+		return id != null && "2".equals(id);
+	}
+	
 	/**
 	 * 是否政府用户
 	 * @return

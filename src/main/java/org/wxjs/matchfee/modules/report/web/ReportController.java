@@ -151,6 +151,59 @@ public class ReportController extends BaseController {
 	}
 	
 	@RequiresPermissions("report:report:view")
+	@RequestMapping(value = {"search4CommonUser"})
+	public String search4CommonUser(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		if(charge.getDateFrom()==null){
+			Calendar cal=Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			charge.setDateFrom(cal.getTime());
+		}
+		
+		if(charge.getDateTo()==null){
+			Calendar cal=Calendar.getInstance();
+			charge.setDateTo(cal.getTime());
+		}
+		
+		User user = UserUtils.getUser();
+
+		if(user.getIsQyUser()){
+			Project projectParam = new Project();
+			projectParam.setPrjNum(user.getProject().getPrjNum());
+			charge.setProject(projectParam);			
+		}
+
+		
+		Page<Charge> page = chargeService.findPage(new Page<Charge>(request, response), charge);
+		
+		model.addAttribute("page", page);
+		
+		model.addAttribute("charge", charge);
+		
+		return "modules/report/queryChargeList4CommonUser";
+	}
+	
+	@RequiresPermissions("report:report:view")
+	@RequestMapping(value = {"toSearch4CommonUser"})
+	public String toSearch4CommonUser(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+
+		if(charge.getDateFrom()==null){
+			Calendar cal=Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			charge.setDateFrom(cal.getTime());
+		}
+		
+		if(charge.getDateTo()==null){
+			Calendar cal=Calendar.getInstance();
+			charge.setDateTo(cal.getTime());
+		}
+		
+		model.addAttribute("charge", charge);
+		
+		return "modules/report/queryChargeList4CommonUser";
+	}
+	
+	@RequiresPermissions("report:report:view")
 	@RequestMapping(value = {"searchInfo"})
 	public String searchInfo(Charge entity, HttpServletRequest request, HttpServletResponse response, Model model) {
 		

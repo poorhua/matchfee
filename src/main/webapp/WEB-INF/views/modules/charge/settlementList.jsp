@@ -79,10 +79,11 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th align="center">条目</th>
-				<th align="center">建筑面积（平米）</th>
-				<th align="center">金额（元）</th>
-				<th align="center">备注</th>
+				<th style="text-align:center;width:26%">条目</th>
+				<th style="text-align:center;width:12%">面积（平米）</th>
+				<th style="text-align:center;width:12%">金额（元）</th>
+				<th style="text-align:center;width:25%">说明</th>
+				<th style="text-align:center;width:25%">备注</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -95,11 +96,10 @@
 				<td>
 					${settementList.charge.previousRemainDisplay}
 				</td>
-				<td>
-					
-				</td>
+				<td></td>
+				<td></td>
 			</tr>		    
-		    <tr><td colspan="4" class="tit"><strong>*结算项目</strong></td></tr>
+		    <tr><td colspan="5" class="tit"><strong>*结算项目</strong></td></tr>
 		<c:forEach items="${settementList.projectLicenses}" var="projectLicense">
 			<tr>
 				<td>
@@ -112,11 +112,12 @@
 					${projectLicense.totalMoneyDisplay}
 				</td>
 				<td>
-					${projectLicense.remarks}
+					${projectLicense.description}
 				</td>
+				<td>${projectLicense.remarks}</td>
 			</tr>
 		</c:forEach>
-		    <tr><td colspan="4"><strong>*抵扣项(设计院证明)</strong></td></tr>
+		    <tr><td colspan="5"><strong>*抵扣项(设计院证明)</strong></td></tr>
 		<c:forEach items="${settementList.deductionDocItems}" var="deductionDocItem">
 			<tr>
 				<td>
@@ -129,11 +130,14 @@
 					${deductionDocItem.money}
 				</td>
 				<td>
+					${deductionDocItem.description}
+				</td>				
+				<td>
 					${deductionDocItem.remarks}
 				</td>
 			</tr>
 		</c:forEach>	
-		    <tr><td colspan="4"><strong>*国土已缴费</strong></td></tr>
+		    <tr><td colspan="5"><strong>*国土已缴费</strong></td></tr>
 		<c:forEach items="${settementList.landPayTickets}" var="landPayTicket">
 			<tr>
 				<td>
@@ -146,11 +150,14 @@
 					${landPayTicket.money}
 				</td>
 				<td>
+					${landPayTicket.description}
+				</td>				
+				<td>
 					${landPayTicket.remarks}
 				</td>
 			</tr>
 		</c:forEach>		
-		    <tr><td colspan="4"><strong>*其他减项</strong></td></tr>
+		    <tr><td colspan="5"><strong>*其他减项</strong></td></tr>
 		<c:forEach items="${settementList.projectDeductions}" var="projectDeduction">
 			<tr>
 				<td>
@@ -163,15 +170,19 @@
 					${projectDeduction.money}
 				</td>
 				<td>
+					${projectDeduction.description}
+				</td>				
+				<td>
 					${projectDeduction.remarks}
 				</td>
 			</tr>
 		</c:forEach>		
-		    <tr><td colspan="4"><strong>*缴费情况</strong></td></tr>
+		    <tr><td colspan="5"><strong>*缴费情况</strong></td></tr>
 			<tr>
 				<td>结算金额（元）</td>
 				<td></td>
 				<td>${settementList.charge.calMoney}</td>
+				<td></td>
 				<td></td>
 			</tr>		    
 		<c:forEach items="${settementList.payTickets}" var="payTicket">
@@ -184,11 +195,15 @@
 					${payTicket.money}
 				</td>
 				<td>
+					${payTicket.description}
+				</td>				
+				<td>
 					${payTicket.remarks}
 				</td>
 			</tr>
 		</c:forEach>	
 			<tr>
+			<!--  
 			<c:choose>
 			  <c:when test="${settementList.charge.moneyGap lt 0}">
 			  <td>少缴费</td>
@@ -197,8 +212,11 @@
 			  <td>多缴费</td>
 			  </c:otherwise>
 			</c:choose>
+			-->
+			  <td>待清算金额</td>
 				<td></td>
 				<td>${settementList.charge.moneyGapDisplay}</td>
+				<td></td>
 				<td></td>
 			</tr>				
 		</tbody>
