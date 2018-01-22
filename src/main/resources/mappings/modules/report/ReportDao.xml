@@ -29,11 +29,11 @@
 		UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 11 MONTH), '%Y-%m') AS
 		`month`) v
 		left join
-		(select DATE_FORMAT(t.report_date,'%Y-%m') month,count(t.id) report from tcharge
-		t
-		where DATE_FORMAT(t.report_date,'%Y-%m')>
-		DATE_FORMAT(date_sub(curdate(), interval 12 month),'%Y-%m')
-		group by month)b
+		(select DATE_FORMAT(t.report_date,'%Y-%m') month,count(t.id) report 
+		from tcharge t
+		where DATE_FORMAT(t.report_date,'%Y-%m')>DATE_FORMAT(date_sub(curdate(), interval 12 month),'%Y-%m')
+		and t.del_flag='0'
+		group by month) b
 		on v.month = b.month group by v.month
 	</select>
 	
@@ -64,11 +64,18 @@
 		UNION SELECT DATE_FORMAT((CURDATE() - INTERVAL 11 MONTH), '%Y-%m') AS
 		`month`) v
 		left join
-		(select DATE_FORMAT(t.report_date,'%Y-%m') month,SUM(t.cal_money) report from tcharge
-		t
-		where DATE_FORMAT(t.report_date,'%Y-%m')>
+		(
+		select DATE_FORMAT(mpt.max_pay_date,'%Y-%m') month,SUM(t.pay_money) report 
+		from tcharge t
+		left join (select pt.charge_id, max(pt.pay_date) max_pay_date
+		from tpay_ticket pt
+		group by pt.charge_id) mpt on mpt.charge_id=t.id
+		where t.status='40'
+		and t.del_flag='0'
+		and DATE_FORMAT(mpt.max_pay_date,'%Y-%m')>
 		DATE_FORMAT(date_sub(curdate(), interval 12 month),'%Y-%m')
-		group by month)b
+		group by month
+		) b
 		on v.month = b.month group by v.month
 	</select>
 	
@@ -76,6 +83,7 @@
 		select b.label status,count(c.id) count from (select a.label,a.value from sys_dict a
 		where a.type='charge_status') b
 		left join tcharge c on b.value=c.status
+		where c.del_flag='0'
 		group by b.label order by b.value
 	</select>
 	</mapper>
