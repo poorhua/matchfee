@@ -159,7 +159,7 @@ public class ChargeController extends BaseController {
 		
 		User user = UserUtils.getUser();
 		
-		if(!user.getIsShy()){
+		if(!user.getIsShy() && !user.getIsMatchfeeAdmin()){
 			charge.setReportStaff(user);
 		}
 		

@@ -366,6 +366,20 @@ public class User extends DataEntity<User> {
 		return flag;
 	}
 	
+	public boolean getIsYwy(){
+		boolean flag = false;
+		List<String> roleIds = this.getRoleIdList();
+		
+		for(String roleId : roleIds){
+			if("5".equals(roleId) || "4".equals(roleId) || "1".equals(roleId)){
+				flag = true;
+				break;
+			}
+		}
+		
+		return flag;
+	}
+	
 	@Override
 	public String toString() {
 		return id;
