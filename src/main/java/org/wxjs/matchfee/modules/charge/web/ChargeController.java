@@ -159,7 +159,7 @@ public class ChargeController extends BaseController {
 		
 		User user = UserUtils.getUser();
 		
-		if(!user.getIsShy() && !user.getIsMatchfeeAdmin()){
+		if(!user.getIsYwy()){
 			charge.setReportStaff(user);
 		}
 		
@@ -205,14 +205,7 @@ public class ChargeController extends BaseController {
 		
 		//charge.setReportStaff(user);
 		
-		if(user.getIsMatchfeeAdmin()){
-			charge.setStatus(Global.CHARGE_STATUS_EDIT
-					 + "," + Global.CHARGE_STATUS_REJECT
-					 + "," + Global.CHARGE_STATUS_TO_CALCULATE
-					 + "," + Global.CHARGE_STATUS_TO_APPROVE);
-		}else{
-			charge.setStatus(Global.CHARGE_STATUS_TO_APPROVE);
-		}
+		charge.setStatus(Global.CHARGE_STATUS_TO_APPROVE);
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);

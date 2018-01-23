@@ -357,7 +357,7 @@ public class User extends DataEntity<User> {
 		List<String> roleIds = this.getRoleIdList();
 		
 		for(String roleId : roleIds){
-			if("4".equals(roleId) || "1".equals(roleId)){
+			if("4".equals(roleId) || "2".equals(roleId)){
 				flag = true;
 				break;
 			}
@@ -371,7 +371,7 @@ public class User extends DataEntity<User> {
 		List<String> roleIds = this.getRoleIdList();
 		
 		for(String roleId : roleIds){
-			if("5".equals(roleId) || "4".equals(roleId) || "1".equals(roleId)){
+			if("5".equals(roleId) || "4".equals(roleId) || "2".equals(roleId)){
 				flag = true;
 				break;
 			}
