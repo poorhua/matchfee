@@ -311,14 +311,14 @@ public class Util {
 	 * @param pattern sample 0.0
 	 * @return
 	 */
-	public static String formatDecimal(float f, String pattern){
+	public static String formatDecimal(double f, String pattern){
 		DecimalFormat df = new DecimalFormat();
 		df.applyPattern(pattern);
 		return df.format(f);
 	}
 	
 	public static String formatDecimal(String floatStr, String pattern){
-		float f = Util.getFloat(floatStr);
+		double f = Util.getDouble(floatStr);
 		return formatDecimal(f, pattern);
 	}
 	

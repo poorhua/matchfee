@@ -109,7 +109,7 @@ public class DeductionDocItemController extends BaseController {
 				buffer.append("0平米");
 			}
 			
-			float areaRemained = Util.getFloat(areaInOpinionBook) - Util.getFloat(areaDeducted);
+			double areaRemained = Util.getDouble(areaInOpinionBook) - Util.getDouble(areaDeducted);
 			
 			buffer.append(", 剩余面积： ");
 			buffer.append(Util.formatDecimal(areaRemained, Global.DecimalFormat)+"平米");
@@ -132,25 +132,25 @@ public class DeductionDocItemController extends BaseController {
 		String prjNum = deductionDocItem.getDoc().getPrjNum();
 		String areaInOpinionBookStr = opinionBookItemService.getAreaInOpinionBook(itemId, prjNum);
 		
-		float areaInOpinionBook = Util.getFloat(areaInOpinionBookStr);
+		double areaInOpinionBook = Util.getDouble(areaInOpinionBookStr);
 		
 		logger.debug("areaInOpinionBook: "+areaInOpinionBook);
 
 		if(areaInOpinionBook > 0){
 			String areaDeductedStr = deductionDocItemService.getAreaDeducted(itemId, prjNum);
-			float areaDeducted = Util.getFloat(areaDeductedStr);
+			double areaDeducted = Util.getDouble(areaDeductedStr);
 			
 			logger.debug("1 areaDeducted: "+areaDeducted);
 			//exclude the original item when do update operation
 			if(!StringUtils.isBlank(deductionDocItem.getId())){
 				DeductionDocItem originalEntity = deductionDocItemService.get(deductionDocItem.getId());
 				if(originalEntity != null){
-					areaDeducted -= Util.getFloat(originalEntity.getArea());
+					areaDeducted -= Util.getDouble(originalEntity.getArea());
 				}
 			}
 			logger.debug("2 areaDeducted: "+areaDeducted);
 			//add area in this operation
-			areaDeducted += Util.getFloat(deductionDocItem.getArea());
+			areaDeducted += Util.getDouble(deductionDocItem.getArea());
 			
 			logger.debug("3 areaDeducted: "+areaDeducted);
 			
@@ -196,7 +196,7 @@ public class DeductionDocItemController extends BaseController {
 		
 		map.put("areaDeducted", areaDeducted);
 		
-		float areaRemained = Util.getFloat(areaInOpinionBook) - Util.getFloat(areaDeducted);
+		double areaRemained = Util.getDouble(areaInOpinionBook) - Util.getDouble(areaDeducted);
 		
 		map.put("areaRemained", Util.formatDecimal(areaRemained, Global.DecimalFormat));
 

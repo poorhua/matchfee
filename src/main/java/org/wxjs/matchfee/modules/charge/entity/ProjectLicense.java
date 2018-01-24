@@ -117,17 +117,17 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 		this.downArea = downArea;
 	}
 	
-	public float getTotalMoney(){
-		float totalArea = Util.getFloat(this.upArea) + Util.getFloat(this.downArea);
-		return this.getTotalArea() * Util.getFloat(Global.getConfig("matchfee.basis"));
+	public double getTotalMoney(){
+		double totalArea = Util.getDouble(this.upArea) + Util.getDouble(this.downArea);
+		return this.getTotalArea() * Util.getDouble(Global.getConfig("matchfee.basis"));
 	}
 	
 	public String getTotalMoneyDisplay(){
 		return Util.formatDecimal(this.getTotalMoney(), Global.DecimalFormat);
 	}
 	
-	public float getTotalArea(){
-		return Util.getFloat(this.upArea) + Util.getFloat(this.downArea);
+	public double getTotalArea(){
+		return Util.getDouble(this.upArea) + Util.getDouble(this.downArea);
 	}
 	
 	public String getTotalAreaDisplay(){

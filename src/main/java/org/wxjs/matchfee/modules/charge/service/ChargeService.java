@@ -131,7 +131,7 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		List<Charge> charges = this.findList(chargeParam);
 		
 		StringBuffer landPayMoneyHistory = new StringBuffer();
-		float landPayMoneyTotal = 0;
+		double landPayMoneyTotal = 0;
 		
 		int temp = 0;
 		for(Charge item: charges){
@@ -144,8 +144,8 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			if(itemId < Util.getInteger(chargeId)){
 				landPayMoneyHistory.append("征收"+itemId)
 				.append(", 抵扣 ")
-				.append(Util.getFloat(item.getLandPayMoney()) +"元<br>");
-				landPayMoneyTotal += Util.getFloat(item.getLandPayMoney());
+				.append(Util.getDouble(item.getLandPayMoney()) +"元<br>");
+				landPayMoneyTotal += Util.getDouble(item.getLandPayMoney());
 			}
 		}
 		
@@ -168,10 +168,10 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			opinionBookItemMap.put(item.getItem().getId(), item.getArea());
 		}
 		
-		float totalArea = 0;
-		float totalUpArea = 0;
-		float totalDownArea = 0;
-		float totalMoney = 0;
+		double totalArea = 0;
+		double totalUpArea = 0;
+		double totalDownArea = 0;
+		double totalMoney = 0;
 		
 		//ProjectLicense
 		ProjectLicense projectLicense = new ProjectLicense();
@@ -187,8 +187,8 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			
 			item.setDescription("规划许可证号: "+item.getDocumentNo());
 			
-			totalUpArea += Util.getFloat(item.getUpArea());
-			totalDownArea += Util.getFloat(item.getDownArea());
+			totalUpArea += Util.getDouble(item.getUpArea());
+			totalDownArea += Util.getDouble(item.getDownArea());
 		}
 		
 		if(settlementList.getProjectLicenses()!=null && settlementList.getProjectLicenses().size()>1){
@@ -207,7 +207,7 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		StringBuffer lptRemarks = new StringBuffer();
 		float lptTotal = 0;
 		for(LandPayTicket item : landPayTickets){
-			lptTotal += Util.getFloat(item.getMoney());
+			lptTotal += Util.getDouble(item.getMoney());
 			lptRemarks.append("金额（元）： " +item.getMoney());
 			lptRemarks.append(", 票据号： " +item.getTicketNo());
 			lptRemarks.append("<br>");
@@ -275,8 +275,8 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			//item.setRemarks(sb.toString());
 			item.setDescription(sb.toString());
 			
-			totalArea += Util.getFloat(item.getArea());
-			totalMoney += Util.getFloat(item.getMoney());
+			totalArea += Util.getDouble(item.getArea());
+			totalMoney += Util.getDouble(item.getMoney());
 		}
 		
 		if(settlementList.getDeductionDocItems()!=null && settlementList.getDeductionDocItems().size() > 1){
@@ -302,8 +302,8 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		for(ProjectDeduction item : settlementList.getProjectDeductions()){
 			calMoney -= Util.getDouble(item.getMoney());
 			
-			totalArea += Util.getFloat(item.getArea());
-			totalMoney += Util.getFloat(item.getMoney());
+			totalArea += Util.getDouble(item.getArea());
+			totalMoney += Util.getDouble(item.getMoney());
 		}
 		
 		if(settlementList.getProjectDeductions()!=null && settlementList.getProjectDeductions().size()>1){

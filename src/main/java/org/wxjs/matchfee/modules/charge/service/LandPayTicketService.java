@@ -44,10 +44,11 @@ public class LandPayTicketService extends CrudService<LandPayTicketDao, LandPayT
 		super.save(landPayTicket);
 		
 		//refresh land pay money
-		chargeDao.refreshLandPayMoney(charge);
+		Charge charge1 = chargeDao.get(charge);
+		chargeDao.refreshLandPayMoney(charge1);
 		
 		//refresh cal money
-		chargeDao.refreshCalMoney(charge);
+		chargeDao.refreshCalMoney(charge1);
 	}
 	
 	@Transactional(readOnly = false)
@@ -55,10 +56,11 @@ public class LandPayTicketService extends CrudService<LandPayTicketDao, LandPayT
 		super.delete(landPayTicket);
 		
 		//refresh land pay money
-		chargeDao.refreshLandPayMoney(charge);
+		Charge charge1 = chargeDao.get(charge);
+		chargeDao.refreshLandPayMoney(charge1);
 		
 		//refresh cal money
-		chargeDao.refreshCalMoney(charge);
+		chargeDao.refreshCalMoney(charge1);
 	}
 	
 }

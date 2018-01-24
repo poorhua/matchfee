@@ -78,6 +78,7 @@
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/charge/defaultTab?id=${charge.id}">进入</a>
+    				<a href="${ctx}/charge/charge/showSettlementList?id=${charge.id}" target="_blank">结算清单</a>
     				<c:if test="${charge.status eq '00'}">
     				  <a href="${ctx}/charge/charge/delete?id=${charge.id}" onclick="return confirmx('确认要删除该征收吗？', this.href)">删除</a>
     				</c:if>

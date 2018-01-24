@@ -57,7 +57,6 @@ public class ProjectLicenseService extends CrudService<ProjectLicenseDao, Projec
 		super.delete(projectLicense);
 		
 		//refresh land pay money
-		
 		Charge charge = chargeDao.get(projectLicense.getCharge());
 		chargeDao.refreshLandPayMoney(charge);
 		

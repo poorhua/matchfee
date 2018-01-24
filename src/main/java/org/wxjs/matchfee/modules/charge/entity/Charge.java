@@ -29,7 +29,7 @@ public class Charge extends DataEntity<Charge> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public static final float MatchfeeBasis = Util.getFloat(Global.getConfig("matchfee.basis"));
+	public static final double MatchfeeBasis = Util.getDouble(Global.getConfig("matchfee.basis"));
 	
 	private Project project;		// 项目代码
 	private User reportStaff;		// 申报人
@@ -70,7 +70,7 @@ public class Charge extends DataEntity<Charge> {
 	
 	private List<LandPayTicket> landPayTicketList;
 	
-	private float previousRemain = 0;
+	private double previousRemain = 0;
 	
 	public Charge() {
 		super();
@@ -367,8 +367,8 @@ public class Charge extends DataEntity<Charge> {
 		this.landPayTicketList = landPayTicketList;
 	}
 
-	public float getMoneyGap(){
-		float gap = Util.getFloat(this.payMoney) - Util.getFloat(this.calMoney);
+	public double getMoneyGap(){
+		double gap = Util.getDouble(this.calMoney) - Util.getDouble(this.payMoney);
 		if(gap < 0.01 && gap > -0.01){
 			gap = 0;
 		}
@@ -376,10 +376,10 @@ public class Charge extends DataEntity<Charge> {
 	}
 	
 	public String getMoneyGapDisplay(){
-		return Util.formatDecimal((0-this.getMoneyGap()), Global.DecimalFormat);
+		return Util.formatDecimal(this.getMoneyGap(), Global.DecimalFormat);
 	}
 
-	public float getPreviousRemain() {
+	public double getPreviousRemain() {
 		return previousRemain;
 	}
 	
@@ -387,7 +387,7 @@ public class Charge extends DataEntity<Charge> {
 		return Util.formatDecimal(previousRemain, Global.DecimalFormat);
 	}
 
-	public void setPreviousRemain(float previousRemain) {
+	public void setPreviousRemain(double previousRemain) {
 		this.previousRemain = previousRemain;
 	}
 	

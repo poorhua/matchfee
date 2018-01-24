@@ -34,7 +34,7 @@
 			if($('#downArea').val() != ''){
 				downArea = parseFloat($('#downArea').val());
 			}
-			$('#totalAreaDisplay').text(upArea + downArea);
+			$('#totalAreaDisplay').text((upArea + downArea).toFixed(2));
 		}
 	</script>
 </head>

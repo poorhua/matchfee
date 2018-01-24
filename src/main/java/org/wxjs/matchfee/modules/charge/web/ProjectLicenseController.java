@@ -90,12 +90,12 @@ public class ProjectLicenseController extends BaseController {
 			
 			//operationLogService.log(projectLicense.getCharge().getId(), "保存规划许可证", "成功");
 			
-			addMessage(redirectAttributes, "保存工程许可证成功");
+			addMessage(redirectAttributes, "保存规划许可证成功");
 		}catch(DuplicateKeyException e1){
-			addMessage(redirectAttributes, "保存工程许可证失败。重复！");
+			addMessage(redirectAttributes, "保存规划许可证失败。重复！");
 			logger.error("save error", e1);
 		}catch(Exception e2){
-			addMessage(redirectAttributes, "保存工程许可证失败。");
+			addMessage(redirectAttributes, "保存规划许可证失败。");
 			logger.error("save error", e2);
 		}
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/projectLicenseTab/?repage";

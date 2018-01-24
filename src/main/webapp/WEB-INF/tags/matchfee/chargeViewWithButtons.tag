@@ -133,6 +133,7 @@
 		          <c:choose>
 		   			<c:when test="${charge.status eq '00' || charge.status eq '05'}">
 		   				<input id="btnYes" class="btn btn-primary" type="button" value=" 提 交 " onclick="reportSubmit()"/>
+		   				<input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   			</c:when>
 		   			<c:when test="${charge.status eq '10' && fns:getUser().isYwy}">
 		   				<table width="100%">
@@ -145,6 +146,7 @@
 		   				    <td align="center">
 		   				      <input id="btnYes" class="btn btn-primary" type="button" value="测算通过 "  onclick="calculatePass()"/>
 		   				      <input id="btnNo" class="btn btn-warning" type="button" value=" 退 回 " onclick="calculateReject()"/>
+		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   				    </td>
 		   				  </tr>
 		   				</table>
@@ -160,19 +162,22 @@
 		   				    <td align="center">
 		   				      <input id="btnYes" class="btn btn-primary" type="button" value="审核通过"  onclick="approvePass()"/>
 		   				      <input id="btnNo" class="btn btn-warning" type="button" value=" 退 回 " onclick="approveReject()"/>
+		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   				    </td>
 		   				  </tr>
 		   				</table>
 		   			</c:when>	
 		   			<c:when test="${charge.status eq '30' && fns:getUser().isShy}">
 		   			    <input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
+		   			    <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   			</c:when>		   				   				   				   					   					   			
 		   			<c:otherwise>
+		   			    <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   			</c:otherwise>
 		   		  </c:choose>
 		   		  
 			    </shiro:hasPermission>	    
-			    <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
+			    
 		    </td>
 		  </tr>
 			
