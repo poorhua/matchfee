@@ -187,7 +187,7 @@
 							<c:if test="${menu.parent.id eq '1'&&menu.isShow eq '1'}">
 								<li class="menu ${not empty firstMenu && firstMenu ? ' active' : ''}">
 									<c:if test="${empty menu.href}">
-										<a class="menu" href="javascript:" data-href="${ctx}/sys/menu/tree?parentId=${menu.id}" data-id="${menu.id}"><span>${menu.name}</span></a>
+										<a class="menu" href="javascript:" data-href="${ctx}/sys/menu/tree?parentId=${menu.id}&time=<%=Math.random()%>" data-id="${menu.id}"><span>${menu.name}</span></a>
 									</c:if>
 									<c:if test="${not empty menu.href}">
 										<a class="menu" href="${fn:indexOf(menu.href, '://') eq -1 ? ctx : ''}${menu.href}" data-id="${menu.id}" target="mainFrame"><span>${menu.name}</span></a>
