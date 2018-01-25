@@ -23,7 +23,9 @@
 
 	<div style="margin:10px 60px 10px 0;text-align:right">
 	    <shiro:hasPermission name="charge:charge:edit">
+	    <c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
 	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加缴费凭证" onclick="toNew()"/>
+	    </c:if>
 	    </shiro:hasPermission>	   
 	</div>
 
@@ -55,8 +57,10 @@
 					<fmt:formatDate value="${payTicket.payDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
+				<c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
     				<a href="${ctx}/charge/payTicket/form?id=${payTicket.id}">修改</a>
 					<a href="${ctx}/charge/payTicket/delete?id=${payTicket.id}" onclick="return confirmx('确认要删除该缴费凭证吗？', this.href)">删除</a>
+				</c:if>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>	

@@ -33,8 +33,10 @@
 
 	<div style="margin: 10px 60px 10px 0;text-align:right">
 		<shiro:hasPermission name="charge:charge:edit">
+		<c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
 			<input id="btnAdd" class="btn btn-primary" type="button"
 				value="添加文件" onclick="toNewDeductionDoc()" />
+		</c:if>
 		</shiro:hasPermission>
 	</div>
 
@@ -43,21 +45,32 @@
 		<legend>设计院证明---${deductionDoc.documentNo}</legend>
 		<div style="margin: 10px 60px 10px 0;text-align:right">
 			<shiro:hasPermission name="charge:charge:edit">
+			<c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
 				<a href="${ctx}/charge/deductionDoc/form?id=${deductionDoc.id}">修改</a>
 				<a href="${ctx}/charge/deductionDoc/delete?id=${deductionDoc.id}"
 					onclick="return confirmx('确认要删除该设计院证明吗？', this.href)">删除</a>
+			</c:if>
 			</shiro:hasPermission>
 		</div>
 
 		<matchfee:deductionDocView deductionDoc="${deductionDoc}"></matchfee:deductionDocView>
-
-		<div style="margin: 10px 60px 10px 0;text-align:right">
-			<input id="btnAddItem" class="btn btn-primary" type="button"
-				value="添加项目" onclick="toNewItem(${deductionDoc.id})" />
-		</div>
 		
-		<matchfee:deductionDocItemView deductionDoc="${deductionDoc}" withOperation="1"></matchfee:deductionDocItemView>
-		<hr style="border:1px dotted #036" />
+	   <c:choose>
+	      <c:when test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
+			<div style="margin: 10px 60px 10px 0;text-align:right">
+				<input id="btnAddItem" class="btn btn-primary" type="button"
+					value="添加项目" onclick="toNewItem(${deductionDoc.id})" />
+			</div>
+			
+			<matchfee:deductionDocItemView deductionDoc="${deductionDoc}" withOperation="1"></matchfee:deductionDocItemView>
+		
+  		  </c:when>			   			  	   			  		   			  
+  		  <c:otherwise>
+            <matchfee:deductionDocItemView deductionDoc="${deductionDoc}" withOperation="0"></matchfee:deductionDocItemView>	  
+  		  </c:otherwise>		   			  
+	   </c:choose>		
+	   
+	   <hr style="border:1px dotted #036" />
 		
 	</c:forEach>
 	

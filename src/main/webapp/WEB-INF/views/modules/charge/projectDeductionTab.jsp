@@ -27,7 +27,9 @@
 	<div class="docHint">*其他减项指滨湖区已缴费凭证、防空地下室批文、减免证明等。</div>
 	<div style="margin:10px 60px 10px 0;text-align:right">
 	    <shiro:hasPermission name="charge:charge:edit">
+	    <c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
 	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNew()"/>
+	    </c:if>
 	    </shiro:hasPermission>	  
 	</div>
 
@@ -75,8 +77,10 @@
 					${projectDeduction.remarks}
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
+				<c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
     				<a href="${ctx}/charge/projectDeduction/form?id=${projectDeduction.id}">修改</a>
 					<a href="${ctx}/charge/projectDeduction/delete?id=${projectDeduction.id}" onclick="return confirmx('确认要删除该项目抵扣项吗？', this.href)">删除</a>
+				</c:if>
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>

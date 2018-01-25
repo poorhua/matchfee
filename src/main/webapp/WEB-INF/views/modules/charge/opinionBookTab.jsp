@@ -37,7 +37,9 @@
 	<div style="margin:10px 60px 10px 0;width:100%">
 	   <div align="right">
 		    <shiro:hasPermission name="charge:charge:edit">
+		    <c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
 		    <input id="btnAdd" class="btn btn-primary" type="button" value="添加文件" onclick="toNewOpinonBook()"/>
+		    </c:if>
 		    </shiro:hasPermission>	   
 	   </div>
 	</div>    
@@ -54,17 +56,27 @@
 		<legend>条件意见书</legend>
 		<div style="margin:10px 60px 10px 0;text-align:right">
 			<shiro:hasPermission name="charge:charge:edit">
+			<c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
 		 		<a href="${ctx}/charge/opinionBook/form?id=${opinionBook.id}">修改</a>
 				<a href="${ctx}/charge/opinionBook/delete?id=${opinionBook.id}" onclick="return confirmx('确认要删除该条件意见书吗？', this.href)">删除</a>
+			</c:if>
 			</shiro:hasPermission>					
 		</div>	
 		
 		<matchfee:opinionBookView opinionBook="${opinionBook}"></matchfee:opinionBookView>
-		
-		<div style="margin:10px 60px 10px 0;text-align:right">
-			<input id="btnAddItem" class="btn btn-primary" type="button" value="添加项目" onclick="toNewItem(${opinionBook.id})"/>
-		</div>	      
-	    <matchfee:opinionBookItemView opinionBook="${opinionBook}" withOperation="1"></matchfee:opinionBookItemView>
+	    
+	   <c:choose>
+	      <c:when test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
+			<div style="margin:10px 60px 10px 0;text-align:right">
+				<input id="btnAddItem" class="btn btn-primary" type="button" value="添加项目" onclick="toNewItem(${opinionBook.id})"/>
+			</div>	      
+		    <matchfee:opinionBookItemView opinionBook="${opinionBook}" withOperation="1"></matchfee:opinionBookItemView>
+  		  </c:when>			   			  	   			  		   			  
+  		  <c:otherwise>
+            <matchfee:opinionBookItemView opinionBook="${opinionBook}" withOperation="0"></matchfee:opinionBookItemView>  		  
+  		  </c:otherwise>		   			  
+	   </c:choose>	    
+	    
 <!--  
 	  <table style="text-align:top;width:100%" cellspacing="10">
 	    <tr>

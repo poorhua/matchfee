@@ -22,8 +22,12 @@
 	<matchfee:chargeTabController tab="1"></matchfee:chargeTabController>
 	
 	<div style="margin:10px 60px 10px 0;text-align:right">
-	    <shiro:hasPermission name="charge:charge:edit">
-	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNewPage()"/>
+	    <shiro:hasPermission name="charge:charge:edit">	      
+	    
+	    <c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">		 
+	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加" onclick="toNewPage()"/>  			    
+	    </c:if>	    
+	    
 	    </shiro:hasPermission>	   
 	</div>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
@@ -64,9 +68,13 @@
 				<td>
 					${projectLicense.totalAreaDisplay}
 				</td>				
-				<shiro:hasPermission name="charge:charge:edit"><td>
+				<shiro:hasPermission name="charge:charge:edit"><td>	
+		   		  
+			    <c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">		 
     				<a href="${ctx}/charge/projectLicense/form?id=${projectLicense.id}">修改</a>
-					<a href="${ctx}/charge/projectLicense/delete?id=${projectLicense.id}" onclick="return confirmx('确认要删除该规划许可证吗？', this.href)">删除</a>
+					<a href="${ctx}/charge/projectLicense/delete?id=${projectLicense.id}" onclick="return confirmx('确认要删除该规划许可证吗？', this.href)">删除</a> 			    
+			    </c:if>		   		  			
+
 				</td></shiro:hasPermission>
 			</tr>
 		</c:forEach>
