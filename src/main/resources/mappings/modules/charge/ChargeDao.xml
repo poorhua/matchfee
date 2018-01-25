@@ -63,7 +63,8 @@
 	
 	<select id="findList" resultType="Charge">
 		SELECT 
-			distinct <include refid="chargeColumns"/>, mpt.max_pay_date AS "maxPayDate"
+			distinct <include refid="chargeColumns"/>, 
+			IFNULL(mpt.max_pay_date, a.confirm_date) AS "maxPayDate"
 		FROM tcharge a
 		<include refid="chargeJoinsEx"/>
 		<where>
@@ -89,10 +90,10 @@
             <choose>
               <when test="dateType==1">  
 				<if test="dateFrom != null and dateFrom != ''">
-					AND DATE_FORMAT(mpt.max_pay_date,'%Y-%m-%d') &gt;= DATE_FORMAT(#{dateFrom},'%Y-%m-%d')
+					AND DATE_FORMAT(IFNULL(mpt.max_pay_date, a.confirm_date),'%Y-%m-%d') &gt;= DATE_FORMAT(#{dateFrom},'%Y-%m-%d')
 				</if>
 				<if test="dateTo != null and dateTo != ''">
-					AND DATE_FORMAT(mpt.max_pay_date,'%Y-%m-%d') &lt;= DATE_FORMAT(#{dateTo},'%Y-%m-%d')
+					AND DATE_FORMAT(IFNULL(mpt.max_pay_date, a.confirm_date),'%Y-%m-%d') &lt;= DATE_FORMAT(#{dateTo},'%Y-%m-%d')
 				</if>				          
               </when>
               <otherwise>  

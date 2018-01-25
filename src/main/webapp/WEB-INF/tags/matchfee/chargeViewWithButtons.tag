@@ -73,8 +73,15 @@
 	    }
 	    
 	    function confirmSubmit(){
+	    	
+	    	var isEmptyList = ${empty charge.payTicketList};
+	    	
+	    	var hint = "确定要确认缴费吗？";
+	    	if(isEmptyList){
+	    		hint = "缴费凭证尚未添加，" + hint;
+	    	}
 
-			top.$.jBox.confirm("确定要确认缴费吗？","系统提示",function(v,h,f){
+			top.$.jBox.confirm(hint,"系统提示",function(v,h,f){
 				if(v=="ok"){	    	
 					$("#chargeForm").attr("action","${ctx}/charge/charge/confirm");
 					$("#chargeForm").submit();	
