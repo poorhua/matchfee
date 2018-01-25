@@ -43,7 +43,10 @@
 				<form:input path="prjAddress" htmlEscape="false" maxlength="128" class="input-large"/>
 			</li>
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value="查询"/>
-			<input id="btnAdd" class="btn btn-primary" type="button" value="手动添加" onclick="toNewPage()"/></li>
+			<c:if test="${fns:getUser().isShy}">
+			<input id="btnAdd" class="btn btn-primary" type="button" value="手动添加" onclick="toNewPage()"/>
+			</c:if>
+			</li>
 			<li class="clearfix"></li>
 		</ul>
 	</form:form>
