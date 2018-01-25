@@ -76,10 +76,13 @@
 	    	
 	    	var isEmptyList = ${empty charge.payTicketList};
 	    	
-	    	var hint = "确定要确认缴费吗？";
+	    	
 	    	if(isEmptyList){
-	    		hint = "缴费凭证尚未添加，" + hint;
+	    		alert("请先上传缴费凭证！");
+	    		return;
 	    	}
+	    	
+	    	var hint = "确定要确认缴费吗？";
 
 			top.$.jBox.confirm(hint,"系统提示",function(v,h,f){
 				if(v=="ok"){	    	
@@ -174,9 +177,25 @@
 		   				  </tr>
 		   				</table>
 		   			</c:when>	
-		   			<c:when test="${charge.status eq '30' && fns:getUser().isShy}">
-		   			    <input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
-		   			    <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
+		   			<c:when test="${charge.status eq '30' && fns:getUser().isYwy}">
+		   				<table width="100%">
+		   				  <tr>
+		   				    <td>意见：<br>
+		   				      <textarea id="approveMemo" name="approveMemo" rows="3" cols="40"></textarea>    
+		   				    </td>
+		   				  </tr>
+		   				  <tr>
+		   				    <td align="center">
+		   				    <c:if test="${fns:getUser().isShy}">
+		   				      <input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
+		   				    </c:if>
+		   				      
+		   				      <input id="btnNo" class="btn btn-warning" type="button" value=" 退 回 " onclick="approveReject()"/>
+		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
+		   				    </td>
+		   				  </tr>
+		   				</table>		   			    
+		   			    
 		   			</c:when>		   				   				   				   					   					   			
 		   			<c:otherwise>
 		   			    <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
