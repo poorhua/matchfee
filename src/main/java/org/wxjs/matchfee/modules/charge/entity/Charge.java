@@ -4,7 +4,6 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
 
-import org.apache.commons.httpclient.util.DateUtil;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
@@ -16,6 +15,7 @@ import com.google.common.collect.Lists;
 
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
+import org.wxjs.matchfee.common.utils.DateUtils;
 import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.sys.entity.User;
 import org.wxjs.matchfee.modules.sys.utils.DictUtils;
@@ -103,7 +103,7 @@ public class Charge extends DataEntity<Charge> {
 	}
 	
 	public String getReportDateYYYYMMDD() {
-		return DateUtil.formatDate(reportDate, "yyyy-MM-dd");
+		return DateUtils.formatDate(reportDate, "yyyy-MM-dd");
 	}
 
 	public void setReportDate(Date reportDate) {
