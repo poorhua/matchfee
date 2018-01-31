@@ -65,7 +65,7 @@
 				        <a href="${ctx}/charge/charge/defaultTab?id=${charge.id}">进入</a>
 				        <a href="${ctx}/charge/charge/showSettlementList?id=${charge.id}" target="_blank">结算清单</a>
 		   			  </c:when>
-				      <c:when test="${charge.status eq '30'}">
+				      <c:when test="${charge.status eq '30' || charge.status eq '35'}">
 				        <a href="${ctx}/charge/charge/payTicketTab?id=${charge.id}">进入</a>
 				        <a href="${ctx}/charge/charge/showSettlementList?id=${charge.id}" target="_blank">结算清单</a>
 		   			  </c:when>

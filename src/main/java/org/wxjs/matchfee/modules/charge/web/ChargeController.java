@@ -223,6 +223,17 @@ public class ChargeController extends BaseController {
 	}	
 	
 	@RequiresPermissions("charge:charge:view")
+	@RequestMapping(value = {"uploadlist"})
+	public String uploadlist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
+		
+		charge.setStatus(Global.CHARGE_STATUS_TO_UPLOAD);
+		
+		List<Charge> list = chargeService.findList(charge); 
+		model.addAttribute("list", list);
+		return "modules/charge/myChargeList_postSubmit";
+	}
+	
+	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"confirmlist"})
 	public String confirmlist(Charge charge, HttpServletRequest request, HttpServletResponse response, Model model) {
 		
@@ -617,7 +628,7 @@ public class ChargeController extends BaseController {
 
 		charge.setApproveDate(Calendar.getInstance().getTime());
 		
-		charge.setStatus(Global.CHARGE_STATUS_TO_CONFIRM);
+		charge.setStatus(Global.CHARGE_STATUS_TO_UPLOAD);
 		
 		chargeService.updateApprove(charge);
 		
@@ -650,8 +661,52 @@ public class ChargeController extends BaseController {
 	}
 	
 	@RequiresPermissions("charge:charge:edit")
-	@RequestMapping(value = "confirm")
-	public String confirm(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+	@RequestMapping(value = "uploadPass")
+	public String uploadPass(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, charge)){
+			return form(charge, model);
+		}
+		
+		User user = UserUtils.getUser();
+		charge.setApproveStaff(user);
+
+		charge.setApproveDate(Calendar.getInstance().getTime());
+		
+		charge.setStatus(Global.CHARGE_STATUS_TO_CONFIRM);
+		
+		chargeService.updateApprove(charge);
+		
+		operationLogService.logApprove(charge.getId(), "上传凭证", "通过");
+		
+		addMessage(redirectAttributes, "保存征收成功");
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/uploadlist?repage";
+	}
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "uploadReject")
+	public String uploadReject(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, charge)){
+			return form(charge, model);
+		}
+		
+		User user = UserUtils.getUser();
+		charge.setApproveStaff(user);
+
+		charge.setApproveDate(Calendar.getInstance().getTime());
+		
+		charge.setStatus(Global.CHARGE_STATUS_REJECT);
+		
+		chargeService.updateApprove(charge);
+		
+		operationLogService.logApprove(charge.getId(), "上传凭证", "退回，"+charge.getApproveMemo());
+		
+		addMessage(redirectAttributes, "保存征收成功");
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/uploadlist?repage";
+	}	
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "confirmPass")
+	public String confirmPass(Charge charge, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, charge)){
 			return form(charge, model);
 		}
@@ -665,11 +720,33 @@ public class ChargeController extends BaseController {
 			
 		chargeService.updateConfirm(charge);
 		
-		operationLogService.logApprove(charge.getId(), "缴费确认", "");
+		operationLogService.logApprove(charge.getId(), "缴费确认", "通过");
 		
 		addMessage(redirectAttributes, "保存征收成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/confirmlist?repage";
 	}
+	
+	@RequiresPermissions("charge:charge:edit")
+	@RequestMapping(value = "confirmReject")
+	public String confirmReject(Charge charge, Model model, RedirectAttributes redirectAttributes) {
+		if (!beanValidator(model, charge)){
+			return form(charge, model);
+		}
+		
+		User user = UserUtils.getUser();
+		charge.setApproveStaff(user);
+
+		charge.setApproveDate(Calendar.getInstance().getTime());
+		
+		charge.setStatus(Global.CHARGE_STATUS_REJECT);
+		
+		chargeService.updateApprove(charge);
+		
+		operationLogService.logApprove(charge.getId(), "缴费确认", "退回，"+charge.getApproveMemo());
+		
+		addMessage(redirectAttributes, "保存征收成功");
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/confirmlist?repage";
+	}	
 	
 	@RequiresPermissions("charge:charge:edit")
 	@RequestMapping(value = "close")

@@ -8,7 +8,7 @@
 		
 	    function reportSubmit(){
 	       
-			top.$.jBox.confirm("确认提交吗？","系统提示",function(v,h,f){
+			top.$.jBox.confirm("确认要提交吗？","系统提示",function(v,h,f){
 				if(v=="ok"){
 					$("#chargeForm").attr("action","${ctx}/charge/charge/reportSubmit");
 					$("#chargeForm").submit();	
@@ -19,7 +19,7 @@
 	    
 	    function calculatePass(){
 		
-			top.$.jBox.confirm("确认通过吗？","系统提示",function(v,h,f){
+			top.$.jBox.confirm("确认要通过吗？","系统提示",function(v,h,f){
 				if(v=="ok"){
 					$("#chargeForm").attr("action","${ctx}/charge/charge/calculatePass");
 					$("#chargeForm").submit();
@@ -47,7 +47,7 @@
 	    
 	    function approvePass(){
 			
-			top.$.jBox.confirm("确认批准吗？","系统提示",function(v,h,f){
+			top.$.jBox.confirm("确认要批准吗？","系统提示",function(v,h,f){
 				if(v=="ok"){
 					$("#chargeForm").attr("action","${ctx}/charge/charge/approvePass");
 					$("#chargeForm").submit();	
@@ -72,7 +72,34 @@
 
 	    }
 	    
-	    function confirmSubmit(){
+	    function uploadPass(){
+			
+			top.$.jBox.confirm("确认要提交吗？","系统提示",function(v,h,f){
+				if(v=="ok"){
+					$("#chargeForm").attr("action","${ctx}/charge/charge/uploadPass");
+					$("#chargeForm").submit();	
+				}
+			},{buttonsFocus:1});
+			top.$('.jbox-body .jbox-icon').css('top','55px');			
+	    }	
+	    
+	    function uploadReject(){
+	    	var memo = $("#approveMemo").val();
+	    	if(memo == ""){
+	    		alert("退回操作，请填写审批意见！");
+	    		return;
+	    	}	    	
+			top.$.jBox.confirm("确认要退回吗？","系统提示",function(v,h,f){
+				if(v=="ok"){	    	
+					$("#chargeForm").attr("action","${ctx}/charge/charge/uploadReject");
+					$("#chargeForm").submit();	
+				}
+			},{buttonsFocus:1});
+			top.$('.jbox-body .jbox-icon').css('top','55px');
+
+	    }	    
+	    
+	    function confirmPass(){
 	    	
 	    	var isEmptyList = ${empty charge.payTicketList};
 	    	
@@ -86,12 +113,28 @@
 
 			top.$.jBox.confirm(hint,"系统提示",function(v,h,f){
 				if(v=="ok"){	    	
-					$("#chargeForm").attr("action","${ctx}/charge/charge/confirm");
+					$("#chargeForm").attr("action","${ctx}/charge/charge/confirmPass");
 					$("#chargeForm").submit();	
 				}
 			},{buttonsFocus:1});
 			top.$('.jbox-body .jbox-icon').css('top','55px');
 	    	
+	    }
+	    
+	    function confirmReject(){
+	    	var memo = $("#approveMemo").val();
+	    	if(memo == ""){
+	    		alert("退回操作，请填写审批意见！");
+	    		return;
+	    	}	    	
+			top.$.jBox.confirm("确认要退回吗？","系统提示",function(v,h,f){
+				if(v=="ok"){	    	
+					$("#chargeForm").attr("action","${ctx}/charge/charge/confirmReject");
+					$("#chargeForm").submit();	
+				}
+			},{buttonsFocus:1});
+			top.$('.jbox-body .jbox-icon').css('top','55px');
+
 	    }
 	    
 	    function showSettlementList(){
@@ -121,6 +164,10 @@
 					<td class="tit">建设单位代码：</td><td>${charge.project.buildCorpCode}</td>
 					<td class="tit">建设单位名称：</td><td>${charge.project.buildCorpName}</td>
 				</tr>
+				<tr>
+					<td class="tit">联系人：</td><td>${charge.project.contact}</td>
+					<td class="tit">联系电话：</td><td>${charge.project.mobile}</td>
+				</tr>				
 				<tr>
 					<td class="tit">状态：</td><td>${charge.statusLabel}</td>
 					<td class="tit">结算金额（元）：</td>
@@ -186,11 +233,25 @@
 		   				  </tr>
 		   				  <tr>
 		   				    <td align="center">
-		   				    <c:if test="${fns:getUser().isShy}">
-		   				      <input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmSubmit()"/>
-		   				    </c:if>
-		   				      
-		   				      <input id="btnNo" class="btn btn-warning" type="button" value=" 退 回 " onclick="approveReject()"/>
+		   				      <input id="btnYes" class="btn btn-primary" type="button" value="提交凭证" onclick="uploadPass()"/>
+		   				      <input id="btnNo" class="btn btn-warning" type="button" value=" 退 回 " onclick="uploadReject()"/>
+		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
+		   				    </td>
+		   				  </tr>
+		   				</table>		   			    
+		   			    
+		   			</c:when>		   			
+		   			<c:when test="${charge.status eq '35' && fns:getUser().isShy}">
+		   				<table width="100%">
+		   				  <tr>
+		   				    <td>意见：<br>
+		   				      <textarea id="approveMemo" name="approveMemo" rows="3" cols="40"></textarea>    
+		   				    </td>
+		   				  </tr>
+		   				  <tr>
+		   				    <td align="center">
+		   				      <input id="btnYes" class="btn btn-primary" type="button" value="确认缴费" onclick="confirmPass()"/>
+		   				      <input id="btnNo" class="btn btn-warning" type="button" value=" 退 回 " onclick="confirmReject()"/>
 		   				      <input id="btnSettle" class="btn btn-primary" type="button" value="预览结算清单" onclick="showSettlementList()"/>
 		   				    </td>
 		   				  </tr>
