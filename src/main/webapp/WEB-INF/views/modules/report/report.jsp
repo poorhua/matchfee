@@ -22,7 +22,7 @@
   </tr>
   <tr>
     <td>
-	<form:form id="searchForm" modelAttribute="reportParam" action="${ctx}/report/charge/query" method="post" class="breadcrumb form-search">
+	<form:form id="searchForm" modelAttribute="reportParam" action="${ctx}/report/report/query" method="post" class="breadcrumb form-search">
         <form:hidden path="reportType"/>
 		<ul class="ul-form">
 			<li>				
