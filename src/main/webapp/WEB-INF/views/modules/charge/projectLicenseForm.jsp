@@ -25,7 +25,7 @@
 		});
 		
 		function areaOnkeyup(obj){
-			obj.value=obj.value.replace(/[^\d.]/g,'');
+			obj.value=obj.value.replace(/[^-\d.]/g,'');
 			var upArea = 0;
 			if($('#upArea').val() != ''){
 				upArea = parseFloat($('#upArea').val());
@@ -36,6 +36,18 @@
 			}
 			$('#totalAreaDisplay').text((upArea + downArea).toFixed(2));
 		}
+		
+	    function onSubmit(){
+	    	
+	    	var path = $("#path").val();
+	    	if(path == ""){
+	    		alert("请上传建设工程规划许可证扫描件！");
+	    		return;
+	    	}
+
+			$("#inputForm").submit();	
+			top.$('.jbox-body .jbox-icon').css('top','55px');
+	    }		
 	</script>
 </head>
 <body>
@@ -50,7 +62,7 @@
 		<div class="control-group">
 			<label class="control-label">文件：</label>
 			<div class="controls">
-				<form:hidden id="path" path="path" htmlEscape="false" maxlength="256" class="input-xlarge"/>
+				<form:hidden id="path" path="path" htmlEscape="false" maxlength="256" class="input-xlarge required"/>
 				<sys:ckfinder input="path" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> &nbsp;&nbsp;&nbsp;如果是多页，请做成一个pdf文件 。</span>
 			</div>
@@ -83,7 +95,7 @@
 			<div class="controls">
 				<form:input path="upArea" htmlEscape="false" class="input-xlarge required"  
 				 onkeyup="areaOnkeyup(this)"
-                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
+                 onafterpaste="this.value=this.value.replace(/[^-\d.]/g,'')"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -92,7 +104,7 @@
 			<div class="controls">
 				<form:input path="downArea" htmlEscape="false" class="input-xlarge required"  
 				 onkeyup="areaOnkeyup(this)"
-                 onafterpaste="this.value=this.value.replace(/[^\d.]/g,'')"/>
+                 onafterpaste="this.value=this.value.replace(/[^-\d.]/g,'')"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -109,7 +121,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="charge:charge:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="charge:charge:edit"><input id="btnSubmit" class="btn btn-primary" type="button" value="保 存" onclick="onSubmit()"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>
