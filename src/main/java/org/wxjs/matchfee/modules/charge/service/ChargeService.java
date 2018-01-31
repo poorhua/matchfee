@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.httpclient.util.DateUtil;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,6 +28,8 @@ import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.entity.SettlementList;
 import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
 import org.wxjs.matchfee.modules.charge.dao.ChargeDao;
+
+import org.wxjs.matchfee.common.utils.DateUtils;
 
 import com.google.common.collect.Lists;
 
@@ -141,15 +143,21 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 				charge.setPreviousRemain(item.getMoneyGap());
 			}
 			
+			/*
 			if(itemId < Util.getInteger(chargeId)){
 				landPayMoneyHistory.append("征收"+itemId)
 				.append(", 抵扣 ")
-				.append(Util.getDouble(item.getLandPayMoney()) +"元<br>");
+				.append(Util.formatDecimal(item.getLandPayMoney(), Global.DecimalFormat) +"元<br>");
 				landPayMoneyTotal += Util.getDouble(item.getLandPayMoney());
 			}
+			*/
+			landPayMoneyHistory.append("征收"+itemId)
+			.append(", 抵扣 ")
+			.append(Util.formatDecimal(item.getLandPayMoney(), Global.DecimalFormat) +"元<br>");
+			landPayMoneyTotal += Util.getDouble(item.getLandPayMoney());
 		}
 		
-		landPayMoneyHistory.append("累计已抵扣"+Util.formatDecimal(landPayMoneyTotal, Global.DecimalFormat)+"元");
+		landPayMoneyHistory.append("至本期累计已抵扣"+Util.formatDecimal(landPayMoneyTotal, Global.DecimalFormat)+"元");
 		
 		calMoney -= charge.getPreviousRemain();
 		
@@ -204,26 +212,29 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		landPayTicket.setPrjNum(prjNum);
 		List<LandPayTicket> landPayTickets = landPayTicketService.findList(landPayTicket);
 		
+		StringBuffer lptDescription = new StringBuffer();
 		StringBuffer lptRemarks = new StringBuffer();
 		float lptTotal = 0;
 		for(LandPayTicket item : landPayTickets){
 			lptTotal += Util.getDouble(item.getMoney());
-			lptRemarks.append("金额（元）： " +item.getMoney());
-			lptRemarks.append(", 票据号： " +item.getTicketNo());
-			lptRemarks.append("<br>");
+			lptDescription.append("金额（元）： " +item.getMoney());
+			lptDescription.append(", 票据号： " +item.getTicketNo());
+			lptDescription.append("<br>");
+			
+			lptRemarks.append(item.getRemarks()).append("<br>");
 		}
-		lptRemarks.append("合计已缴费金额（元）：");
-		lptRemarks.append(Util.formatDecimal(lptTotal, Global.DecimalFormat));
-		lptRemarks.append("<br>");
+		lptDescription.append("合计已缴费金额（元）：");
+		lptDescription.append(Util.formatDecimal(lptTotal, Global.DecimalFormat));
+		lptDescription.append("<br>");
 		
 		//deducted previously
-		lptRemarks.append(landPayMoneyHistory);
+		lptDescription.append(landPayMoneyHistory);
 		
 		landPayTicket.setName("国土已缴费抵扣");
 		landPayTicket.setMoney(charge.getLandPayMoney());
-		
-		//landPayTicket.setRemarks(lptRemarks.toString());
-		landPayTicket.setDescription(lptRemarks.toString());
+
+		landPayTicket.setDescription(lptDescription.toString());
+		landPayTicket.setRemarks(lptRemarks.toString());
 		
 		List<LandPayTicket> landPayTicketList = Lists.newArrayList();
 		landPayTicketList.add(landPayTicket);
@@ -324,7 +335,7 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		for(PayTicket item : settlementList.getPayTickets()){
 			payMoney += Util.getDouble(item.getMoney());
 			//item.setRemarks("票据号: "+item.getTicketNo()+", 缴费日期: "+DateUtil.formatDate(item.getPayDate(), "yyyy-MM-dd"));
-			item.setDescription("票据号: "+item.getTicketNo()+", 缴费日期: "+DateUtil.formatDate(item.getPayDate(), "yyyy-MM-dd"));
+			item.setDescription("票据号: "+item.getTicketNo()+", 缴费日期: "+DateUtils.formatDate(item.getPayDate(), "yyyy-MM-dd"));
 		}
 		
 		//已有结果，为避免计算精度导致差异，直接用原来的值
