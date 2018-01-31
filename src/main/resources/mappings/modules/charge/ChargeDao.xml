@@ -8,6 +8,8 @@
 		b.prj_name AS "project.prjName",
 		b.build_corp_code AS "project.buildCorpCode",
 		b.build_corp_name AS "project.buildCorpName",
+		b.contact AS "project.contact",
+		b.mobile AS "project.mobile",
 		b.prj_address AS "project.prjAddress",
 		a.report_staff AS "reportStaff.id",
 		u1.name AS "reportStaff.name",

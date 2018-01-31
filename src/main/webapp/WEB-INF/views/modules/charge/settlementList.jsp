@@ -61,7 +61,7 @@
 </head>
 <body>
   <div style="width:210mm; align:center; margin: 0 auto">
-    <c:if test="${settementList.charge.status eq '40'}">
+    <c:if test="${settementList.charge.status ge '30'}">
     <div style="margin:10px 30px 10px 10px; text-align:right">
     <input id="btnPrint" class="btn btn-primary" type="button" value=" 打 印 " onclick="myprint()"/>&nbsp;&nbsp;&nbsp;
     <input id="btnExportPdf" class="btn btn-primary" type="button" value="导出PDF " onclick="exportPdf()"/>&nbsp;&nbsp;&nbsp;
