@@ -93,13 +93,13 @@ public class ExportSettlementList {
             
             document.add(PdfUtil.generateTable4Padding());
             
-            String[] headers = new String[]{"条目","面积（平米）","金额（元）","说明","备注"};
+            String[] headers = new String[]{"条目","面积\n（平米）","金额\n（元）","说明","备注"};
     		
             float[] widths = new float[]{0.26f, 0.12f, 0.12f ,0.25f ,0.25f};
             
             List<String[]> items = new ArrayList<String[]>();
 			
-			table = PdfUtil.generateTable(headers, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(true), widths, tableWidth);
+			table = PdfUtil.generateTable(headers, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(true), widths, tableWidth, true);
 			document.add(table);	
 			
 			table = PdfUtil.generateTable(new String[]{"*上期待清算金额（元）", "", settlementList.getCharge().getPreviousRemainDisplay(), ""}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -110,7 +110,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(ProjectLicense item : settlementList.getProjectLicenses()){
-				items.add(new String[]{item.getName(), item.getTotalArea() +"", item.getTotalMoney() +"", item.getDescription4Plain(), item.getRemarks()});
+				items.add(new String[]{item.getName(), item.getTotalArea() +"", item.getTotalMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -122,7 +122,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(DeductionDocItem item : settlementList.getDeductionDocItems()){
-				items.add(new String[]{item.getItem().getName(), item.getArea() +"", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks()});
+				items.add(new String[]{item.getItem().getName(), item.getArea() +"", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -133,7 +133,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(LandPayTicket item : settlementList.getLandPayTickets()){
-				items.add(new String[]{item.getName(), "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks()});
+				items.add(new String[]{item.getName(), "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -145,7 +145,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(ProjectDeduction item : settlementList.getProjectDeductions()){
-				items.add(new String[]{item.getName(), item.getArea() +"", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks()});
+				items.add(new String[]{item.getName(), item.getArea() +"", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -158,7 +158,7 @@ public class ExportSettlementList {
 			items.clear();
 			items.add(new String[]{"结算金额", "", settlementList.getCharge().getCalMoney() +"", "", ""});
 			for(PayTicket item : settlementList.getPayTickets()){
-				items.add(new String[]{"缴费", "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks()});
+				items.add(new String[]{"缴费", "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			String gapHint = "待清算金额";

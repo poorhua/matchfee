@@ -143,18 +143,12 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 				charge.setPreviousRemain(item.getMoneyGap());
 			}
 			
-			/*
-			if(itemId < Util.getInteger(chargeId)){
+			if(itemId <= Util.getInteger(chargeId)){
 				landPayMoneyHistory.append("征收"+itemId)
 				.append(", 抵扣 ")
 				.append(Util.formatDecimal(item.getLandPayMoney(), Global.DecimalFormat) +"元<br>");
 				landPayMoneyTotal += Util.getDouble(item.getLandPayMoney());
 			}
-			*/
-			landPayMoneyHistory.append("征收"+itemId)
-			.append(", 抵扣 ")
-			.append(Util.formatDecimal(item.getLandPayMoney(), Global.DecimalFormat) +"元<br>");
-			landPayMoneyTotal += Util.getDouble(item.getLandPayMoney());
 		}
 		
 		landPayMoneyHistory.append("至本期累计已抵扣"+Util.formatDecimal(landPayMoneyTotal, Global.DecimalFormat)+"元");

@@ -10,7 +10,9 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import org.wxjs.matchfee.common.utils.IdGen;
+import org.wxjs.matchfee.common.utils.PdfUtil;
 import org.wxjs.matchfee.modules.sys.entity.User;
 import org.wxjs.matchfee.modules.sys.utils.UserUtils;
 
@@ -75,6 +77,10 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	public String getRemarks() {
 		return remarks;
 	}
+	
+	public String getRemarks4Plain(){
+		return PdfUtil.toPlain(this.remarks);
+	}
 
 	public void setRemarks(String remarks) {
 		this.remarks = remarks;
@@ -133,11 +139,7 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	
 	@JsonIgnore
 	public String getDescription4Plain() {
-		if(!StringUtils.isBlank(this.description)){
-			return this.description.replaceAll("<br>", "/n/r").replace("<BR>", "/n/r");
-		}else{
-			return description;
-		}
+		return PdfUtil.toPlain(this.description);
 		
 	}
 

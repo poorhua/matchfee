@@ -13,6 +13,8 @@ import com.lowagie.text.pdf.PdfPTable;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class PdfUtil {
 	
     private static BaseFont bfChinese;
@@ -62,6 +64,10 @@ public class PdfUtil {
     }
     
     public static PdfPTable generateTable(String[] headers, Font headerFont, List<String[]> items, Font rowFont, float[] widths, int tableWidth) throws DocumentException{
+    	return generateTable(headers, headerFont, items, rowFont, widths, tableWidth, false);
+    }
+    
+    public static PdfPTable generateTable(String[] headers, Font headerFont, List<String[]> items, Font rowFont, float[] widths, int tableWidth, boolean headerCenter) throws DocumentException{
     	int columns = widths.length;
     	//int rows = items.size()+1;
     	
@@ -78,7 +84,12 @@ public class PdfUtil {
             	phrase = new Phrase(header, headerFont);
             	cell = new PdfPCell(phrase);
             	cell.setBorderWidth(1);
-            	cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            	if(headerCenter){
+            		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            	}else{
+            		cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+            	}
+            	
             	//cell.setBackgroundColor(Color.lightGray);
             	table.addCell(cell);
             }           	
@@ -112,6 +123,14 @@ public class PdfUtil {
     	table.addCell(cell); 	
 
     	return table;
+    }
+    
+    public static String toPlain(String src){
+		if(!StringUtils.isBlank(src)){
+			return src.replaceAll("<br>", "\n").replace("<BR>", "\n");
+		}else{
+			return src;
+		}
     }
 
 }
