@@ -110,8 +110,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE tpay_ticket SET 
-			del_flag = #{DEL_FLAG_DELETE}
+		DELETE FROM tpay_ticket
 		WHERE id = #{id}
 	</update>
 	

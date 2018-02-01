@@ -121,8 +121,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE tland_pay_ticket SET 
-			del_flag = #{DEL_FLAG_DELETE}
+		DELETE FROM tland_pay_ticket
 		WHERE id = #{id}
 	</update>
 	

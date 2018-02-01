@@ -120,8 +120,7 @@
 	</update>
 	
 	<update id="delete">
-		UPDATE tproject_license SET 
-			del_flag = #{DEL_FLAG_DELETE}
+		DELETE FROM tproject_license
 		<choose>
 			<when test="id !=null and id != ''">
 				WHERE id = #{id}

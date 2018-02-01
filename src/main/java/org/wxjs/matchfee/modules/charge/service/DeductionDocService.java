@@ -57,7 +57,10 @@ public class DeductionDocService extends CrudService<DeductionDocDao, DeductionD
 	
 	@Transactional(readOnly = false)
 	public void delete(DeductionDoc deductionDoc) {
+		
 		super.delete(deductionDoc);
+		
+		deductionDocItemDao.delete(new DeductionDocItem(deductionDoc));
 	}
 	
 }
