@@ -77,11 +77,11 @@
 		<div class="control-group">
 			<label class="control-label">抵扣项：</label>
 			<div class="controls">
-				
-				<form:select path="item.id" class="input-large required" onchange="itemChange()">
+			   
+			   <form:select path="item.id" class="input-large required" onchange="itemChange()" disabled="${not empty deductionDocItem.id}">
 				    <form:option value="" label="请选择"/>
 					<form:options items="${fns:getDeductionItems()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
-				</form:select>				
+				</form:select>				   		    	
 				
 				<span class="help-inline"><font color="red">*</font> </span>
 				<div id="deductionItemHint" name="deductionItemHint" style="color:#00F">${deductionItemHint}</div>

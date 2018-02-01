@@ -34,12 +34,12 @@
 		<form:hidden path="doc.id" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 		<div class="control-group">
 			<label class="control-label">抵扣项：</label>
-			<div class="controls">
+			<div class="controls">		
 				
-				<form:select path="item.id" class="input-large required">
+				<form:select path="item.id" class="input-large required" disabled="${not empty opinionBookItem.id}">
 				    <form:option value="" label="请选择"/>
 					<form:options items="${fns:getDeductionItems()}" itemLabel="name" itemValue="id" htmlEscape="false"/>
-				</form:select>				
+				</form:select>						
 				
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
