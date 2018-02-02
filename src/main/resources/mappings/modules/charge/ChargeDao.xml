@@ -205,7 +205,6 @@
 	
 	<update id="updateReport">
 		UPDATE tcharge SET
-			report_staff = #{reportStaff.id},
 			report_date = #{reportDate},
 			report_memo = #{reportMemo},
 			status = #{status}
