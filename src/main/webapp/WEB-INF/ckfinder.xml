@@ -27,7 +27,7 @@
 		<type name="files">
 			<url>%BASE_URL%files/</url>
 			<directory>%BASE_DIR%files</directory>
-			<maxSize>5M</maxSize>
+			<maxSize>20M</maxSize>
 			<allowedExtensions>jpeg,jpg,pdf</allowedExtensions>
 			<deniedExtensions></deniedExtensions>
 		</type>
