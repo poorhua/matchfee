@@ -24,7 +24,7 @@
 
 	<div style="margin:10px 60px 10px 0;text-align:right">
 	    <shiro:hasPermission name="charge:charge:edit">
-	    <c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isYwy)}">
+	    <c:if test="${charge.status ge '20' && fns:getUser().isYwy}">
 	    <input id="btnAdd" class="btn btn-primary" type="button" value="添加缴费凭证" onclick="toNew()"/>
 	    </c:if>
 	    </shiro:hasPermission>	   
