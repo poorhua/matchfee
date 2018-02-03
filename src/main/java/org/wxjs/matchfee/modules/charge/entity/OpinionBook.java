@@ -17,6 +17,7 @@ import com.google.common.collect.Lists;
 
 import org.wxjs.matchfee.common.persistence.DataEntity;
 import org.wxjs.matchfee.common.utils.Util;
+import org.wxjs.matchfee.modules.charge.utils.EntityUtils;
 
 /**
  * 条件意见书Entity
@@ -63,6 +64,10 @@ public class OpinionBook extends DataEntity<OpinionBook> {
 	@Length(min=1, max=64, message="文件编号长度必须介于 1 和 64 之间")
 	public String getDocumentNo() {
 		return documentNo;
+	}
+	
+	public String getDocumentNoDisplay() {
+		return EntityUtils.duplicateTag(this.documentNo);
 	}
 
 	public void setDocumentNo(String documentNo) {

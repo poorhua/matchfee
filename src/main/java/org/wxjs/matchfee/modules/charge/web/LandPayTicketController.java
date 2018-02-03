@@ -3,6 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
@@ -106,6 +109,19 @@ public class LandPayTicketController extends BaseController {
 		landPayTicketService.delete(landPayTicket, charge);
 		addMessage(redirectAttributes, "删除国土已缴费成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/landPayTicketTab/?repage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "ticketNoExists")
+	public boolean ticketNoExists(String ticketNo) {
+		
+		LandPayTicket landPayTicket = new LandPayTicket();
+		
+		landPayTicket.setTicketNo(ticketNo);
+		
+		List<LandPayTicket> list = landPayTicketService.findList(landPayTicket);
+		
+		return (list != null && list.size() > 0);
 	}
 
 }

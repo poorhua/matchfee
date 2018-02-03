@@ -73,8 +73,18 @@
 	    }
 	    
 	    function uploadPass(){
+	    	
+	    	var isEmptyList = ${empty charge.payTicketList};
+	    	
+	    	
+	    	if(isEmptyList){
+	    		alert("请先上传缴费凭证！");
+	    		return;
+	    	}
+	    	
+	    	var hint = "确认要提交吗？";	    	
 			
-			top.$.jBox.confirm("确认要提交吗？","系统提示",function(v,h,f){
+			top.$.jBox.confirm(hint,"系统提示",function(v,h,f){
 				if(v=="ok"){
 					$("#chargeForm").attr("action","${ctx}/charge/charge/uploadPass");
 					$("#chargeForm").submit();	

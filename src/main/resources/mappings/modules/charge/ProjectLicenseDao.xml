@@ -42,6 +42,9 @@
 			<if test="charge != null and charge.id != null and charge.id != ''">
 				AND a.charge_id = #{charge.id}
 			</if>
+			<if test="documentNo != null and documentNo != ''">
+				AND a.document_no = #{documentNo}
+			</if>			
 		</where>
 		<choose>
 			<when test="page !=null and page.orderBy != null and page.orderBy != ''">

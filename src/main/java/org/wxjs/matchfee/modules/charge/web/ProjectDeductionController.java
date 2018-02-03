@@ -3,6 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
@@ -109,6 +112,19 @@ public class ProjectDeductionController extends BaseController {
 		
 		addMessage(redirectAttributes, "删除项目抵扣项成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/projectDeductionTab/?repage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "documentNoExists")
+	public boolean documentNoExists(String documentNo) {
+		
+		ProjectDeduction projectDeduction = new ProjectDeduction();
+		
+		projectDeduction.setDocumentNo(documentNo);
+		
+		List<ProjectDeduction> list = projectDeductionService.findList(projectDeduction);
+		
+		return (list != null && list.size() > 0);
 	}
 
 }

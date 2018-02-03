@@ -36,9 +36,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th>文件</th>			
+				<th>文件</th>		
+				<th>文件编号</th>	
 				<th>名称</th>
-				<th>文件编号</th>
 				<th>文档日期</th>
 				<th>面积（平米）</th>
 				<th>金额（元）</th>
@@ -54,10 +54,10 @@
 				<a href="${projectDeduction.path}" target="_blank">${projectDeduction.filename}</a>					
 				</td>			
 				<td>
-					${projectDeduction.name}
-				</td>
+					${projectDeduction.documentNoDisplay}
+				</td>				
 				<td>
-					${projectDeduction.documentNo}
+					${projectDeduction.name}
 				</td>
 				<td>
 					<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd"/>

@@ -33,9 +33,9 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-                <th>文件</th>			
+                <th>文件</th>		
+                <th>规划许可证编号</th>	
 				<th>项目名称</th>
-				<th>规划许可证编号</th>
 				<th>发证日期</th>
 				<th>地上面积（平米）</th>
 				<th>地下面积（平米）</th>
@@ -48,14 +48,13 @@
 			<tr>
 				<td>	
 				<a href="${projectLicense.path}" target="_blank">${projectLicense.filename}</a>				
-				</td>			
+				</td>
+				<td>
+					${projectLicense.documentNoDisplay}
+				</td>							
 				<td>
 					${projectLicense.name}
 				</td>
-				<td>
-					${projectLicense.documentNo}
-				</td>
-
 				<td>
 					<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd"/>
 				</td>

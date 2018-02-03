@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
@@ -22,6 +23,7 @@ import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
 import org.wxjs.matchfee.modules.charge.entity.Project;
+import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
 import org.wxjs.matchfee.modules.charge.service.ProjectService;
 
@@ -96,6 +98,21 @@ public class OpinionBookController extends BaseController {
 		opinionBookService.delete(opinionBook);
 		addMessage(redirectAttributes, "删除条件意见书成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/opinionBookTab/?repage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "documentNoExists")
+	public boolean documentNoExists(String documentNo) {
+		
+		OpinionBook opinionBook = new OpinionBook();
+		
+		opinionBook.setDocumentNo(documentNo);
+		
+		logger.debug("documentNo: "+documentNo);
+		
+		List<OpinionBook> list = opinionBookService.findList(opinionBook);
+		
+		return (list != null && list.size() > 0);
 	}
 
 }

@@ -175,7 +175,6 @@ CREATE TABLE `tproject_license` (
   `update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `remarks` varchar(512) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
-  UNIQUE(`name`, prj_num),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '工程许可证';
 
@@ -188,7 +187,7 @@ CREATE TABLE `tproject_deduction` (
   `charge_id` int(11) NOT NULL COMMENT '征收代码',
   `name` varchar(64) NOT NULL COMMENT '名称',
   `prj_num` varchar(64) NOT NULL COMMENT '项目代码',
-  `document_no` varchar(64) NOT NULL COMMENT '文件编号',
+  `document_no` varchar(64) NULL COMMENT '文件编号',
   `path` varchar(512) NOT NULL COMMENT '保存路径',
   `document_date` datetime NOT NULL COMMENT '文档日期',
   `area` decimal(15,2) NOT NULL COMMENT '面积（平米）',
@@ -200,7 +199,6 @@ CREATE TABLE `tproject_deduction` (
   `update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `remarks` varchar(512) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
-  UNIQUE(`name`, prj_num),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '项目抵扣项';
 
@@ -265,7 +263,6 @@ CREATE TABLE `tland_pay_ticket` (
   `update_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '更新时间',
   `remarks` varchar(512) DEFAULT NULL COMMENT '备注信息',
   `del_flag` char(1) DEFAULT '0' COMMENT '删除标记',
-  UNIQUE(`ticket_no`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '国土已缴费';
 

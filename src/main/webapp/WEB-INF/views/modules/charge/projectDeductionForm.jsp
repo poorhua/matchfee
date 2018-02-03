@@ -5,7 +5,9 @@
 	<title>项目抵扣项管理</title>
 	<meta name="decorator" content="default"/>
 	<script type="text/javascript">
+	    
 		$(document).ready(function() {
+			
 			//$("#name").focus();
 			$("#inputForm").validate({
 				submitHandler: function(form){
@@ -23,6 +25,44 @@
 				}
 			});
 		});
+		
+		function onSubmit(){
+			var documentNo = $("#documentNo").val();
+			
+			if(documentNo == "" || documentNo == "无"){
+				$("#inputForm").submit();
+				return;
+			}
+			
+			var aj = $.ajax( {    
+			    url:'${ctx}/charge/projectDeduction/documentNoExists?documentNo='+documentNo,   
+			    data:{
+			    	//documentNo:$("#documentNo").val()
+			    },    
+			    type:'post',    
+			    cache:false,    
+			    dataType:'json',    
+			    success:function(data) {
+			    	
+			    	if(data == true){
+						top.$.jBox.confirm("该文件编号已使用过，注意不要重复抵扣，确认要保存吗？","系统提示",function(v,h,f){
+							if(v=="ok"){
+								$("#documentNo").val(documentNo+"_duplicate");
+								
+								$("#inputForm").submit();	
+							}
+						},{buttonsFocus:1});				    		
+			    	}else{
+			    		$("#inputForm").submit();	
+			    	}
+		        
+			     },    
+			     error : function() {   
+			          alert("获取数据异常！");    
+			     }    
+			});	
+			
+		} 
 	</script>
 </head>
 <body>
@@ -40,18 +80,17 @@
 				<sys:ckfinder input="path" type="files" uploadPath="/配套费/减项证明" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> &nbsp;&nbsp;&nbsp;如果是多页，请做成一个pdf文件 。</span>
 			</div>
-		</div>		
+		</div>	
+		<div class="control-group">
+			<label class="control-label">文件编号：</label>
+			<div class="controls">
+			<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge" readonly="${not empty projectDeduction.id}"/>
+			</div>
+		</div>			
 		<div class="control-group">
 			<label class="control-label">名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">文件编号：</label>
-			<div class="controls">
-				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
@@ -101,7 +140,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="charge:charge:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="charge:charge:edit"><input id="btnSubmit" class="btn btn-primary" type="button" value="保 存" onclick="onSubmit()"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

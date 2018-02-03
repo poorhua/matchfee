@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
 import org.wxjs.matchfee.common.utils.Util;
+import org.wxjs.matchfee.modules.charge.utils.EntityUtils;
 
 /**
  * LandPayTicketEntity
@@ -61,6 +62,10 @@ public class LandPayTicket extends DataEntity<LandPayTicket> {
 	@Length(min=1, max=64, message="票据号长度必须介于 1 和 64 之间")
 	public String getTicketNo() {
 		return ticketNo;
+	}
+	
+	public String getTicketNoDisplay() {
+		return EntityUtils.duplicateTag(this.ticketNo);
 	}
 
 	public void setTicketNo(String ticketNo) {

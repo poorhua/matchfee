@@ -24,6 +24,45 @@
 			});
 		});
 		
+		function onSubmit(){
+			
+	    	var path = $("#path").val();
+	    	if(path == ""){
+	    		alert("请上传建设工程规划许可证扫描件！");
+	    		return;
+	    	}
+			
+			var documentNo = $("#documentNo").val();
+			
+			var aj = $.ajax( {    
+			    url:'${ctx}/charge/projectLicense/documentNoExists?documentNo='+documentNo,   
+			    data:{
+			    },    
+			    type:'post',    
+			    cache:false,    
+			    dataType:'json',    
+			    success:function(data) {
+			    	
+			    	if(data == true){
+						top.$.jBox.confirm("该规划许可证号已使用过，注意不要重复收费，确认要保存吗？","系统提示",function(v,h,f){
+							if(v=="ok"){
+								$("#documentNo").val(documentNo+"_duplicate");
+								
+								$("#inputForm").submit();	
+							}
+						},{buttonsFocus:1});				    		
+			    	}else{
+			    		$("#inputForm").submit();	
+			    	}
+		        
+			     },    
+			     error : function() {   
+			          alert("获取数据异常！");    
+			     }    
+			});	
+			
+		} 		
+		
 		function areaOnkeyup(obj){
 			obj.value=obj.value.replace(/[^-\d.]/g,'');
 			var upArea = 0;
@@ -36,18 +75,7 @@
 			}
 			$('#totalAreaDisplay').text((upArea + downArea).toFixed(2));
 		}
-		
-	    function onSubmit(){
-	    	
-	    	var path = $("#path").val();
-	    	if(path == ""){
-	    		alert("请上传建设工程规划许可证扫描件！");
-	    		return;
-	    	}
-
-			$("#inputForm").submit();	
-			top.$('.jbox-body .jbox-icon').css('top','55px');
-	    }		
+			
 	</script>
 </head>
 <body>
@@ -66,19 +94,19 @@
 				<sys:ckfinder input="path" type="files" uploadPath="/配套费/规划许可证" selectMultiple="false"/>
 				<span class="help-inline"><font color="red">*</font> &nbsp;&nbsp;&nbsp;如果是多页，请做成一个pdf文件 。</span>
 			</div>
-		</div>		
+		</div>
+		<div class="control-group">
+			<label class="control-label">规划许可证编号：</label>
+			<div class="controls">
+				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="${not empty projectLicense.id}"/>
+				<span class="help-inline"><font color="red">*</font> </span>
+			</div>
+		</div>				
 		<div class="control-group">
 			<label class="control-label">项目名称：</label>
 			<div class="controls">
 				<form:input path="name" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> &nbsp;&nbsp;&nbsp;请按照规划许可证上的建设项目名称填写。</span>
-			</div>
-		</div>
-		<div class="control-group">
-			<label class="control-label">规划许可证编号：</label>
-			<div class="controls">
-				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required" />
-				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>
 		<div class="control-group">

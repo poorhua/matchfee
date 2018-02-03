@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
 import org.wxjs.matchfee.common.utils.Util;
+import org.wxjs.matchfee.modules.charge.utils.EntityUtils;
 
 /**
  * 项目抵扣项Entity
@@ -66,9 +67,13 @@ public class ProjectDeduction extends DataEntity<ProjectDeduction> {
 		this.project = project;
 	}
 
-	@Length(min=1, max=64, message="文件编号长度必须介于 1 和 64 之间")
+	@Length(min=0, max=64, message="文件编号长度必须介于 0 和 64 之间")
 	public String getDocumentNo() {
 		return documentNo;
+	}
+	
+	public String getDocumentNoDisplay() {
+		return EntityUtils.duplicateTag(this.documentNo);
 	}
 
 	public void setDocumentNo(String documentNo) {

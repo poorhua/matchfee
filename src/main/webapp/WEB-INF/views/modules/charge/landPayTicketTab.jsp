@@ -33,9 +33,9 @@
 		<thead>
 			<tr>
 				<th>票据</th>
-				<th>代收费协议</th>			
+				<th>代收费协议</th>		
+				<th>票据号</th>	
 				<th>名称</th>
-				<th>票据号</th>
 				<th>面积（平米）</th>
 				<th>金额（元）</th>
 				<th>缴费日期</th>
@@ -53,10 +53,10 @@
 				<a href="${landPayTicket.agencyAgreement}" target="_blank">${landPayTicket.agencyAgreementFilename}</a>					
 				</td>			
 				<td>
-					${landPayTicket.name}
-				</td>
+					${landPayTicket.ticketNoDisplay}
+				</td>				
 				<td>
-					${landPayTicket.ticketNo}
+					${landPayTicket.name}
 				</td>
 				<td>
 					${landPayTicket.area}

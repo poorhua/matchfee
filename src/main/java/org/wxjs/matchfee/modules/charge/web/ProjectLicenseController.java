@@ -3,6 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
@@ -110,6 +113,19 @@ public class ProjectLicenseController extends BaseController {
 		
 		addMessage(redirectAttributes, "删除工程许可证成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/charge/projectLicenseTab/?repage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "documentNoExists")
+	public boolean documentNoExists(String documentNo) {
+		
+		ProjectLicense projectLicense = new ProjectLicense();
+		
+		projectLicense.setDocumentNo(documentNo);
+		
+		List<ProjectLicense> list = projectLicenseService.findList(projectLicense);
+		
+		return (list != null && list.size() > 0);
 	}
 
 }
