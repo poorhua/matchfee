@@ -15,10 +15,15 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		bb.duplicate_flag AS "duplicateFlag"
 	</sql>
 	
 	<sql id="opinionBookJoins">
+	    LEFT JOIN (SELECT aa.document_no, 1 duplicate_flag 
+		FROM topinion_book aa 
+		GROUP BY aa.document_no
+		HAVING count(*)>1) bb on a.document_no=bb.document_no	
 	</sql>
     
 	<select id="get" resultType="OpinionBook">
@@ -58,6 +63,22 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<select id="findList4DuplicateCheck" resultType="OpinionBook">
+		SELECT 
+			<include refid="opinionBookColumns"/>
+		FROM topinion_book a
+		<include refid="opinionBookJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="id != null and id != ''">
+			    AND a.id != #{id}
+			</if>			
+			<if test="documentNo != null and documentNo != ''">
+				AND a.document_no = #{documentNo}
+			</if>					
+		</where>
+	</select>	
 	
 	<select id="findAllList" resultType="OpinionBook">
 		SELECT 

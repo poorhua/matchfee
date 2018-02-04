@@ -35,6 +35,10 @@ public class ProjectLicenseService extends CrudService<ProjectLicenseDao, Projec
 		return super.findList(projectLicense);
 	}
 	
+	public List<ProjectLicense> findList4DuplicateCheck(ProjectLicense projectLicense) {
+		return dao.findList4DuplicateCheck(projectLicense);
+	}
+	
 	public Page<ProjectLicense> findPage(Page<ProjectLicense> page, ProjectLicense projectLicense) {
 		return super.findPage(page, projectLicense);
 	}

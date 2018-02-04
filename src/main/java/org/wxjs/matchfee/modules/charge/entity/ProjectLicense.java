@@ -76,7 +76,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 	}
 	
 	public String getDocumentNoDisplay() {
-		return EntityUtils.duplicateTag(this.documentNo);
+		return EntityUtils.duplicateTag(this.documentNo, this.duplicateFlag);
 	}
 
 	public void setDocumentNo(String documentNo) {

@@ -27,6 +27,7 @@
 		});
 		
 		function onSubmit(){
+			var id = $("#inputForm").find("#id").val();
 			var documentNo = $("#documentNo").val();
 			
 			if(documentNo == "" || documentNo == "无"){
@@ -35,9 +36,10 @@
 			}
 			
 			var aj = $.ajax( {    
-			    url:'${ctx}/charge/projectDeduction/documentNoExists?documentNo='+documentNo,   
+			    url:'${ctx}/charge/projectDeduction/documentNoExists',   
 			    data:{
-			    	//documentNo:$("#documentNo").val()
+			    	id:id,
+			    	documentNo:documentNo
 			    },    
 			    type:'post',    
 			    cache:false,    
@@ -47,8 +49,6 @@
 			    	if(data == true){
 						top.$.jBox.confirm("该文件编号已使用过，注意不要重复抵扣，确认要保存吗？","系统提示",function(v,h,f){
 							if(v=="ok"){
-								$("#documentNo").val(documentNo+"_duplicate");
-								
 								$("#inputForm").submit();	
 							}
 						},{buttonsFocus:1});				    		
@@ -84,7 +84,10 @@
 		<div class="control-group">
 			<label class="control-label">文件编号：</label>
 			<div class="controls">
+			<!--  
 			<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge" readonly="${not empty projectDeduction.id}"/>
+			-->
+			<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge"/>
 			</div>
 		</div>			
 		<div class="control-group">

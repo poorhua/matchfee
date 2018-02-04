@@ -31,12 +31,16 @@
 	    		alert("请上传建设工程规划许可证扫描件！");
 	    		return;
 	    	}
+	    	
+	    	var id = $("#inputForm").find("#id").val();
 			
 			var documentNo = $("#documentNo").val();
 			
 			var aj = $.ajax( {    
-			    url:'${ctx}/charge/projectLicense/documentNoExists?documentNo='+documentNo,   
+			    url:'${ctx}/charge/projectLicense/documentNoExists?',   
 			    data:{
+			    	id:id,
+			    	documentNo:documentNo			    	
 			    },    
 			    type:'post',    
 			    cache:false,    
@@ -46,7 +50,6 @@
 			    	if(data == true){
 						top.$.jBox.confirm("该规划许可证号已使用过，注意不要重复收费，确认要保存吗？","系统提示",function(v,h,f){
 							if(v=="ok"){
-								$("#documentNo").val(documentNo+"_duplicate");
 								
 								$("#inputForm").submit();	
 							}
@@ -98,7 +101,10 @@
 		<div class="control-group">
 			<label class="control-label">规划许可证编号：</label>
 			<div class="controls">
+			    <!--  
 				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required" readonly="${not empty projectLicense.id}"/>
+				-->
+				<form:input path="documentNo" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
 				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>				

@@ -116,13 +116,15 @@ public class ProjectDeductionController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "documentNoExists")
-	public boolean documentNoExists(String documentNo) {
+	public boolean documentNoExists(String id, String documentNo) {
 		
 		ProjectDeduction projectDeduction = new ProjectDeduction();
 		
+		projectDeduction.setId(id);
+		
 		projectDeduction.setDocumentNo(documentNo);
 		
-		List<ProjectDeduction> list = projectDeductionService.findList(projectDeduction);
+		List<ProjectDeduction> list = projectDeductionService.findList4DuplicateCheck(projectDeduction);
 		
 		return (list != null && list.size() > 0);
 	}

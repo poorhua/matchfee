@@ -35,6 +35,10 @@ public class LandPayTicketService extends CrudService<LandPayTicketDao, LandPayT
 		return super.findList(landPayTicket);
 	}
 	
+	public List<LandPayTicket> findList4DuplicateCheck(LandPayTicket landPayTicket) {
+		return dao.findList4DuplicateCheck(landPayTicket);
+	}
+	
 	public Page<LandPayTicket> findPage(Page<LandPayTicket> page, LandPayTicket landPayTicket) {
 		return super.findPage(page, landPayTicket);
 	}

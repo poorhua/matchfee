@@ -8,11 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
+import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.dao.OpinionBookDao;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
 import org.wxjs.matchfee.modules.charge.dao.OpinionBookItemDao;
@@ -37,6 +37,10 @@ public class OpinionBookService extends CrudService<OpinionBookDao, OpinionBook>
 	
 	public List<OpinionBook> findList(OpinionBook opinionBook) {
 		return super.findList(opinionBook);
+	}
+	
+	public List<OpinionBook> findList4DuplicateCheck(OpinionBook opinionBook) {
+		return dao.findList4DuplicateCheck(opinionBook);
 	}
 	
 	public Page<OpinionBook> findPage(Page<OpinionBook> page, OpinionBook opinionBook) {

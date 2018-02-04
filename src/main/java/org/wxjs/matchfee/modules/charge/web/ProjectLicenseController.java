@@ -117,13 +117,15 @@ public class ProjectLicenseController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "documentNoExists")
-	public boolean documentNoExists(String documentNo) {
+	public boolean documentNoExists(String id, String documentNo) {
 		
 		ProjectLicense projectLicense = new ProjectLicense();
 		
+		projectLicense.setId(id);
+		
 		projectLicense.setDocumentNo(documentNo);
 		
-		List<ProjectLicense> list = projectLicenseService.findList(projectLicense);
+		List<ProjectLicense> list = projectLicenseService.findList4DuplicateCheck(projectLicense);
 		
 		return (list != null && list.size() > 0);
 	}

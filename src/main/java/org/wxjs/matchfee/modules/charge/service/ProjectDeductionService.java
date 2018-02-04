@@ -25,7 +25,7 @@ import org.wxjs.matchfee.modules.charge.dao.ProjectDeductionDao;
 public class ProjectDeductionService extends CrudService<ProjectDeductionDao, ProjectDeduction> {
 	
 	@Autowired
-	private ChargeDao chargeDao;	
+	private ChargeDao chargeDao;
 
 	public ProjectDeduction get(String id) {
 		return super.get(id);
@@ -33,6 +33,10 @@ public class ProjectDeductionService extends CrudService<ProjectDeductionDao, Pr
 	
 	public List<ProjectDeduction> findList(ProjectDeduction projectDeduction) {
 		return super.findList(projectDeduction);
+	}
+	
+	public List<ProjectDeduction> findList4DuplicateCheck(ProjectDeduction projectDeduction) {
+		return dao.findList4DuplicateCheck(projectDeduction);
 	}
 	
 	public Page<ProjectDeduction> findPage(Page<ProjectDeduction> page, ProjectDeduction projectDeduction) {

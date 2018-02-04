@@ -17,10 +17,15 @@
 		a.update_by AS "updateBy.id",
 		a.update_date AS "updateDate",
 		a.remarks AS "remarks",
-		a.del_flag AS "delFlag"
+		a.del_flag AS "delFlag",
+		bb.duplicate_flag AS "duplicateFlag"
 	</sql>
 	
 	<sql id="landPayTicketJoins">
+	    LEFT JOIN (SELECT aa.ticket_no, 1 duplicate_flag 
+		FROM tland_pay_ticket aa 
+		GROUP BY aa.ticket_no
+		HAVING count(*)>1) bb on a.ticket_no=bb.ticket_no	
 	</sql>
     
 	<select id="get" resultType="LandPayTicket">
@@ -54,6 +59,22 @@
 			</otherwise>
 		</choose>
 	</select>
+	
+	<select id="findList4DuplicateCheck" resultType="LandPayTicket">
+		SELECT 
+			<include refid="landPayTicketColumns"/>
+		FROM tland_pay_ticket a
+		<include refid="landPayTicketJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="id != null and id != ''">
+			    AND a.id != #{id}
+			</if>			
+			<if test="ticketNo != null and ticketNo != ''">
+				AND a.ticket_no = #{ticketNo}
+			</if>					
+		</where>
+	</select>	
 	
 	<select id="findAllList" resultType="LandPayTicket">
 		SELECT 

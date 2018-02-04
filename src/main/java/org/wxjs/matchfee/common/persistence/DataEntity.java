@@ -32,6 +32,8 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 	protected Date updateDate;	// 更新日期
 	protected String delFlag; 	// 删除标记（0：正常；1：删除；2：审核）
 	
+	protected String duplicateFlag; 	// 重复标记（0：正常；1：重复；
+	
 	protected String description;	// 说明，临时保存，不持久化
 	
 	public DataEntity() {
@@ -130,6 +132,14 @@ public abstract class DataEntity<T> extends BaseEntity<T> {
 
 	public void setDelFlag(String delFlag) {
 		this.delFlag = delFlag;
+	}	
+
+	public String getDuplicateFlag() {
+		return duplicateFlag;
+	}
+
+	public void setDuplicateFlag(String duplicateFlag) {
+		this.duplicateFlag = duplicateFlag;
 	}
 
 	@JsonIgnore

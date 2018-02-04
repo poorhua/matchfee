@@ -65,7 +65,7 @@ public class LandPayTicket extends DataEntity<LandPayTicket> {
 	}
 	
 	public String getTicketNoDisplay() {
-		return EntityUtils.duplicateTag(this.ticketNo);
+		return EntityUtils.duplicateTag(this.ticketNo, this.duplicateFlag);
 	}
 
 	public void setTicketNo(String ticketNo) {

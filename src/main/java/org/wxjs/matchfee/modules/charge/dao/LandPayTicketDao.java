@@ -3,6 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.dao;
 
+import java.util.List;
+
 import org.wxjs.matchfee.common.persistence.CrudDao;
 import org.wxjs.matchfee.common.persistence.annotation.MyBatisDao;
 import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
@@ -14,5 +16,7 @@ import org.wxjs.matchfee.modules.charge.entity.LandPayTicket;
  */
 @MyBatisDao
 public interface LandPayTicketDao extends CrudDao<LandPayTicket> {
+	
+	public List<LandPayTicket> findList4DuplicateCheck(LandPayTicket entity);
 	
 }

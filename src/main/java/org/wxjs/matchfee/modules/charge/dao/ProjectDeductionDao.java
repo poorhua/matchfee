@@ -3,6 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.dao;
 
+import java.util.List;
+
 import org.wxjs.matchfee.common.persistence.CrudDao;
 import org.wxjs.matchfee.common.persistence.annotation.MyBatisDao;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
@@ -14,5 +16,7 @@ import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
  */
 @MyBatisDao
 public interface ProjectDeductionDao extends CrudDao<ProjectDeduction> {
+	
+	public List<ProjectDeduction> findList4DuplicateCheck(ProjectDeduction entity);
 	
 }

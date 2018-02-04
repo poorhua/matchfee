@@ -102,15 +102,17 @@ public class OpinionBookController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "documentNoExists")
-	public boolean documentNoExists(String documentNo) {
+	public boolean documentNoExists(String id, String documentNo) {
 		
 		OpinionBook opinionBook = new OpinionBook();
+		
+		opinionBook.setId(id);
 		
 		opinionBook.setDocumentNo(documentNo);
 		
 		logger.debug("documentNo: "+documentNo);
 		
-		List<OpinionBook> list = opinionBookService.findList(opinionBook);
+		List<OpinionBook> list = opinionBookService.findList4DuplicateCheck(opinionBook);
 		
 		return (list != null && list.size() > 0);
 	}

@@ -113,13 +113,15 @@ public class LandPayTicketController extends BaseController {
 	
 	@ResponseBody
 	@RequestMapping(value = "ticketNoExists")
-	public boolean ticketNoExists(String ticketNo) {
+	public boolean ticketNoExists(String id, String ticketNo) {
 		
 		LandPayTicket landPayTicket = new LandPayTicket();
 		
+		landPayTicket.setId(id);
+		
 		landPayTicket.setTicketNo(ticketNo);
 		
-		List<LandPayTicket> list = landPayTicketService.findList(landPayTicket);
+		List<LandPayTicket> list = landPayTicketService.findList4DuplicateCheck(landPayTicket);
 		
 		return (list != null && list.size() > 0);
 	}
