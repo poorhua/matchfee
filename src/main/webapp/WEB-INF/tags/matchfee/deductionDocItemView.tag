@@ -25,11 +25,11 @@
 				<td>
 					${deductionDocItem.item.name}
 				</td>
-				<td>
-					${deductionDocItem.area}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${deductionDocItem.area}" pattern="#,###.00"/>
 				</td>
-				<td>
-					${deductionDocItem.money}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${deductionDocItem.money}" pattern="#,###.00"/>
 				</td>
 				<td>
 					${deductionDocItem.remarks}

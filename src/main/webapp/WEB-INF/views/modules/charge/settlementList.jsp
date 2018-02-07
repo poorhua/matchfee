@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
-<%@ include file="/WEB-INF/views/include/taglib.jsp"%>
+<%@ include file="/WEB-INF/views/include/taglib.jsp"%>  
+
 <html>
 <head>
 	<title>结算清单</title>
@@ -93,7 +94,7 @@
 				</td>
 				<td>
 				</td>
-				<td>
+				<td style="text-align:right">
 					${settementList.charge.previousRemainDisplay}
 				</td>
 				<td></td>
@@ -105,11 +106,11 @@
 				<td>
 					${projectLicense.name}
 				</td>
-				<td>
-					${projectLicense.totalAreaDisplay}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectLicense.totalAreaDisplay}" pattern="#,###.00"/>
 				</td>
-				<td>
-					${projectLicense.totalMoneyDisplay}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectLicense.totalMoneyDisplay}" pattern="#,###.00"/>
 				</td>
 				<td>
 					${projectLicense.description}
@@ -123,11 +124,11 @@
 				<td>
 					${deductionDocItem.item.name}
 				</td>
-				<td>
-					${deductionDocItem.area}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${deductionDocItem.area}" pattern="#,###.00"/>
 				</td>
-				<td>
-					${deductionDocItem.money}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${deductionDocItem.money}" pattern="#,###.00"/>
 				</td>
 				<td>
 					${deductionDocItem.description}
@@ -146,8 +147,8 @@
 				<td>
 					
 				</td>
-				<td>
-					${landPayTicket.money}
+				<td style="text-align:right">
+					 <fmt:formatNumber value="${landPayTicket.money}" pattern="#,###.00"/>
 				</td>
 				<td>
 					${landPayTicket.description}
@@ -163,11 +164,11 @@
 				<td>
 					${projectDeduction.name}
 				</td>
-				<td>
-					${projectDeduction.area}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectDeduction.area}" pattern="#,###.00"/>
 				</td>
-				<td>
-					${projectDeduction.money}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectDeduction.money}" pattern="#,###.00"/>
 				</td>
 				<td>
 					${projectDeduction.description}
@@ -179,9 +180,11 @@
 		</c:forEach>		
 		    <tr><td colspan="5"><strong>*缴费情况</strong></td></tr>
 			<tr>
-				<td>结算金额（元）</td>
+				<td style="text-align:right">结算金额（元）</td>
 				<td></td>
-				<td>${settementList.charge.calMoney}</td>
+				<td style="text-align:right">
+				<fmt:formatNumber value="${settementList.charge.calMoney}" pattern="#,###.00"/>
+				</td>
 				<td></td>
 				<td></td>
 			</tr>		    
@@ -191,10 +194,11 @@
 					缴费
 				</td>
 				<td></td>
-				<td>
-					${payTicket.money}
+				<td style="text-align:right">
+					
+					<fmt:formatNumber value="${payTicket.money}" pattern="#,###.00"/>
 				</td>
-				<td>
+				<td style="text-align:right">
 					${payTicket.description}
 				</td>				
 				<td>
@@ -215,7 +219,9 @@
 			-->
 			  <td>待清算金额</td>
 				<td></td>
-				<td>${settementList.charge.moneyGapDisplay}</td>
+				<td style="text-align:right">
+				<fmt:formatNumber value="${settementList.charge.moneyGapDisplay}" pattern="#,###.00"/>
+				</td>
 				<td></td>
 				<td></td>
 			</tr>				

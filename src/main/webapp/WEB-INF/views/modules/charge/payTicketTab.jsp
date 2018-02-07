@@ -48,8 +48,8 @@
 				<td>
 				<a href="${payTicket.path}" target="_blank">${payTicket.filename}</a>				
 				</td>
-				<td>
-					${payTicket.money}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${payTicket.money}" pattern="#,###.00"/>
 				</td>				
 				<td>
 					${payTicket.ticketNo}
@@ -58,7 +58,7 @@
 					<fmt:formatDate value="${payTicket.payDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
-				<c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
+				<c:if test="${charge.status ge '20' && fns:getUser().isYwy}">
     				<a href="${ctx}/charge/payTicket/form?id=${payTicket.id}">修改</a>
 					<a href="${ctx}/charge/payTicket/delete?id=${payTicket.id}" onclick="return confirmx('确认要删除该缴费凭证吗？', this.href)">删除</a>
 				</c:if>

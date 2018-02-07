@@ -43,7 +43,7 @@ public class OperationLogService extends CrudService<OperationLogDao, OperationL
 	@Transactional(readOnly = false)
 	public void logApprove(String chargeId, String operation, String result) {
 		User user = UserUtils.getUser();
-		String operator = user.getLoginName();
+		String operator = user.getName()+"("+user.getLoginName()+")";
 		if(user.getIsQyUser()){
 			operator = user.getProject().getBuildCorpName();
 		}

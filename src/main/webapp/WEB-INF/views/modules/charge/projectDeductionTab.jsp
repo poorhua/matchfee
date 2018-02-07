@@ -62,12 +62,12 @@
 				<td>
 					<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd"/>
 				</td>
-				<td>
-					${projectDeduction.area}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectDeduction.area}" pattern="#,###.00"/>
 				</td>
-				<td>
-					${projectDeduction.money}
-				</td>
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectDeduction.money}" pattern="#,###.00"/>
+				</td>				
 				<!-- 
 				<td>
 					${fns:getDictLabel(projectDeduction.deductionType, 'deduction_type', '')}

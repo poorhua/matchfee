@@ -58,15 +58,15 @@
 				<td>
 					<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd"/>
 				</td>
-				<td>
-					${projectLicense.upArea}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectLicense.upArea}" pattern="#,###.00"/>
 				</td>
-				<td>
-					${projectLicense.downArea}
-				</td>
-				<td>
-					${projectLicense.totalAreaDisplay}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectLicense.downArea}" pattern="#,###.00"/>
 				</td>				
+				<td style="text-align:right">
+					<fmt:formatNumber value="${projectLicense.totalAreaDisplay}" pattern="#,###.00"/>
+				</td>								
 				<shiro:hasPermission name="charge:charge:edit"><td>	
 		   		  
 			    <c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">		 

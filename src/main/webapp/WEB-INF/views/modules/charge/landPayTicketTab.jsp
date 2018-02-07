@@ -58,12 +58,12 @@
 				<td>
 					${landPayTicket.name}
 				</td>
-				<td>
-					${landPayTicket.area}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${landPayTicket.area}" pattern="#,###.00"/>
 				</td>
-				<td>
-					${landPayTicket.money}
-				</td>
+				<td style="text-align:right">
+					<fmt:formatNumber value="${landPayTicket.money}" pattern="#,###.00"/>
+				</td>				
 				<td>
 					<fmt:formatDate value="${landPayTicket.payDate}" pattern="yyyy-MM-dd"/>
 				</td>

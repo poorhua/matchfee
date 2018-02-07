@@ -66,11 +66,11 @@
 				<td>
 					<fmt:formatDate value="${charge.reportDate}" pattern="yyyy-MM-dd"/>
 				</td>
-				<td>
-					${charge.calMoney}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${charge.calMoney}" pattern="#,###.00"/>
 				</td>
-				<td>
-					${charge.payMoney}
+				<td style="text-align:right">
+					<fmt:formatNumber value="${charge.payMoney}" pattern="#,###.00"/>
 				</td>
 				<td>
 					<fmt:formatDate value="${charge.maxPayDate}" pattern="yyyy-MM-dd"/>

@@ -107,7 +107,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 	}
 	
 	public String getUpArea() {
-		return upArea;
+		return Util.formatDecimal(upArea, Global.DecimalFormat);
 	}
 
 	public void setUpArea(String upArea) {
@@ -115,7 +115,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 	}
 	
 	public String getDownArea() {
-		return downArea;
+		return Util.formatDecimal(this.downArea, Global.DecimalFormat);
 	}
 
 	public void setDownArea(String downArea) {
