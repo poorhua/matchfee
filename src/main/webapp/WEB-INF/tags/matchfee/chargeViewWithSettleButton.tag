@@ -41,15 +41,15 @@
 					<td class="tit">状态：</td><td>${charge.statusLabel}</td>
 					<td class="tit">结算金额（元）：</td>
 					<td style="text-align:right">
-					    <fmt:formatNumber value="${charge.calMoney}" pattern="#,###.00"/>
+					    <fmt:formatNumber value="${charge.calMoney}" pattern="#,##0.00"/>
 					</td>				
 				</tr>	
 				<c:if test="${charge.status gt '30' }">
 				<tr>
 					<td class="tit">缴费金额（元）：</td>
-					<td style="text-align:right"><fmt:formatNumber value="${charge.payMoney}" pattern="#,###.00"/></td>
+					<td style="text-align:right"><fmt:formatNumber value="${charge.payMoney}" pattern="#,##0.00"/></td>
 					<td class="tit">待清算金额（元）：</td>
-					<td style="text-align:right"><fmt:formatNumber value="${charge.moneyGapDisplay}" pattern="#,###.00"/>
+					<td style="text-align:right"><fmt:formatNumber value="${charge.moneyGapDisplay}" pattern="#,##0.00"/>
 					</td>				
 				</tr>	
 				</c:if> 		      

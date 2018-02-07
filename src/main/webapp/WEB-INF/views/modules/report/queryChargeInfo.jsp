@@ -56,13 +56,13 @@
 					<fmt:formatDate value="${projectLicense.documentDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectLicense.upArea}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectLicense.upArea}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectLicense.downArea}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectLicense.downArea}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectLicense.totalAreaDisplay}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectLicense.totalAreaDisplay}" pattern="#,##0.00"/>
 				</td>				
 			</tr>
 		</c:forEach>
@@ -128,10 +128,10 @@
 					${landPayTicket.ticketNo}
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${landPayTicket.area}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${landPayTicket.area}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${landPayTicket.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${landPayTicket.money}" pattern="#,##0.00"/>
 				</td>				
 				<td>
 					<fmt:formatDate value="${landPayTicket.payDate}" pattern="yyyy-MM-dd"/>
@@ -177,10 +177,10 @@
 					<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectDeduction.area}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectDeduction.area}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectDeduction.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectDeduction.money}" pattern="#,##0.00"/>
 				</td>				
 				<!-- 
 				<td>
@@ -215,7 +215,7 @@
 				<sys:ckfinder input="pathpt${payTicket.id}" type="files" uploadPath="/配套费/缴费票据" selectMultiple="false" readonly="true"/>					
 				</td>		
 				<td style="text-align:right">
-					<fmt:formatNumber value="${payTicket.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${payTicket.money}" pattern="#,##0.00"/>
 				</td>						
 				<td>
 					${payTicket.ticketNo}

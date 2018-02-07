@@ -25,10 +25,10 @@
 					${opinionBookItem.item.name}
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${opinionBookItem.area}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${opinionBookItem.area}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${opinionBookItem.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${opinionBookItem.money}" pattern="#,##0.00"/>
 				</td>
 				<td>
 					${opinionBookItem.remarks}

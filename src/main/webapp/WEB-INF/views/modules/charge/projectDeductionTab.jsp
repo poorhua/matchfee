@@ -63,10 +63,10 @@
 					<fmt:formatDate value="${projectDeduction.documentDate}" pattern="yyyy-MM-dd"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectDeduction.area}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectDeduction.area}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectDeduction.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectDeduction.money}" pattern="#,##0.00"/>
 				</td>				
 				<!-- 
 				<td>

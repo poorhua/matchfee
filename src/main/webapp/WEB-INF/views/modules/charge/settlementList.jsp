@@ -107,10 +107,10 @@
 					${projectLicense.name}
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectLicense.totalAreaDisplay}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectLicense.totalAreaDisplay}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectLicense.totalMoneyDisplay}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectLicense.totalMoneyDisplay}" pattern="#,##0.00"/>
 				</td>
 				<td>
 					${projectLicense.description}
@@ -125,10 +125,10 @@
 					${deductionDocItem.item.name}
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${deductionDocItem.area}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${deductionDocItem.area}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${deductionDocItem.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${deductionDocItem.money}" pattern="#,##0.00"/>
 				</td>
 				<td>
 					${deductionDocItem.description}
@@ -148,7 +148,7 @@
 					
 				</td>
 				<td style="text-align:right">
-					 <fmt:formatNumber value="${landPayTicket.money}" pattern="#,###.00"/>
+					 <fmt:formatNumber value="${landPayTicket.money}" pattern="#,##0.00"/>
 				</td>
 				<td>
 					${landPayTicket.description}
@@ -165,10 +165,10 @@
 					${projectDeduction.name}
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectDeduction.area}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectDeduction.area}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${projectDeduction.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${projectDeduction.money}" pattern="#,##0.00"/>
 				</td>
 				<td>
 					${projectDeduction.description}
@@ -183,7 +183,7 @@
 				<td style="text-align:right">结算金额（元）</td>
 				<td></td>
 				<td style="text-align:right">
-				<fmt:formatNumber value="${settementList.charge.calMoney}" pattern="#,###.00"/>
+				<fmt:formatNumber value="${settementList.charge.calMoney}" pattern="#,##0.00"/>
 				</td>
 				<td></td>
 				<td></td>
@@ -196,7 +196,7 @@
 				<td></td>
 				<td style="text-align:right">
 					
-					<fmt:formatNumber value="${payTicket.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${payTicket.money}" pattern="#,##0.00"/>
 				</td>
 				<td style="text-align:right">
 					${payTicket.description}
@@ -220,7 +220,7 @@
 			  <td>待清算金额</td>
 				<td></td>
 				<td style="text-align:right">
-				<fmt:formatNumber value="${settementList.charge.moneyGapDisplay}" pattern="#,###.00"/>
+				<fmt:formatNumber value="${settementList.charge.moneyGapDisplay}" pattern="#,##0.00"/>
 				</td>
 				<td></td>
 				<td></td>

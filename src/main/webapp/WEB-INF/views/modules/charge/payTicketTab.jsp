@@ -49,7 +49,7 @@
 				<a href="${payTicket.path}" target="_blank">${payTicket.filename}</a>				
 				</td>
 				<td style="text-align:right">
-					<fmt:formatNumber value="${payTicket.money}" pattern="#,###.00"/>
+					<fmt:formatNumber value="${payTicket.money}" pattern="#,##0.00"/>
 				</td>				
 				<td>
 					${payTicket.ticketNo}
