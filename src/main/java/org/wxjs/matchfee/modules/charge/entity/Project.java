@@ -1,7 +1,12 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.wxjs.matchfee.common.persistence.DataEntity;
+
+import com.google.common.collect.Lists;
 
 public class Project extends DataEntity<Project> {
 	
@@ -25,6 +30,11 @@ public class Project extends DataEntity<Project> {
 	
 	//for query param
 	private String projectLicense;
+	
+	//charge history
+	private String chargeHistory;
+	
+	private List<Charge> charges = Lists.newArrayList();
 	
 	public Project(){
 		
@@ -102,9 +112,45 @@ public class Project extends DataEntity<Project> {
 		this.projectLicense = projectLicense;
 	}
 
+	public String getChargeHistory() {
+		return chargeHistory;
+	}
+
+	public void setChargeHistory(String chargeHistory) {
+		this.chargeHistory = chargeHistory;
+	}
+	
+	public boolean getIsMultiplePrjNum(){
+		return !StringUtils.isBlank(this.prjNum) && this.prjNum.contains(",");
+	}
+	
+	public List<String> getPrjNums(){
+		List<String> list = Lists.newArrayList();
+		if(!StringUtils.isBlank(this.prjNum)){
+			String[] strs = this.prjNum.split(",");
+			for(String str : strs){
+				list.add(str);
+			}
+		}
+		return list;
+	}
+
+	public List<Charge> getCharges() {
+		return charges;
+	}
+
+	public void setCharges(List<Charge> charges) {
+		this.charges = charges;
+	}
+	
+	public void addCharge(Charge charge){
+		this.charges.add(charge);
+	}
+
 	@Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }
 
+	
 }

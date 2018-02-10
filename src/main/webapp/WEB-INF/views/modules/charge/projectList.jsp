@@ -75,14 +75,32 @@
 				<td>
 					${project.buildCorpName}
 				</td>
-
 				<td>
 					${project.prjAddress}
-				</td>
+				</td>			
 				<shiro:hasPermission name="charge:charge:edit"><td>
     				<a href="${ctx}/charge/project/form?id=${project.id}&prjNum=${project.prjNum}"><strong> 申报 </strong></a>
 				</td></shiro:hasPermission>			
 			</tr>
+			<c:if test="${not empty project.charges}">	
+				<c:forEach items="${project.charges}" var="charge">
+  			<tr>
+				<td>----征收记录</td>
+				<td colspan="4">				
+				             规划许可证：${charge.projectLicenses};
+					申报日期：<fmt:formatDate value="${charge.reportDate}" pattern="yyyy-MM-dd HH:mm:ss"/>;
+					结算金额：<fmt:formatNumber value="${charge.calMoney}" pattern="#,##0.00"/>;
+					缴费金额：<fmt:formatNumber value="${charge.payMoney}" pattern="#,##0.00"/>;
+					缴费日期：<fmt:formatDate value="${charge.maxPayDate}" pattern="yyyy-MM-dd HH:mm:ss"/>;
+					状态：${charge.statusLabel}<br>
+				</td>			
+				<td>
+				   <a href="${ctx}/report/report/searchInfo?id=${charge.id}" target="_blank">详情</a>
+				</td>	
+			</tr>					
+				</c:forEach>              
+                		
+			</c:if>
 		</c:forEach>
 		</tbody>
 	</table>

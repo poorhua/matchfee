@@ -4,6 +4,7 @@
 package org.wxjs.matchfee.modules.charge.entity;
 
 
+import org.apache.commons.collections.ListUtils;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
@@ -389,6 +390,25 @@ public class Charge extends DataEntity<Charge> {
 
 	public void setPreviousRemain(double previousRemain) {
 		this.previousRemain = previousRemain;
+	}
+	
+	public String getChargeSummary(){
+		StringBuffer buffer = new StringBuffer();
+		buffer.append(DateUtils.formatDate(this.reportDate));
+		buffer.append(" ");
+		buffer.append(this.getStatusLabel());
+		return buffer.toString();
+	}
+	
+	public String getProjectLicenses(){
+		StringBuffer buffer = new StringBuffer();
+		if(this.projectLicenseList!=null && this.projectLicenseList.size()>0){
+			for(ProjectLicense item : this.projectLicenseList){
+				buffer.append(",");
+				buffer.append(item.getDocumentNoDisplay());
+			}
+		}
+		return buffer.length()>1?buffer.substring(1):"";
 	}
 	
 }

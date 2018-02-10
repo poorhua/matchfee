@@ -72,7 +72,18 @@
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
 			<if test="project != null and project.prjNum != null and project.prjNum != ''">
-				AND a.prj_num = #{project.prjNum}
+				<choose>
+					<when test='project.isMultiplePrjNum == "0"'>
+					    AND a.prj_num = #{project.prjNum}
+					</when>
+					<otherwise>
+					    AND a.prj_num in (
+					    <foreach collection="project.prjNums" item="tempStr" separator=",">
+			               '${tempStr}'
+			            </foreach>
+			            )						
+					</otherwise>
+				</choose>				
 			</if>
 			<if test="project != null and project.prjName != null and project.prjName != ''">
 				AND b.prj_name like concat('%',#{project.prjName},'%') 
