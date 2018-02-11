@@ -309,6 +309,8 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			
 			totalArea += Util.getDouble(item.getArea());
 			totalMoney += Util.getDouble(item.getMoney());
+			
+			item.setDescription("文件编号：" + item.getDocumentNo());
 		}
 		
 		if(settlementList.getProjectDeductions()!=null && settlementList.getProjectDeductions().size()>1){
