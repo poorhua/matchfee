@@ -70,6 +70,7 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
+			    <th>编号</th>
 				<th>项目代码</th>
 				<th>项目名称</th>
 				<th>项目地址</th>
@@ -85,6 +86,9 @@
 		<tbody>
 		<c:forEach items="${page.list}" var="charge">
 			<tr>
+				<td>
+					${charge.id}
+				</td>			
 				<td>
 					${charge.project.prjNum}
 				</td>
