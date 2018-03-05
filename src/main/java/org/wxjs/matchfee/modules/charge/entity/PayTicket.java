@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.DataEntity;
 import org.wxjs.matchfee.common.utils.Util;
+import org.wxjs.matchfee.modules.charge.utils.EntityUtils;
 
 /**
  * 缴费凭证Entity
@@ -55,9 +56,13 @@ public class PayTicket extends DataEntity<PayTicket> {
 		this.prjNum = prjNum;
 	}
 	
-	@Length(min=1, max=64, message="票据号长度必须介于 1 和64 之间")
+	@Length(min=0, max=64, message="票据号长度必须介于 1 和64 之间")
 	public String getTicketNo() {
 		return ticketNo;
+	}
+	
+	public String getTicketNoDisplay() {
+		return EntityUtils.duplicateTag(this.ticketNo, this.duplicateFlag);
 	}
 
 	public void setTicketNo(String ticketNo) {

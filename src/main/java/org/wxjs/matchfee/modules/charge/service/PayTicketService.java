@@ -34,6 +34,10 @@ public class PayTicketService extends CrudService<PayTicketDao, PayTicket> {
 		return super.findList(payTicket);
 	}
 	
+	public List<PayTicket> findList4DuplicateCheck(PayTicket payTicket) {
+		return dao.findList4DuplicateCheck(payTicket);
+	}
+	
 	public Page<PayTicket> findPage(Page<PayTicket> page, PayTicket payTicket) {
 		return super.findPage(page, payTicket);
 	}

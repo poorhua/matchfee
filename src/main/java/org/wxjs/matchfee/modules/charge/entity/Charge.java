@@ -411,4 +411,9 @@ public class Charge extends DataEntity<Charge> {
 		return buffer.length()>1?buffer.substring(1):"";
 	}
 	
+	public String getCalMoneyLessEqualZero(){
+		float f = Util.getFloat(this.calMoney);
+		return f<=0 ? "1":"0";
+	}
+	
 }

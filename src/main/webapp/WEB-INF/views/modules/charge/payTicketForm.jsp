@@ -23,6 +23,50 @@
 				}
 			});
 		});
+		
+		function onSubmit(){
+			var id = $("#inputForm").find("#id").val();
+			var ticketNo = $("#ticketNo").val();
+			
+			var calMoneyLessEqualZero = $("#calMoneyLessEqualZero").val();
+			
+			if(ticketNo == "" || ticketNo == "无"){
+				if(calMoneyLessEqualZero == '1'){
+					$("#inputForm").submit();			
+				}else{
+					alert("请填写票据号！");
+				}
+				return;
+			}
+			
+			var aj = $.ajax( {    
+			    url:'${ctx}/charge/payTicket/ticketNoExists',   
+			    data:{
+			    	id:id,
+			    	ticketNo:ticketNo
+			    },    
+			    type:'post',    
+			    cache:false,    
+			    dataType:'json',    
+			    success:function(data) {
+			    	
+			    	if(data == true){
+						top.$.jBox.confirm("该编号已使用过，注意不要重复，确认要保存吗？","系统提示",function(v,h,f){
+							if(v=="ok"){
+								$("#inputForm").submit();	
+							}
+						},{buttonsFocus:1});				    		
+			    	}else{
+			    		$("#inputForm").submit();	
+			    	}
+		        
+			     },    
+			     error : function() {   
+			          alert("获取数据异常！");    
+			     }    
+			});	
+			
+		} 		
 	</script>
 </head>
 <body>
@@ -30,6 +74,7 @@
 	<matchfee:chargeView charge="${charge}"></matchfee:chargeView><br/>
 	<form:form id="inputForm" modelAttribute="payTicket" action="${ctx}/charge/payTicket/save" method="post" class="form-horizontal">
 		<form:hidden path="id"/>
+		<input type="hidden" id="calMoneyLessEqualZero" value="${charge.calMoneyLessEqualZero}">
 		<input type="hidden" id="charge.id" name="charge.id" value="${charge.id}">
 		<input type="hidden" id="prjNum" name="prjNum" value="${charge.project.prjNum}">
 		<sys:message content="${message}"/>		
@@ -53,8 +98,7 @@
 		<div class="control-group">
 			<label class="control-label">票据号：</label>
 			<div class="controls">
-				<form:input path="ticketNo" htmlEscape="false" maxlength="64" class="input-xlarge required"/>
-				<span class="help-inline"><font color="red">*</font> </span>
+				<form:input path="ticketNo" htmlEscape="false" maxlength="64" class="input-xlarge"/>
 			</div>
 		</div>
 		<div class="control-group">
@@ -73,7 +117,7 @@
 			</div>
 		</div>
 		<div class="form-actions">
-			<shiro:hasPermission name="charge:charge:edit"><input id="btnSubmit" class="btn btn-primary" type="submit" value="保 存"/>&nbsp;</shiro:hasPermission>
+			<shiro:hasPermission name="charge:charge:edit"><input id="btnSubmit" class="btn btn-primary" type="button" value="保 存" onclick="onSubmit()"/>&nbsp;</shiro:hasPermission>
 			<input id="btnCancel" class="btn" type="button" value="返 回" onclick="history.go(-1)"/>
 		</div>
 	</form:form>

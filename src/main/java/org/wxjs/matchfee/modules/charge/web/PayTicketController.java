@@ -3,6 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.web;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -15,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
@@ -22,6 +25,7 @@ import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.common.utils.StringUtils;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.PayTicket;
+
 import org.wxjs.matchfee.modules.charge.service.ChargeService;
 import org.wxjs.matchfee.modules.charge.service.PayTicketService;
 
@@ -86,7 +90,7 @@ public class PayTicketController extends BaseController {
 			
 			addMessage(redirectAttributes, "保存缴费凭证成功");			
 		}catch(DuplicateKeyException e1){
-			addMessage(redirectAttributes, "保存失败。重复！");
+			addMessage(redirectAttributes, "保存失败。票据号重复！");
 			logger.error("save error", e1);
 		}catch(Exception e2){
 			addMessage(redirectAttributes, "保存失败。");
@@ -107,6 +111,21 @@ public class PayTicketController extends BaseController {
 		
 		addMessage(redirectAttributes, "删除缴费凭证成功");
 		return "redirect:"+Global.getAdminPath()+"/charge/payTicket/?repage";
+	}
+	
+	@ResponseBody
+	@RequestMapping(value = "ticketNoExists")
+	public boolean ticketNoExists(String id, String ticketNo) {
+		
+		PayTicket payTicket = new PayTicket();
+		
+		payTicket.setId(id);
+		
+		payTicket.setTicketNo(ticketNo);
+		
+		List<PayTicket> list = payTicketService.findList4DuplicateCheck(payTicket);
+		
+		return (list != null && list.size() > 0);
 	}
 
 }

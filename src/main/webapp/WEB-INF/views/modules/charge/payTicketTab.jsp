@@ -52,7 +52,7 @@
 					<fmt:formatNumber value="${payTicket.money}" pattern="#,##0.00"/>
 				</td>				
 				<td>
-					${payTicket.ticketNo}
+					${payTicket.ticketNoDisplay}
 				</td>
 				<td>
 					<fmt:formatDate value="${payTicket.payDate}" pattern="yyyy-MM-dd"/>
