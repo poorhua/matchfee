@@ -56,7 +56,7 @@ public class PayTicket extends DataEntity<PayTicket> {
 		this.prjNum = prjNum;
 	}
 	
-	@Length(min=0, max=64, message="票据号长度必须介于 1 和64 之间")
+	@Length(min=0, max=64, message="票据号长度必须介于 0和64 之间")
 	public String getTicketNo() {
 		return ticketNo;
 	}
@@ -69,7 +69,7 @@ public class PayTicket extends DataEntity<PayTicket> {
 		this.ticketNo = ticketNo;
 	}
 	
-	@Length(min=1, max=512, message="保存路径长度必须介于 1 和 512 之间")
+	@Length(min=0, max=512, message="保存路径长度必须介于 0 和 512 之间")
 	public String getPath() {
 		return path;
 	}

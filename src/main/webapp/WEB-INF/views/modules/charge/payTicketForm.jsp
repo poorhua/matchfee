@@ -28,16 +28,27 @@
 			var id = $("#inputForm").find("#id").val();
 			var ticketNo = $("#ticketNo").val();
 			
-			var calMoneyLessEqualZero = $("#calMoneyLessEqualZero").val();
+			var money = $("#money").val();
 			
-			if(ticketNo == "" || ticketNo == "无"){
-				if(calMoneyLessEqualZero == '1'){
-					$("#inputForm").submit();			
-				}else{
-					alert("请填写票据号！");
-				}
+			var path = $("#path").val();
+			
+			var msg = "";
+			
+			if(money == 0){
+				$("#inputForm").submit();	
 				return;
-			}
+			}else{
+				if(path == ""){
+					msg = msg + "请上传票据！";
+				}				
+				if(ticketNo == "" || ticketNo == "无"){
+					msg = msg + "请填写票据号！";
+				}
+				if(msg != ""){
+					alert(msg);
+					return;
+				}
+			}			
 			
 			var aj = $.ajax( {    
 			    url:'${ctx}/charge/payTicket/ticketNoExists',   
@@ -83,7 +94,6 @@
 			<div class="controls">
 				<form:hidden id="path" path="path" htmlEscape="false" maxlength="256" class="input-xlarge"/>
 				<sys:ckfinder input="path" type="files" uploadPath="/配套费/缴费票据" selectMultiple="false"/>
-				<span class="help-inline"><font color="red">*</font> </span>
 			</div>
 		</div>	
 		<div class="control-group">
