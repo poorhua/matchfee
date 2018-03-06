@@ -78,7 +78,7 @@ public class PayTicketController extends BaseController {
 
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "save")
-	public String save(PayTicket payTicket, HttpSession httpSession,  Model model, RedirectAttributes redirectAttributes) {
+	public String save(PayTicket payTicket, HttpSession httpSession, Model model, RedirectAttributes redirectAttributes) {
 		if (!beanValidator(model, payTicket)){
 			return form(payTicket, model);
 		}
@@ -104,13 +104,15 @@ public class PayTicketController extends BaseController {
 	
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = "delete")
-	public String delete(PayTicket payTicket, RedirectAttributes redirectAttributes) {
+	public String delete(PayTicket payTicket, HttpSession httpSession, RedirectAttributes redirectAttributes) {
 		payTicketService.delete(payTicket);
 		
 		//operationLogService.log(payTicket.getCharge().getId(), "删除规划许可证", "成功");
 		
+		httpSession.setAttribute("chargeId", payTicket.getCharge().getId());
+		
 		addMessage(redirectAttributes, "删除缴费凭证成功");
-		return "redirect:"+Global.getAdminPath()+"/charge/payTicket/?repage";
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/payTicketTab/?repage";
 	}
 	
 	@ResponseBody

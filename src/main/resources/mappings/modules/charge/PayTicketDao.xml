@@ -41,7 +41,7 @@
 		<include refid="payTicketJoins"/>
 		<where>
 			a.del_flag = #{DEL_FLAG_NORMAL}
-			<if test="charge.id != null and charge.id != ''">
+			<if test="charge != null and charge.id != null and charge.id != ''">
 				AND a.charge_id = #{charge.id}
 			</if>			
 		</where>
