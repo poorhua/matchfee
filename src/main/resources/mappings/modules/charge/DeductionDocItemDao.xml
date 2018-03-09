@@ -81,7 +81,9 @@
         LEFT JOIN tdeduction_doc b on a.doc_id=b.id
         WHERE a.del_flag = #{DEL_FLAG_NORMAL} 
         AND b.prj_num = #{doc.prjNum}	
+        <if test="doc.charge != null and doc.charge.id != null and doc.charge.id != ''">
         AND b.charge_id &lt;= #{doc.charge.id}
+        </if>
 		GROUP BY a.item_id
 		ORDER BY a.item_id
 	</select>
