@@ -4,14 +4,11 @@
 package org.wxjs.matchfee.modules.base.utils;
 
 import java.awt.Color;
-
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-
 import java.util.ArrayList;
-
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import com.lowagie.text.Document;
 import com.lowagie.text.DocumentException;
 import com.lowagie.text.Element;
-
 import com.lowagie.text.PageSize;
 import com.lowagie.text.Paragraph;
 import com.lowagie.text.Phrase;
@@ -30,9 +26,9 @@ import com.lowagie.text.pdf.PdfPCell;
 import com.lowagie.text.pdf.PdfPTable;
 import com.lowagie.text.pdf.PdfWriter;
 
+import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.utils.Encodes;
 import org.wxjs.matchfee.common.utils.PdfUtil;
-
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
@@ -99,7 +95,7 @@ public class ExportSettlementList {
             
             List<String[]> items = new ArrayList<String[]>();
 			
-			table = PdfUtil.generateTable(headers, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(true), widths, tableWidth, true);
+			table = PdfUtil.generateTable(headers, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(true), widths, tableWidth, true, 1);
 			document.add(table);	
 			
 			table = PdfUtil.generateTable(new String[]{"*上期待清算金额（元）", "", settlementList.getCharge().getPreviousRemainDisplay(), ""}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -171,6 +167,17 @@ public class ExportSettlementList {
 			items.add(new String[]{gapHint, "", settlementList.getCharge().getMoneyGapDisplay() +"", "", ""});
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
+			document.add(table);
+			
+			document.add(PdfUtil.generateTable4Padding());
+			
+			//add account information
+			items.clear();
+			items.add(new String[]{"", PdfUtil.toPlain(Global.getConfig("BANK_ACCOUNT"))});
+			
+			float[] widthsAcc = new float[]{0.15f, 0.85f};
+			
+			table = PdfUtil.generateTable(null, null, items, PdfUtil.getTextFont(true), widthsAcc, tableWidth, false, 0);
 			document.add(table);
 			
 		}finally{

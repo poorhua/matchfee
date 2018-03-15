@@ -217,16 +217,25 @@
 			  </c:otherwise>
 			</c:choose>
 			-->
-			  <td>待清算金额</td>
+			    <td>待清算金额</td>
 				<td></td>
 				<td style="text-align:right">
 				<fmt:formatNumber value="${settementList.charge.moneyGapDisplay}" pattern="#,##0.00"/>
 				</td>
 				<td></td>
 				<td></td>
-			</tr>				
+			</tr>								
 		</tbody>
 	</table>    
+	<BR>
+    <table width="100%">
+      <tr>
+        <td width="20%"></td>
+        <td width="80%" align="left">
+        ${fns:getConfig('BANK_ACCOUNT')}
+        </td>
+      </tr>
+    </table>	
     </div>
   </div>
 </body>

@@ -64,10 +64,10 @@ public class PdfUtil {
     }
     
     public static PdfPTable generateTable(String[] headers, Font headerFont, List<String[]> items, Font rowFont, float[] widths, int tableWidth) throws DocumentException{
-    	return generateTable(headers, headerFont, items, rowFont, widths, tableWidth, false);
+    	return generateTable(headers, headerFont, items, rowFont, widths, tableWidth, false, 1);
     }
     
-    public static PdfPTable generateTable(String[] headers, Font headerFont, List<String[]> items, Font rowFont, float[] widths, int tableWidth, boolean headerCenter) throws DocumentException{
+    public static PdfPTable generateTable(String[] headers, Font headerFont, List<String[]> items, Font rowFont, float[] widths, int tableWidth, boolean headerCenter, float bordWidth) throws DocumentException{
     	int columns = widths.length;
     	//int rows = items.size()+1;
     	
@@ -83,7 +83,7 @@ public class PdfUtil {
             for(String header: headers){
             	phrase = new Phrase(header, headerFont);
             	cell = new PdfPCell(phrase);
-            	cell.setBorderWidth(1);
+            	cell.setBorderWidth(bordWidth);
             	if(headerCenter){
             		cell.setHorizontalAlignment(Element.ALIGN_CENTER);
             	}else{
@@ -101,7 +101,7 @@ public class PdfUtil {
         		for(String str:strs){
                 	phrase = new Phrase(str, rowFont);
                 	cell = new PdfPCell(phrase);
-                	cell.setBorderWidth(1);
+                	cell.setBorderWidth(bordWidth);
                 	cell.setHorizontalAlignment(Element.ALIGN_LEFT);
                 	table.addCell(cell);
         		}
