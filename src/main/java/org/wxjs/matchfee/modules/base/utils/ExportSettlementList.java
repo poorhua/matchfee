@@ -157,6 +157,10 @@ public class ExportSettlementList {
 				items.add(new String[]{"缴费", "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
+			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
+			document.add(table);
+			
+			items.clear();
 			String gapHint = "待清算金额";
 			/*
 			String gapHint = "多缴费";
@@ -164,11 +168,14 @@ public class ExportSettlementList {
 				gapHint = "少缴费";
 			}
 			*/
-			items.add(new String[]{gapHint, "", settlementList.getCharge().getMoneyGapDisplay() +"", "", ""});
+			items.add(new String[]{gapHint, "", settlementList.getCharge().getMoneyGapDisplay() +"", 
+					               PdfUtil.toPlain(Global.getConfig("BANK_ACCOUNT"))});
 			
-			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
+			float[] widthsGap = new float[]{0.26f, 0.12f, 0.12f ,0.50f};
+			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widthsGap, tableWidth);
 			document.add(table);
 			
+			/*
 			document.add(PdfUtil.generateTable4Padding());
 			
 			//add account information
@@ -179,6 +186,7 @@ public class ExportSettlementList {
 			
 			table = PdfUtil.generateTable(null, null, items, PdfUtil.getTextFont(true), widthsAcc, tableWidth, false, 0);
 			document.add(table);
+			*/
 			
 		}finally{
 			if(document!=null){

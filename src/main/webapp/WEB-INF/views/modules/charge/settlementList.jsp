@@ -222,20 +222,10 @@
 				<td style="text-align:right">
 				<fmt:formatNumber value="${settementList.charge.moneyGapDisplay}" pattern="#,##0.00"/>
 				</td>
-				<td></td>
-				<td></td>
+				<td colspan="2" align="left">${fns:getConfig('BANK_ACCOUNT')}</td>
 			</tr>								
 		</tbody>
-	</table>    
-	<BR>
-    <table width="100%">
-      <tr>
-        <td width="20%"></td>
-        <td width="80%" align="left">
-        ${fns:getConfig('BANK_ACCOUNT')}
-        </td>
-      </tr>
-    </table>	
+	</table>	
     </div>
   </div>
 </body>
