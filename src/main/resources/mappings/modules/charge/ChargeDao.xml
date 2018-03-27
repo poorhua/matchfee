@@ -288,6 +288,6 @@
 		UPDATE tcharge SET 
 			del_flag = #{DEL_FLAG_DELETE}
 		WHERE id = #{id}
-	</update>
+	</update>	
 	
 </mapper>

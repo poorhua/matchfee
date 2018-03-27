@@ -70,6 +70,42 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		return super.get(id);
 	}
 	
+	public Charge loadChargeAndSubs(Charge chargeParam) {
+		Charge charge = super.get(chargeParam.getId());
+		
+		//OpinionBook
+		OpinionBook opinionBook = new OpinionBook();
+		opinionBook.setPrjNum(charge.getProject().getPrjNum());		
+		charge.setOpinionBookList(opinionBookService.findList(opinionBook));
+		
+	    //ProjectLicense
+		ProjectLicense projectLicense = new ProjectLicense();
+		projectLicense.setCharge(chargeParam);
+		charge.setProjectLicenseList(projectLicenseService.findList(projectLicense));
+		
+		//LandPayTicket
+		LandPayTicket landPayTicket = new LandPayTicket();
+		landPayTicket.setPrjNum(charge.getProject().getPrjNum());
+		charge.setLandPayTicketList(landPayTicketService.findList(landPayTicket));
+			
+		//DeductionDoc
+		DeductionDoc deductionDoc = new DeductionDoc();
+		deductionDoc.setCharge(chargeParam);
+		charge.setDeductionDocList(deductionDocService.findList(deductionDoc));
+			
+		//ProjectDeduction
+		ProjectDeduction projectDeduction = new ProjectDeduction();
+		projectDeduction.setCharge(charge);
+		charge.setProjectDeductionList(projectDeductionService.findList(projectDeduction));
+			
+		//PayTicket	
+		PayTicket payTicket = new PayTicket();
+		payTicket.setCharge(chargeParam);
+		charge.setPayTicketList(payTicketService.findList(payTicket));
+		
+		return charge;
+	}
+	
 	public List<Charge> findList(Charge charge) {
 		return super.findList(charge);
 	}
@@ -110,7 +146,32 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 	
 	@Transactional(readOnly = false)
 	public void delete(Charge charge) {
+		
+		//get all subs
+		Charge chargeWithSubs = this.loadChargeAndSubs(charge);
+		
 		super.delete(charge);
+		
+		//delete subs
+	    //ProjectLicense
+		for(ProjectLicense item : chargeWithSubs.getProjectLicenseList()){
+			projectLicenseService.deleteOnly(item);
+		}
+			
+		//DeductionDoc
+		for(DeductionDoc item : chargeWithSubs.getDeductionDocList()){
+			deductionDocService.delete(item);
+		}
+
+		//ProjectDeduction
+		for(ProjectDeduction item : chargeWithSubs.getProjectDeductionList()){
+			projectDeductionService.deleteOnly(item);
+		}			
+			
+		//PayTicket		
+		for(PayTicket item : chargeWithSubs.getPayTicketList()){
+			payTicketService.delete(item);
+		}
 	}
 	
 	@Transactional(readOnly = true)

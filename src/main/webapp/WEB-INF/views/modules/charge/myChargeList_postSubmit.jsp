@@ -75,7 +75,7 @@
 		   			  <c:otherwise></c:otherwise>		   			  
 				   </c:choose>
     				<c:if test="${fns:getUser().isMatchfeeAdmin}">
-    				  <a href="${ctx}/charge/charge/approvedelete?id=${charge.id}" onclick="return confirmx('确认要删除该征收吗？', this.href)">删除</a>
+    				  <a href="${ctx}/charge/charge/approvedelete?id=${charge.id}&fromMenu=${fromMenu}" onclick="return confirmx('确认要删除该征收吗？', this.href)">删除</a>
     				</c:if>				   
 				</td></shiro:hasPermission>
 			</tr>

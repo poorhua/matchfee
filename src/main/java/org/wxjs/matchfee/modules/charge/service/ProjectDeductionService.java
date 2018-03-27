@@ -65,4 +65,9 @@ public class ProjectDeductionService extends CrudService<ProjectDeductionDao, Pr
 		chargeDao.refreshCalMoney(charge);
 	}
 	
+	@Transactional(readOnly = false)
+	public void deleteOnly(ProjectDeduction projectDeduction) {
+		super.delete(projectDeduction);
+	}
+	
 }

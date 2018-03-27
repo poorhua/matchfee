@@ -69,4 +69,10 @@ public class ProjectLicenseService extends CrudService<ProjectLicenseDao, Projec
 
 	}
 	
+	@Transactional(readOnly = false)
+	public void deleteOnly(ProjectLicense projectLicense) {
+		super.delete(projectLicense);
+
+	}
+	
 }
