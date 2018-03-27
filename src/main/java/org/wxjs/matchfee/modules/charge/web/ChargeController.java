@@ -194,6 +194,9 @@ public class ChargeController extends BaseController {
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
+		
+		model.addAttribute("fromMenu", "calculatelist");
+		
 		return "modules/charge/myChargeList_postSubmit";
 	}
 	
@@ -209,17 +212,22 @@ public class ChargeController extends BaseController {
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
+		
+		model.addAttribute("fromMenu", "approvelist");
+		
 		return "modules/charge/myChargeList_postSubmit";
 	}
 	
 	@RequiresPermissions("charge:charge:view")
 	@RequestMapping(value = {"approvedelete"})
-	public String approvedelete(Charge charge, RedirectAttributes redirectAttributes) {
+	public String approvedelete(Charge charge, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		
 		chargeService.delete(charge);
 		addMessage(redirectAttributes, "删除征收成功");
 		
-		return "modules/charge/myChargeList_postSubmit";
+		String fromMenu = Util.getString(request.getParameter("fromMenu"));
+		
+		return "redirect:"+Global.getAdminPath()+"/charge/charge/"+fromMenu+"?repage";
 	}	
 	
 	@RequiresPermissions("charge:charge:view")
@@ -230,6 +238,9 @@ public class ChargeController extends BaseController {
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
+		
+		model.addAttribute("fromMenu", "uploadlist");
+		
 		return "modules/charge/myChargeList_postSubmit";
 	}
 	
@@ -241,6 +252,9 @@ public class ChargeController extends BaseController {
 		
 		List<Charge> list = chargeService.findList(charge); 
 		model.addAttribute("list", list);
+		
+		model.addAttribute("fromMenu", "confirmlist");
+		
 		return "modules/charge/myChargeList_postSubmit";
 	}
 	
