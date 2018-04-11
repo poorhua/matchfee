@@ -269,7 +269,7 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		
 		StringBuffer lptDescription = new StringBuffer();
 		StringBuffer lptRemarks = new StringBuffer();
-		float lptTotal = 0;
+		double lptTotal = 0;
 		for(LandPayTicket item : landPayTickets){
 			lptTotal += Util.getDouble(item.getMoney());
 			lptDescription.append("金额（元）： " +item.getMoney());
