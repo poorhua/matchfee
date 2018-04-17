@@ -4,14 +4,14 @@
 DROP PROCEDURE IF EXISTS `proc_refresh_land_pay_money`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_refresh_land_pay_money`(IN chargeId CHAR(20), 
-IN prjNum CHAR(20), IN matchfeeBasis INT, OUT deductMoney decimal(10,2))
+IN prjNum CHAR(20), IN matchfeeBasis INT, OUT deductMoney decimal(15,2))
 BEGIN
 	
 	Declare landPayTicketTotal decimal(15,2) default 0;
 	Declare licenseUpAreaTotal decimal(15,2) default 0;
 	Declare previousDeductTotal decimal(15,2) default 0;
     Declare sumMoneyExcludeLandPay decimal(15,2) default 0;
-	Declare deductRemain decimal(10,2) default 0;
+	Declare deductRemain decimal(15,2) default 0;
 	
 	#国土总的缴费A
 	
@@ -98,7 +98,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `proc_refresh_cal_money`;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `proc_refresh_cal_money`(IN chargeId CHAR(20), 
-IN prjNum CHAR(20), IN matchfeeBasis INT, OUT calMoney decimal(10,2))
+IN prjNum CHAR(20), IN matchfeeBasis INT, OUT calMoney decimal(15,2))
 BEGIN
 	
 	select sum(u.money) into calMoney from
