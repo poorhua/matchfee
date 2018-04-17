@@ -29,6 +29,7 @@ import com.lowagie.text.pdf.PdfWriter;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.utils.Encodes;
 import org.wxjs.matchfee.common.utils.PdfUtil;
+import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.charge.entity.ProjectLicense;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
 import org.wxjs.matchfee.modules.charge.entity.ProjectDeduction;
@@ -106,7 +107,11 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(ProjectLicense item : settlementList.getProjectLicenses()){
-				items.add(new String[]{item.getName(), item.getTotalArea() +"", item.getTotalMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
+				items.add(new String[]{item.getName(), 
+						Util.formatDecimal(item.getTotalArea(), Global.DecimalFormat),
+						Util.formatDecimal(item.getTotalMoney(), Global.DecimalFormat),
+						item.getDescription4Plain(), 
+						item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
