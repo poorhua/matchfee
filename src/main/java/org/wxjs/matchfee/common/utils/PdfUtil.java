@@ -102,13 +102,32 @@ public class PdfUtil {
                 	phrase = new Phrase(str, rowFont);
                 	cell = new PdfPCell(phrase);
                 	cell.setBorderWidth(bordWidth);
-                	cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                	if(isMoneyArea(str)){
+                		cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+                	}else{
+                		cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+                	}
                 	table.addCell(cell);
         		}
         	}        	
         }
     	
     	return table;
+    }
+    
+    private static boolean isMoneyArea(String str){
+    	boolean flag = false;
+    	if(StringUtils.isBlank(str)){
+    		return flag;
+    	}
+    	int dotIndex = str.indexOf(".");
+    	if(dotIndex>0){
+    		String partBehindDot = str.substring(dotIndex+1);
+    		if(partBehindDot.length() == 2){
+    			flag = true;
+    		}
+    	}
+    	return flag;
     }
     
     public static PdfPTable generateTable4Padding() throws DocumentException{

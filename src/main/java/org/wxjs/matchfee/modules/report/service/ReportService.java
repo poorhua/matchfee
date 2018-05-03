@@ -1,6 +1,7 @@
 package org.wxjs.matchfee.modules.report.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.service.BaseService;
+import org.wxjs.matchfee.common.utils.DateUtils;
 import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.report.dao.ChargeReportDao;
 import org.wxjs.matchfee.modules.report.dao.ReportDao;
@@ -23,6 +25,9 @@ import org.wxjs.matchfee.modules.report.dataModel.ReportData;
 import org.wxjs.matchfee.modules.report.dataModel.TableColModel;
 import org.wxjs.matchfee.modules.report.dataModel.TableData;
 import org.wxjs.matchfee.modules.report.entity.ReportParam;
+import org.wxjs.matchfee.modules.report.entity.TaxProtectReport;
+
+import com.google.common.collect.Lists;
 
 
 
@@ -175,6 +180,16 @@ public class ReportService extends BaseService{
 		Collection<HashMap<String, Object>> map=reportDao.dashboardChargeStatus();
 		return map;
 	}
-
-
+	
+	public List<TaxProtectReport> taxProtectReport(ReportParam param){
+		if(param.getDateFrom() == null){
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			param.setDateFrom(cal.getTime());
+		}
+		param.setDateTo(param.getDateFrom());
+		List<TaxProtectReport> list = Lists.newArrayList();
+		return list;
+	}
+	
 }

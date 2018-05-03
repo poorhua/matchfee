@@ -377,7 +377,7 @@ public class Charge extends DataEntity<Charge> {
 	}
 	
 	public String getMoneyGapDisplay(){
-		return Util.formatDecimal(this.getMoneyGap(), Global.DecimalFormat);
+		return Util.formatMoneyArea(this.getMoneyGap());
 	}
 
 	public double getPreviousRemain() {
@@ -385,7 +385,7 @@ public class Charge extends DataEntity<Charge> {
 	}
 	
 	public String getPreviousRemainDisplay() {
-		return Util.formatDecimal(previousRemain, Global.DecimalFormat);
+		return Util.formatMoneyArea(previousRemain);
 	}
 
 	public void setPreviousRemain(double previousRemain) {

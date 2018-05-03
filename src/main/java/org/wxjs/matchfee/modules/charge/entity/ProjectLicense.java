@@ -123,7 +123,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 	}
 	
 	public double getTotalMoney(){
-		double totalArea = Util.getDouble(this.upArea) + Util.getDouble(this.downArea);
+		//double totalArea = Util.getDouble(this.upArea) + Util.getDouble(this.downArea);
 		return this.getTotalArea() * Util.getDouble(Global.getConfig("matchfee.basis"));
 	}
 	

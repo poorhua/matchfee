@@ -193,6 +193,9 @@ public class Global {
     //public static final String CHARGE_STATUS_CONFIRMED_TODO = "50";
     public static final String CHARGE_STATUS_CLOSE = "90";
     
+    //public static final String DecimalFormat = "#.##";
+    //public static final String DecimalFormat = "#,##0.00";
+    
     public static final String DecimalFormat = "#.##";
 	
 }

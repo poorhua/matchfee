@@ -36,6 +36,7 @@
 					onclick="WdatePicker({dateFmt:'yyyy-MM',isShowClear:false});"/>
 			</li>			
 			<li class="btns"><input id="btnSubmit" class="btn btn-primary" type="submit" value=" 查 询 "/>
+			
 			</li>
 			<li class="clearfix"></li>
 		</ul>		

@@ -99,8 +99,35 @@ public class ExportSettlementList {
 			table = PdfUtil.generateTable(headers, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(true), widths, tableWidth, true, 1);
 			document.add(table);	
 			
-			table = PdfUtil.generateTable(new String[]{"*上期待清算金额（元）", "", settlementList.getCharge().getPreviousRemainDisplay(), ""}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), widths, tableWidth);
-			document.add(table);
+			//上期待清算金额（元） 
+	        table = new PdfPTable(5);
+	        table.setWidths(widths);
+	        table.setWidthPercentage(tableWidth);
+	        
+	        PdfPCell cell;
+	        
+        	phrase = new Phrase("*上期待清算金额（元）", PdfUtil.getTextFont(true));
+        	cell = new PdfPCell(phrase);
+        	cell.setBorderWidth(1);
+        	cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        	table.addCell(cell);
+        	
+        	phrase = new Phrase("", PdfUtil.getTextFont(true));
+        	PdfPCell emptyCell = new PdfPCell(phrase);
+        	emptyCell.setBorderWidth(1);
+        	emptyCell.setHorizontalAlignment(Element.ALIGN_LEFT);
+        	table.addCell(emptyCell);       
+        	
+        	phrase = new Phrase(settlementList.getCharge().getPreviousRemainDisplay(), PdfUtil.getTextFont(false));
+        	cell = new PdfPCell(phrase);
+        	cell.setBorderWidth(1);
+        	cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+        	table.addCell(cell);   
+        	
+        	table.addCell(emptyCell); 
+        	table.addCell(emptyCell); 
+			
+			document.add(table);			
 			
 			table = PdfUtil.generateTable(new String[]{"*结算项目"}, PdfUtil.getTextFont(true), null, PdfUtil.getTextFont(false), new float[]{1f}, tableWidth);
 			document.add(table);
@@ -108,8 +135,8 @@ public class ExportSettlementList {
 			items.clear();
 			for(ProjectLicense item : settlementList.getProjectLicenses()){
 				items.add(new String[]{item.getName(), 
-						Util.formatDecimal(item.getTotalArea(), Global.DecimalFormat),
-						Util.formatDecimal(item.getTotalMoney(), Global.DecimalFormat),
+						Util.formatMoneyArea(item.getTotalArea()),
+						Util.formatMoneyArea(item.getTotalMoney()),
 						item.getDescription4Plain(), 
 						item.getRemarks4Plain()});
 			}
@@ -123,7 +150,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(DeductionDocItem item : settlementList.getDeductionDocItems()){
-				items.add(new String[]{item.getItem().getName(), item.getArea() +"", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
+				items.add(new String[]{item.getItem().getName(), Util.formatMoneyArea(item.getArea()) +"", Util.formatMoneyArea(item.getMoney()) +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -134,7 +161,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(LandPayTicket item : settlementList.getLandPayTickets()){
-				items.add(new String[]{item.getName(), "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
+				items.add(new String[]{item.getName(), "", Util.formatMoneyArea(item.getMoney()) +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -146,7 +173,7 @@ public class ExportSettlementList {
 			
 			items.clear();
 			for(ProjectDeduction item : settlementList.getProjectDeductions()){
-				items.add(new String[]{item.getName(), item.getArea() +"", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
+				items.add(new String[]{item.getName(), Util.formatMoneyArea(item.getArea()) +"", Util.formatMoneyArea(item.getMoney()) +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -157,9 +184,9 @@ public class ExportSettlementList {
 			document.add(table);
 			
 			items.clear();
-			items.add(new String[]{"结算金额", "", settlementList.getCharge().getCalMoney() +"", "", ""});
+			items.add(new String[]{"结算金额", "", Util.formatMoneyArea(settlementList.getCharge().getCalMoney()) +"", "", ""});
 			for(PayTicket item : settlementList.getPayTickets()){
-				items.add(new String[]{"缴费", "", item.getMoney() +"", item.getDescription4Plain(), item.getRemarks4Plain()});
+				items.add(new String[]{"缴费", "", Util.formatMoneyArea(item.getMoney()) +"", item.getDescription4Plain(), item.getRemarks4Plain()});
 			}
 			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widths, tableWidth);
@@ -233,14 +260,16 @@ public class ExportSettlementList {
         table.addCell(this.getContentCell(this.settlementList.getCharge().getStatusLabel()));
         
         table.addCell(this.getLabelCell("结算金额（元）:"));
-        table.addCell(this.getContentCell(this.settlementList.getCharge().getCalMoney()));
+        table.addCell(this.getContentCell(Util.formatMoneyArea(this.settlementList.getCharge().getCalMoney()), Element.ALIGN_RIGHT));
+        
+        log.debug("this.settlementList.getCharge().getCalMoney(): "+this.settlementList.getCharge().getCalMoney());
         
         if("40".equals(this.settlementList.getCharge().getStatus())){
             table.addCell(this.getLabelCell("缴费金额（元）:"));
-            table.addCell(this.getContentCell(this.settlementList.getCharge().getPayMoney()));
+            table.addCell(this.getContentCell(Util.formatMoneyArea(this.settlementList.getCharge().getPayMoney())));
             
             table.addCell(this.getLabelCell("待清算金额（元）:"));
-            table.addCell(this.getContentCell(this.settlementList.getCharge().getMoneyGapDisplay()));
+            table.addCell(this.getContentCell(Util.formatMoneyArea(this.settlementList.getCharge().getMoneyGapDisplay())));
         	
         }
         
@@ -258,10 +287,14 @@ public class ExportSettlementList {
 	}
 	
 	private PdfPCell getContentCell(String content){
+		return this.getContentCell(content, Element.ALIGN_LEFT);
+	}
+	
+	private PdfPCell getContentCell(String content, int align){
 		Phrase phrase = new Phrase(content, PdfUtil.getTextFont(false));
 		PdfPCell cell = new PdfPCell(phrase);
     	cell.setBorderWidth(0);
-    	cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+    	cell.setHorizontalAlignment(align);
     	return cell;
 	}
 

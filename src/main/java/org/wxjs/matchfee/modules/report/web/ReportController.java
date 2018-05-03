@@ -5,13 +5,11 @@ package org.wxjs.matchfee.modules.report.web;
 
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.Date;
+
 import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +37,7 @@ import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
 import org.wxjs.matchfee.modules.charge.service.PayTicketService;
 import org.wxjs.matchfee.modules.charge.service.ProjectDeductionService;
 import org.wxjs.matchfee.modules.charge.service.ProjectLicenseService;
-import org.wxjs.matchfee.modules.charge.service.ProjectService;
+
 import org.wxjs.matchfee.modules.report.dataModel.ReportData;
 import org.wxjs.matchfee.modules.report.entity.ReportParam;
 import org.wxjs.matchfee.modules.report.service.ReportService;
@@ -287,6 +285,18 @@ public class ReportController extends BaseController {
 		model.addAttribute("chargeMoneyData", chargeMoneyData);
 		
 		return "modules/report/dashboard";
+	}
+	
+	@RequiresPermissions("report:report:view")
+	@RequestMapping(value = {"taxProtect"})
+	public String taxProtect(ReportParam param, HttpServletRequest request, HttpServletResponse response, Model model) {
+		//第一个用户框数据框
+		User currentUser=UserUtils.getUser();
+		model.addAttribute("user", currentUser);
+		//第二个征收汇总数据框
+		Collection<HashMap<String, Object>> map1=reportService.dashboardChargeStatus();
+		
+		return "modules/report/taxtProtectReport";
 	}
 
 }

@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 public class Util {
 	private static final String BasicCharSet = "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	private static final int BasicCharSetLen = BasicCharSet.length();
+	
+	public static final String MoneyAreaPattern = "#,##0.00";
 
 	public static String getRandomStr(int len){
 		StringBuffer buffer = new StringBuffer(len);
@@ -321,6 +323,15 @@ public class Util {
 		double f = Util.getDouble(floatStr);
 		return formatDecimal(f, pattern);
 	}
+	
+	public static String formatMoneyArea(double f){
+		return formatDecimal(f, MoneyAreaPattern);
+	}
+	
+	public static String formatMoneyArea(String floatStr){
+		double f = Util.getDouble(floatStr);
+		return formatDecimal(f, MoneyAreaPattern);
+	}	
 	
 	public static String requestParamDecode(String param){
 		String rst = "";

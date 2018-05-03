@@ -207,12 +207,12 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 			if(itemId <= Util.getInteger(chargeId)){
 				landPayMoneyHistory.append("征收"+itemId)
 				.append(", 抵扣 ")
-				.append(Util.formatDecimal(item.getLandPayMoney(), Global.DecimalFormat) +"元<br>");
+				.append(Util.formatMoneyArea(item.getLandPayMoney()) +"元<br>");
 				landPayMoneyTotal += Util.getDouble(item.getLandPayMoney());
 			}
 		}
 		
-		landPayMoneyHistory.append("至本期累计已抵扣"+Util.formatDecimal(landPayMoneyTotal, Global.DecimalFormat)+"元");
+		landPayMoneyHistory.append("至本期累计已抵扣"+Util.formatMoneyArea(landPayMoneyTotal)+"元");
 		
 		calMoney -= charge.getPreviousRemain();
 		
@@ -272,14 +272,14 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		double lptTotal = 0;
 		for(LandPayTicket item : landPayTickets){
 			lptTotal += Util.getDouble(item.getMoney());
-			lptDescription.append("金额（元）： " +item.getMoney());
+			lptDescription.append("金额（元）： " +Util.formatMoneyArea(item.getMoney()));
 			lptDescription.append(", 票据号： " +item.getTicketNo());
 			lptDescription.append("<br>");
 			
 			lptRemarks.append(item.getRemarks()).append("<br>");
 		}
 		lptDescription.append("合计已缴费金额（元）：");
-		lptDescription.append(Util.formatDecimal(lptTotal, Global.DecimalFormat));
+		lptDescription.append(Util.formatMoneyArea(lptTotal));
 		lptDescription.append("<br>");
 		
 		//deducted previously

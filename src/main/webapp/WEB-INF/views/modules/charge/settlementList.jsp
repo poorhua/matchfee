@@ -180,7 +180,7 @@
 		</c:forEach>		
 		    <tr><td colspan="5"><strong>*缴费情况</strong></td></tr>
 			<tr>
-				<td style="text-align:right">结算金额（元）</td>
+				<td>结算金额（元）</td>
 				<td></td>
 				<td style="text-align:right">
 				<fmt:formatNumber value="${settementList.charge.calMoney}" pattern="#,##0.00"/>
@@ -220,7 +220,7 @@
 			    <td>待清算金额</td>
 				<td></td>
 				<td style="text-align:right">
-				<fmt:formatNumber value="${settementList.charge.moneyGapDisplay}" pattern="#,##0.00"/>
+				<fmt:formatNumber value="${settementList.charge.moneyGap}" pattern="#,##0.00"/>
 				</td>
 				<td colspan="2" align="left">${fns:getConfig('BANK_ACCOUNT')}</td>
 			</tr>								
