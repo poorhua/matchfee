@@ -43,6 +43,10 @@ public class ExportSettlementList {
 	
 	private final static int tableWidth = 90;
 	
+	final static float[] widths = new float[]{0.25f, 0.12f, 0.16f ,0.24f ,0.23f};
+	
+	final static float[] widthsGap = new float[]{0.25f, 0.12f, 0.16f ,0.47f};
+	
 	private SettlementList settlementList;
 	
 	public ExportSettlementList(SettlementList settlementList){
@@ -92,7 +96,6 @@ public class ExportSettlementList {
             
             String[] headers = new String[]{"条目","面积\n（平米）","金额\n（元）","说明","备注"};
     		
-            float[] widths = new float[]{0.26f, 0.12f, 0.12f ,0.25f ,0.25f};
             
             List<String[]> items = new ArrayList<String[]>();
 			
@@ -203,7 +206,7 @@ public class ExportSettlementList {
 			items.add(new String[]{gapHint, "", settlementList.getCharge().getMoneyGapDisplay() +"", 
 					               PdfUtil.toPlain(Global.getConfig("BANK_ACCOUNT"))});
 			
-			float[] widthsGap = new float[]{0.26f, 0.12f, 0.12f ,0.50f};
+			
 			table = PdfUtil.generateTable(null, PdfUtil.getTextFont(true), items, PdfUtil.getTextFont(false), widthsGap, tableWidth);
 			document.add(table);
 			
