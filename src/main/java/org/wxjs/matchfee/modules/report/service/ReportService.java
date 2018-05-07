@@ -182,13 +182,14 @@ public class ReportService extends BaseService{
 	}
 	
 	public List<TaxProtectReport> taxProtectReport(ReportParam param){
-		if(param.getDateFrom() == null){
-			Calendar cal = Calendar.getInstance();
-			cal.add(Calendar.MONTH, -1);
-			param.setDateFrom(cal.getTime());
+		List<TaxProtectReport> list = reportDao.taxProtect(param);
+		//append sequence
+		int i = 0;
+		for(TaxProtectReport item: list){
+			i++;
+			item.setSeq(i+"");
 		}
-		param.setDateTo(param.getDateFrom());
-		List<TaxProtectReport> list = Lists.newArrayList();
+		
 		return list;
 	}
 	

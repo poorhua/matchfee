@@ -5,8 +5,8 @@ package org.wxjs.matchfee.modules.report.web;
 
 import java.util.Calendar;
 import java.util.Collection;
-
 import java.util.HashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,7 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.persistence.Page;
+import org.wxjs.matchfee.common.utils.DateUtils;
+import org.wxjs.matchfee.common.utils.excel.ExportExcel;
 import org.wxjs.matchfee.common.web.BaseController;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
@@ -37,9 +41,9 @@ import org.wxjs.matchfee.modules.charge.service.OpinionBookService;
 import org.wxjs.matchfee.modules.charge.service.PayTicketService;
 import org.wxjs.matchfee.modules.charge.service.ProjectDeductionService;
 import org.wxjs.matchfee.modules.charge.service.ProjectLicenseService;
-
 import org.wxjs.matchfee.modules.report.dataModel.ReportData;
 import org.wxjs.matchfee.modules.report.entity.ReportParam;
+import org.wxjs.matchfee.modules.report.entity.TaxProtectReport;
 import org.wxjs.matchfee.modules.report.service.ReportService;
 import org.wxjs.matchfee.modules.sys.entity.User;
 import org.wxjs.matchfee.modules.sys.utils.UserUtils;
@@ -290,13 +294,40 @@ public class ReportController extends BaseController {
 	@RequiresPermissions("report:report:view")
 	@RequestMapping(value = {"taxProtect"})
 	public String taxProtect(ReportParam param, HttpServletRequest request, HttpServletResponse response, Model model) {
-		//第一个用户框数据框
-		User currentUser=UserUtils.getUser();
-		model.addAttribute("user", currentUser);
-		//第二个征收汇总数据框
-		Collection<HashMap<String, Object>> map1=reportService.dashboardChargeStatus();
+		
+		if(param.getDateFrom() == null){
+			Calendar cal = Calendar.getInstance();
+			cal.add(Calendar.MONTH, -1);
+			param.setDateFrom(cal.getTime());
+
+			param.setDateTo(param.getDateFrom());
+		}
+		
+		List<TaxProtectReport> list = reportService.taxProtectReport(param);
+		
+		model.addAttribute("list", list);
+		
+		model.addAttribute("reportParam", param);
 		
 		return "modules/report/taxtProtectReport";
+	}
+	
+	@RequiresPermissions("report:report:view")
+	@RequestMapping(value = "taxProtectExport", method=RequestMethod.POST)
+	public String taxProtectExport(ReportParam param, HttpServletRequest request, HttpServletResponse response, Model model, RedirectAttributes redirectAttributes) {
+		
+		try {
+            String fileName = "税收保障"+DateUtils.formatDate(param.getDateFrom(), "yyyy-MM")+".xlsx";
+            
+            List<TaxProtectReport> list = reportService.taxProtectReport(param);
+            
+    		new ExportExcel("税收保障", TaxProtectReport.class).setDataList(list).write(response, fileName).dispose();
+    		
+    		return null;
+		} catch (Exception e) {
+			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
+		}
+		return "redirect:" + adminPath + "/report/report/taxProtect?repage";
 	}
 
 }

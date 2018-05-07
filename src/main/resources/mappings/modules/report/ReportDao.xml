@@ -86,4 +86,30 @@
 		where c.del_flag='0'
 		group by b.label order by b.value
 	</select>
+	
+	<select   id="taxProtect" resultType="org.wxjs.matchfee.modules.report.entity.TaxProtectReport">
+		SELECT 
+		b.prj_num AS "project.prjNum",
+		b.prj_name AS "project.prjName",
+		b.build_corp_code AS "project.buildCorpCode",
+		b.build_corp_name AS "project.buildCorpName",
+		b.contact AS "project.contact",
+		b.mobile AS "project.mobile",
+		b.prj_address AS "project.prjAddress",
+		pl.area AS "constructArea",
+		pl.documentlist AS "projectLicense",
+		pt.money AS "payMoney",
+		a.land_pay_money AS "landPayMoney",
+		dd.area AS "matchArea",
+		pd.money AS "projectDeduction",
+		DATE_FORMAT(pt.pay_date,'%Y-%m-%d') AS "maxPayDate"
+		FROM tcharge a
+		LEFT JOIN tproject b on b.prj_num=a.prj_num
+		LEFT JOIN v_pay_ticket pt on a.id=pt.charge_id
+		LEFT JOIN v_project_license pl on a.id=pl.charge_id
+		LEFT JOIN v_deduction_doc dd on a.id=dd.charge_id
+		LEFT JOIN v_project_deduction pd on a.id=pd.charge_id
+		WHERE DATE_FORMAT(pt.pay_date,'%Y-%m') =DATE_FORMAT(#{dateFrom},'%Y-%m')
+		
+	</select>	
 	</mapper>
