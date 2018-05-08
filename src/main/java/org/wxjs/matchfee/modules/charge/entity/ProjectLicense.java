@@ -3,6 +3,7 @@
  */
 package org.wxjs.matchfee.modules.charge.entity;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.hibernate.validator.constraints.Length;
 
 import java.util.Date;
@@ -55,7 +56,7 @@ public class ProjectLicense extends DataEntity<ProjectLicense> {
 	
 	@Length(min=1, max=64, message="名称长度必须介于 1 和 64 之间")
 	public String getName() {
-		return name;
+		return StringEscapeUtils.unescapeHtml4(name);
 	}
 
 	public void setName(String name) {

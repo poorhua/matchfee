@@ -2,6 +2,7 @@ package org.wxjs.matchfee.modules.charge.entity;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.wxjs.matchfee.common.persistence.DataEntity;
@@ -57,7 +58,7 @@ public class Project extends DataEntity<Project> {
 	}
 
 	public String getPrjName() {
-		return prjName;
+		return StringEscapeUtils.unescapeHtml4(prjName);
 	}
 
 	public void setPrjName(String prjName) {
@@ -65,7 +66,7 @@ public class Project extends DataEntity<Project> {
 	}
 
 	public String getBuildCorpName() {
-		return buildCorpName;
+		return StringEscapeUtils.unescapeHtml4(buildCorpName);
 	}
 
 	public void setBuildCorpName(String buildCorpName) {
@@ -81,7 +82,7 @@ public class Project extends DataEntity<Project> {
 	}
 
 	public String getPrjAddress() {
-		return prjAddress;
+		return StringEscapeUtils.unescapeHtml4(prjAddress);
 	}
 
 	public void setPrjAddress(String prjAddress) {
