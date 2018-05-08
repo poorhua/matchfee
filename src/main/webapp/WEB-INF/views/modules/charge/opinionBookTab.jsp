@@ -56,7 +56,7 @@
 		<legend>条件意见书</legend>
 		<div style="margin:10px 60px 10px 0;text-align:right">
 			<shiro:hasPermission name="charge:charge:edit">
-			<c:if test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
+			<c:if test="${(not charge.opinionBookApproved) || (charge.opinionBookApproved && fns:getUser().isShy)}">
 		 		<a href="${ctx}/charge/opinionBook/form?id=${opinionBook.id}">修改</a>
 				<a href="${ctx}/charge/opinionBook/delete?id=${opinionBook.id}" onclick="return confirmx('确认要删除该条件意见书吗？', this.href)">删除</a>
 			</c:if>
@@ -66,7 +66,7 @@
 		<matchfee:opinionBookView opinionBook="${opinionBook}"></matchfee:opinionBookView>
 	    
 	   <c:choose>
-	      <c:when test="${charge.status lt '20' || (charge.status ge '20' && fns:getUser().isShy)}">
+	      <c:when test="${(not charge.opinionBookApproved) || (charge.opinionBookApproved && fns:getUser().isShy)}">
 			<div style="margin:10px 60px 10px 0;text-align:right">
 				<input id="btnAddItem" class="btn btn-primary" type="button" value="添加项目" onclick="toNewItem(${opinionBook.id})"/>
 			</div>	      

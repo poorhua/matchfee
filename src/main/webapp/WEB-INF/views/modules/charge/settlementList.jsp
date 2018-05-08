@@ -76,7 +76,7 @@
       <font size="5" color="blue">无锡市城市基础设施配套费结算清单</font>
       </div>
 	
-	<matchfee:chargeView charge="${settementList.charge}"></matchfee:chargeView><br>
+	<matchfee:chargeViewWithoutHistory charge="${settementList.charge}"></matchfee:chargeViewWithoutHistory><br>
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>

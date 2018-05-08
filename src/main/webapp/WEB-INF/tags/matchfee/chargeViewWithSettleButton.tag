@@ -29,6 +29,17 @@
 					<td class="tit">项目编号：</td><td>${charge.project.prjNum}</td>
 					<td class="tit">项目名称：</td><td>${charge.project.prjName}</td>
 				</tr>
+			<c:if test="${not empty charge.historyCharges }">
+			<tr>
+				<td class="tit">历史征收：</td>
+				<td colspan="3">
+				<c:forEach items="${charge.historyCharges}" var="historyCharge">
+				<a href="${ctx}/report/report/searchInfo?id=${historyCharge.id}" target="_blank">${historyCharge.id}&nbsp;(${historyCharge.statusLabel})</a>
+				<c:set var="printCommaFlag" value="true" scope="request"/>
+				</c:forEach>
+				</td>
+			</tr>	
+			</c:if>				
 				<tr>
 					<td class="tit">建设单位代码：</td><td>${charge.project.buildCorpCode}</td>
 					<td class="tit">建设单位名称：</td><td>${charge.project.buildCorpName}</td>
@@ -49,7 +60,7 @@
 					<td class="tit">缴费金额（元）：</td>
 					<td style="text-align:right"><fmt:formatNumber value="${charge.payMoney}" pattern="#,##0.00"/></td>
 					<td class="tit">待清算金额（元）：</td>
-					<td style="text-align:right"><fmt:formatNumber value="${charge.moneyGapDisplay}" pattern="#,##0.00"/>
+					<td style="text-align:right">${charge.moneyGapDisplay}
 					</td>				
 				</tr>	
 				</c:if> 		      

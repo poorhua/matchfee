@@ -164,6 +164,20 @@
 		</choose>
 	</select>
 	
+	<select id="getHistoryCharges" resultType="Charge">
+		SELECT 
+			distinct <include refid="chargeColumns"/>, 
+			IFNULL(mpt.max_pay_date, a.confirm_date) AS "maxPayDate"
+		FROM tcharge a
+		<include refid="chargeJoinsEx"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			AND a.prj_num = #{project.prjNum}
+			AND a.id &lt; #{id}	
+		</where>
+        ORDER BY a.id
+	</select>	
+	
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id" parameterType="org.wxjs.matchfee.modules.charge.entity.Charge">
 		INSERT INTO tcharge(
 			prj_num,

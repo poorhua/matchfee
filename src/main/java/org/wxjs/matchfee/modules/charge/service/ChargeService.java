@@ -67,7 +67,17 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 	private LandPayTicketService landPayTicketService;	
 
 	public Charge get(String id) {
-		return super.get(id);
+		Charge charge = super.get(id);
+		//fill history charges
+		charge.setHistoryCharges(this.getHistoryCharges(charge));
+		//fill isOpinionBookApproved
+		charge.setOpinionBookApproved(this.isOpinionBookApproved(charge));
+		
+		return charge;
+	}
+	
+	public Charge get(Charge charge) {
+		return this.get(charge.getId());
 	}
 	
 	public Charge loadChargeAndSubs(Charge chargeParam) {
@@ -112,6 +122,10 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 	
 	public Page<Charge> findPage(Page<Charge> page, Charge charge) {
 		return super.findPage(page, charge);
+	}
+	
+	public List<Charge> getHistoryCharges(Charge charge) {
+		return dao.getHistoryCharges(charge);
 	}
 	
 	@Transactional(readOnly = false)
@@ -400,6 +414,26 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 		//settlementList.getCharge().setPayMoney(payMoney + "");
 		
 		return settlementList;
+	}
+	
+	public boolean isOpinionBookApproved(Charge charge){
+		boolean flag = false;
+		
+		Charge chargeParam = new Charge();
+		Project project = new Project();
+		project.setPrjNum(charge.getProject().getPrjNum());
+		chargeParam.setProject(project);
+		
+		List<Charge> list = dao.findList(chargeParam);
+		
+		for(Charge entity : list){
+			if(entity.getStatus().compareTo("30") >=0){
+				flag = true;
+				break;
+			}
+		}
+		
+		return flag;
 	}
 	
 	

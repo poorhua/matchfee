@@ -71,7 +71,11 @@ public class Charge extends DataEntity<Charge> {
 	
 	private List<LandPayTicket> landPayTicketList;
 	
+	private List<Charge> historyCharges;
+	
 	private double previousRemain = 0;
+	
+	private boolean opinionBookApproved = false;
 	
 	public Charge() {
 		super();
@@ -414,6 +418,22 @@ public class Charge extends DataEntity<Charge> {
 	public String getCalMoneyLessEqualZero(){
 		float f = Util.getFloat(this.calMoney);
 		return f<=0 ? "1":"0";
+	}
+
+	public List<Charge> getHistoryCharges() {
+		return historyCharges;
+	}
+
+	public void setHistoryCharges(List<Charge> historyCharges) {
+		this.historyCharges = historyCharges;
+	}
+
+	public boolean isOpinionBookApproved() {
+		return opinionBookApproved;
+	}
+
+	public void setOpinionBookApproved(boolean opinionBookApproved) {
+		this.opinionBookApproved = opinionBookApproved;
 	}
 	
 }

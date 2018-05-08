@@ -1,5 +1,9 @@
 package org.wxjs.matchfee.modules.test;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.utils.Util;
 
@@ -46,6 +50,16 @@ public class TestDouble {
 		System.out.println(d);
 		
 		System.out.println(Util.formatDecimal(d, Global.DecimalFormat));
+		
+		try {
+			String htmlStr = "XDG&mdash;2009&mdash;68号地块开发建设（三期）项目";
+
+			System.out.println(URLDecoder.decode(htmlStr,"UTF-8"));
+			System.out.println(StringEscapeUtils.unescapeHtml4(htmlStr));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

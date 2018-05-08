@@ -117,7 +117,7 @@
 					${charge.statusLabel}
 				</td>
 				<td>
-    				<a href="${ctx}/report/report/searchInfo?id=${charge.id}">查看</a>
+    				<a href="${ctx}/report/report/searchInfo?id=${charge.id}" target="_blank">查看</a>
 				</td>
 			</tr>
 		</c:forEach>

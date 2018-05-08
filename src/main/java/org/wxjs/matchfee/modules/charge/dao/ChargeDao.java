@@ -3,6 +3,8 @@
  */
 package org.wxjs.matchfee.modules.charge.dao;
 
+import java.util.List;
+
 import org.wxjs.matchfee.common.persistence.CrudDao;
 import org.wxjs.matchfee.common.persistence.annotation.MyBatisDao;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
@@ -30,5 +32,7 @@ public interface ChargeDao extends CrudDao<Charge> {
 	public void refreshPayMoney(Charge charge);
 	
 	public void refreshLandPayMoney(Charge charge);
+	
+	public List<Charge> getHistoryCharges(Charge charge);
 	
 }
