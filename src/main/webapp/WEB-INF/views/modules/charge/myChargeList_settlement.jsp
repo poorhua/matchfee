@@ -79,6 +79,7 @@
 					${charge.statusLabel}
 				</td>
 				<shiro:hasPermission name="charge:charge:edit"><td>
+				   <a href="${ctx}/report/report/searchInfo?id=${charge.id}" target="_blank">查看</a>
 				   <a href="${ctx}/charge/charge/showSettlementList?id=${charge.id}" target="_blank">结算清单</a>
 				</td></shiro:hasPermission>
 			</tr>
