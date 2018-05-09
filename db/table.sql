@@ -11,6 +11,8 @@ CREATE TABLE `tproject` (
   `prj_address` varchar(128) NULL COMMENT '项目地址',
   `contact` varchar(32) NULL COMMENT '联系人',
   `mobile` varchar(32) NULL COMMENT '电话',
+  `hint_message` varchar(512) NULL COMMENT '提示',
+  `hint_show_flag` char(1) DEFAULT '0' COMMENT '提示显示标记',
   `create_by` varchar(32) DEFAULT NULL COMMENT '创建者',
   `create_date` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
   `update_by` varchar(32) DEFAULT NULL COMMENT '更新者',
@@ -20,6 +22,7 @@ CREATE TABLE `tproject` (
   UNIQUE(`prj_num`),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT = '工程项目';
+
 
 -- ----------------------------
 -- Table structure for tdeduction_item
