@@ -5,6 +5,7 @@ package org.wxjs.matchfee.modules.charge.web;
 
 import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
@@ -50,6 +52,8 @@ import org.wxjs.matchfee.modules.charge.service.ProjectLicenseService;
 import org.wxjs.matchfee.modules.charge.service.ProjectService;
 import org.wxjs.matchfee.modules.sys.entity.User;
 import org.wxjs.matchfee.modules.sys.utils.UserUtils;
+
+import com.google.common.collect.Maps;
 
 /**
  * 征收Controller
@@ -846,6 +850,23 @@ public class ChargeController extends BaseController {
 			addMessage(redirectAttributes, "导出失败！失败信息："+e.getMessage());
 		}		
 		return "modules/charge/settlementList";
+	}
+	
+	@RequiresPermissions("user")
+	@ResponseBody
+	@RequestMapping(value = "setHintMessage")
+	public Map<String, Object> setHintMessage(@RequestParam(required=true) String prjNum, @RequestParam(required=true) String hintMessage, @RequestParam(required=true) String hintShowFlag, HttpServletResponse response) {
+		Project project = new Project();
+		project.setPrjNum(prjNum);
+		project.setHintMessage(hintMessage);
+		project.setHintShowFlag(hintShowFlag);
+		
+		projectService.updateHint(project);
+		
+		Map<String, Object> map = Maps.newHashMap();
+		map.put("ok", "ok");
+
+		return map;
 	}
 
 }

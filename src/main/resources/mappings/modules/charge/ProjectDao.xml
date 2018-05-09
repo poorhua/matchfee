@@ -11,6 +11,8 @@
 		a.prj_address AS "prjAddress",
 		a.contact AS "contact",
 		a.mobile AS "mobile",
+		a.hint_message AS "hintMessage",
+		a.hint_show_flag AS "hintShowFlag",
 		a.create_by AS "createBy.id",
 		a.create_date AS "createDate",
 		a.update_by AS "updateBy.id",
@@ -145,6 +147,13 @@
 		WHERE id = #{id}
 	</update>
 	
+	<update id="updateHint">
+		UPDATE tproject SET 	
+			hint_message = #{hintMessage},
+			hint_show_flag = #{hintShowFlag}
+		WHERE prj_num = #{prjNum}
+	</update>	
+
 	<update id="delete">
 		UPDATE tproject SET 
 			del_flag = #{DEL_FLAG_DELETE}

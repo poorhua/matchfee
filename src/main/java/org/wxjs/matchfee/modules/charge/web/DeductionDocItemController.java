@@ -66,6 +66,7 @@ public class DeductionDocItemController extends BaseController {
 	@RequestMapping(value = {"list", ""})
 	public String list(DeductionDocItem deductionDocItem, HttpServletRequest request, HttpServletResponse response, Model model) {
 		Page<DeductionDocItem> page = deductionDocItemService.findPage(new Page<DeductionDocItem>(request, response), deductionDocItem); 
+		
 		model.addAttribute("page", page);
 		return "modules/charge/deductionDocItemList";
 	}
@@ -196,9 +197,7 @@ public class DeductionDocItemController extends BaseController {
 		
 		map.put("areaDeducted", areaDeducted);
 		
-		double areaRemained = Util.getDouble(areaInOpinionBook) - Util.getDouble(areaDeducted);
-		
-		map.put("areaRemained", Util.formatDecimal(areaRemained, Global.DecimalFormat));
+		map.put("areaRemained", deductionDocItemService.getAreaRemained(areaInOpinionBook, areaDeducted));	
 
 		return map;
 	}

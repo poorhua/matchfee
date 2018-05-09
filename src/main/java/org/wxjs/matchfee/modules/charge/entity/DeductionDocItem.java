@@ -22,6 +22,10 @@ public class DeductionDocItem extends DataEntity<DeductionDocItem> {
 	private String area;		// 面积（平米）
 	private String money;		// 金额（元）
 	
+	private String areaInOpinionBook; //意见书面积
+	private String areaDeducted; //已抵扣
+	private String areaRemained; //剩余
+	
 	public DeductionDocItem() {
 		super();
 	}
@@ -69,6 +73,30 @@ public class DeductionDocItem extends DataEntity<DeductionDocItem> {
 
 	public void setMoney(String money) {
 		this.money = money;
+	}
+
+	public String getAreaInOpinionBook() {
+		return areaInOpinionBook;
+	}
+
+	public void setAreaInOpinionBook(String areaInOpinionBook) {
+		this.areaInOpinionBook = areaInOpinionBook;
+	}
+
+	public String getAreaDeducted() {
+		return areaDeducted;
+	}
+
+	public void setAreaDeducted(String areaDeducted) {
+		this.areaDeducted = areaDeducted;
+	}
+
+	public String getAreaRemained() {
+		return areaRemained;
+	}
+
+	public void setAreaRemained(String areaRemained) {
+		this.areaRemained = areaRemained;
 	}
 	
 }

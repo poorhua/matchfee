@@ -118,4 +118,9 @@ public class ProjectService extends CrudService<ProjectDao, Project> {
 		super.delete(project);
 	}
 	
+	@Transactional(readOnly = false)
+	public void updateHint(Project project) {
+		dao.updateHint(project);
+	}
+	
 }

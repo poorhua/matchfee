@@ -29,6 +29,10 @@ public class Project extends DataEntity<Project> {
 	
 	private String mobile;
 	
+	private String hintMessage;
+	
+	private String hintShowFlag;
+	
 	//for query param
 	private String projectLicense;
 	
@@ -103,6 +107,22 @@ public class Project extends DataEntity<Project> {
 
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
+	}
+
+	public String getHintMessage() {
+		return hintMessage;
+	}
+
+	public void setHintMessage(String hintMessage) {
+		this.hintMessage = hintMessage;
+	}
+
+	public String getHintShowFlag() {
+		return hintShowFlag;
+	}
+
+	public void setHintShowFlag(String hintShowFlag) {
+		this.hintShowFlag = hintShowFlag;
 	}
 
 	public String getProjectLicense() {

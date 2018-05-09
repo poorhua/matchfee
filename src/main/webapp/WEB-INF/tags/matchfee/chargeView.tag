@@ -48,7 +48,15 @@
 				<td style="text-align:right">${charge.moneyGapDisplay}
 				</td>				
 			</tr>	
-			</c:if> 			      
+			</c:if> 
+			<c:if test="${charge.project.hintShowFlag eq '1' }">
+			<tr>
+				<td class="tit">提示信息：</td>
+				<td colspan="3" >
+				  <font color="red">${charge.project.hintMessage}</font>
+				</td>
+			</tr>	
+			</c:if>							      
 			
 		</table>
 	</fieldset>		

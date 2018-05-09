@@ -17,4 +17,6 @@ public interface ProjectDao extends CrudDao<Project> {
 	
 	public Project getByPrjNum(String prjNum);
 	
+	public void updateHint(Project project);
+	
 }

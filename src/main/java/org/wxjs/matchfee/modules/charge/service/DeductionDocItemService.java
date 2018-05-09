@@ -8,8 +8,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.wxjs.matchfee.common.config.Global;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
+import org.wxjs.matchfee.common.utils.StringUtils;
+import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.charge.entity.Charge;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDoc;
 import org.wxjs.matchfee.modules.charge.entity.DeductionDocItem;
@@ -36,7 +39,20 @@ public class DeductionDocItemService extends CrudService<DeductionDocItemDao, De
 	}
 	
 	public List<DeductionDocItem> findList(DeductionDocItem deductionDocItem) {
-		return super.findList(deductionDocItem);
+		List<DeductionDocItem> list = super.findList(deductionDocItem);
+		
+		//fill areaDeducted, areaRemained
+		for(DeductionDocItem item : list){
+			String areaInOpinionBook = opinionBookItemService.getAreaInOpinionBook(item.getItem().getId(), deductionDocItem.getDoc().getPrjNum());
+			
+			String areaDeducted = this.getAreaDeducted(item.getItem().getId(), deductionDocItem.getDoc().getPrjNum());
+			
+			item.setAreaInOpinionBook(areaInOpinionBook);
+			item.setAreaDeducted(areaDeducted);
+			item.setAreaRemained(this.getAreaRemained(areaInOpinionBook, areaDeducted));
+		}
+		
+		return list;
 	}
 	
 	public Page<DeductionDocItem> findPage(Page<DeductionDocItem> page, DeductionDocItem deductionDocItem) {
@@ -72,7 +88,7 @@ public class DeductionDocItemService extends CrudService<DeductionDocItemDao, De
 
 		List<DeductionDocItem> list = this.getAreaDeductions(itemId, prjNum);
 		
-		String rst = "";
+		String rst = "0";
 		
 		if(list != null){
 			for(DeductionDocItem entity : list){
@@ -94,6 +110,19 @@ public class DeductionDocItemService extends CrudService<DeductionDocItemDao, De
 		deductionDocItem.setDoc(doc);
 
 		return this.sumDeductions(deductionDocItem);
+	}
+	
+	public String getAreaRemained(String areaInOpinionBook, String areaDeducted){
+		String areaRemainedStr = "";
+		if(StringUtils.isEmpty(areaInOpinionBook) || "0".equals(areaInOpinionBook)){
+			areaRemainedStr = "无";
+		}else{
+			double areaRemained = Util.getDouble(areaInOpinionBook) - Util.getDouble(areaDeducted);
+			
+			areaRemainedStr = Util.formatDecimal(areaRemained, Global.DecimalFormat);			
+		}
+		
+		return areaRemainedStr;
 	}
 	
 }

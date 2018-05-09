@@ -10,10 +10,13 @@
 	<table id="contentTable" class="table table-striped table-bordered table-condensed">
 		<thead>
 			<tr>
-				<th width="30%">抵扣项</th>
-				<th width="15%">面积（平米）</th>
-				<th width="15%">金额（元）</th>
-				<th width="30%">备注信息</th>
+				<th width="20%">抵扣项</th>
+				<th width="10%">面积（平米）</th>
+				<th width="10%">金额（元）</th>
+				<th width="10%">意见书面积（平米）</th>
+				<th width="10%">已抵扣面积（平米）</th>
+				<th width="10%">剩余面积（平米）</th>
+				<th width="20%">备注信息</th>
 				<c:if test="${withOperation eq '1' }">
 				<shiro:hasPermission name="charge:charge:edit"><th width="10%">操作</th></shiro:hasPermission>
 				</c:if>
@@ -31,6 +34,15 @@
 				<td style="text-align:right">
 					<fmt:formatNumber value="${deductionDocItem.money}" pattern="#,##0.00"/>
 				</td>
+				<td style="text-align:right">
+					${deductionDocItem.areaInOpinionBook}
+				</td>				
+				<td style="text-align:right">
+					${deductionDocItem.areaDeducted}
+				</td>
+				<td style="text-align:right">
+					${deductionDocItem.areaRemained}
+				</td>				
 				<td>
 					${deductionDocItem.remarks}
 				</td>

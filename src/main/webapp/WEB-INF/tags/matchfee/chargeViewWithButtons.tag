@@ -152,6 +152,35 @@
 	    	window.open('${ctx}/charge/charge/showSettlementList?id=${charge.id}','_blank')
 	    	
 	    }
+	    
+		function updateHint(){
+			var prjNum = ${charge.project.prjNum};
+			var hintMessage = $("#hintMessage").val();
+			var hintShowFlag = $("input[name='hintShowFlag']:checked").val();
+			
+	        $.ajax({     
+	            //要用post方式      
+	            type: "Post",     
+	            //方法所在页面和方法名      
+	            url: "${ctx}/charge/charge/setHintMessage?prjNum="+prjNum
+	            		+"&hintMessage="+hintMessage
+	            		+"&hintShowFlag="+hintShowFlag,     
+	            contentType: "application/json; charset=utf-8",     
+	            dataType: "json",     
+	            success: function(data) {
+	            	if($("input[name='hintShowFlag']:checked").val() == "1"){
+	            		$('#hintMessageDiv').show();
+	            		$('#hintMessageDiv').val("<font color='red'>"+$("#hintMessage").val()+"</font>");
+	            	}else{
+	            		$('#hintMessageDiv').hide();
+	            	}
+	            	$('#myModal').modal('hide');
+	            },     
+	            error: function(err) {     
+	                alert(err);     
+	            }     
+	        });
+		}	    
 	</script>
 
 <form:form id="chargeForm" class="form-horizontal">
@@ -204,7 +233,19 @@
 					<td style="text-align:right">${charge.moneyGapDisplay}
 					</td>				
 				</tr>	
-				</c:if> 		      
+				</c:if> 
+				
+				<tr>
+					<td colspan="3" >
+					<div id="hintMessageDiv">
+					<c:if test="${charge.project.hintShowFlag eq '1' }">
+					  提醒：<font color="red">${charge.project.hintMessage}</font>
+					</c:if>						
+					</div>
+					</td>
+					<td><button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">设置提醒</button></td>
+				</tr>	
+										      
 		      </table>
 		    </td>
 		    <td width="30%" align="center">
@@ -293,3 +334,37 @@
 		</table>
 	</fieldset>		
 </form:form>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					为该项目设置提醒
+				</h4>
+			</div>
+           <form:form id="messageSetForm" action="${ctx}/charge/charge/setHintMessage" method="post" class="form-horizontal">			
+			<div class="modal-body">
+
+			<input type="radio" name="hintShowFlag" value="1" <c:if test="${charge.project.hintShowFlag eq '1' }">checked</c:if>>打开提醒
+			<input type="radio" name="hintShowFlag" value="0" <c:if test="${charge.project.hintShowFlag ne '1' }">checked</c:if>>关闭提醒
+			<BR>
+			提醒信息：
+			<textarea id="hintMessage" name="hintMessage" rows="3" cols="20">${charge.project.hintMessage}
+			</textarea>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="updateHint()">保存</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+			</div>
+			</form:form>
+		</div>
+	</div>
+</div>
+
+

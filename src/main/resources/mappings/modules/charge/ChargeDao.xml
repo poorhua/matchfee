@@ -10,6 +10,8 @@
 		b.build_corp_name AS "project.buildCorpName",
 		b.contact AS "project.contact",
 		b.mobile AS "project.mobile",
+		b.hint_message AS "project.hintMessage",
+		b.hint_show_flag AS "project.hintShowFlag",
 		b.prj_address AS "project.prjAddress",
 		a.report_staff AS "reportStaff.id",
 		u1.name AS "reportStaff.name",

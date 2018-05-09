@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.wxjs.matchfee.common.persistence.Page;
 import org.wxjs.matchfee.common.service.CrudService;
+import org.wxjs.matchfee.common.utils.Util;
 import org.wxjs.matchfee.modules.base.entity.DeductionItem;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBook;
 import org.wxjs.matchfee.modules.charge.entity.OpinionBookItem;
@@ -41,7 +42,7 @@ public class OpinionBookItemService extends CrudService<OpinionBookItemDao, Opin
 		
 		if(list != null){
 			for(OpinionBookItem entity : list){
-				rst = entity.getArea();
+				rst = Util.getString(entity.getArea(), "0");
 			}
 		}
 		
