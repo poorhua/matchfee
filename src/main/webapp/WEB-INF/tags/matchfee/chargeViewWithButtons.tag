@@ -163,21 +163,25 @@
 	            type: "Post",     
 	            //方法所在页面和方法名      
 	            url: "${ctx}/charge/charge/setHintMessage?prjNum="+prjNum
-	            		+"&hintMessage="+hintMessage
-	            		+"&hintShowFlag="+hintShowFlag,     
-	            contentType: "application/json; charset=utf-8",     
+	            		+"&hintMessage="+encodeURI(hintMessage)
+	            		+"&hintShowFlag="+hintShowFlag,  
+	            //url: "${ctx}/charge/charge/setHintMessage",
+	            contentType: "application/json; charset=utf-8",   
+	            //data: {"prjNum":prjNum, "hintMessage":hintMessage, "hintShowFlag":hintShowFlag},
 	            dataType: "json",     
 	            success: function(data) {
-	            	if($("input[name='hintShowFlag']:checked").val() == "1"){
+	            	var flag = $("input[name='hintShowFlag']:checked").val();
+	            	var msg = $("#hintMessage").val();
+	            	if(flag == "1"){
 	            		$('#hintMessageDiv').show();
-	            		$('#hintMessageDiv').val("<font color='red'>"+$("#hintMessage").val()+"</font>");
+	            		document.getElementById('hintMessageDiv').innerHTML = "提醒："+msg;
 	            	}else{
 	            		$('#hintMessageDiv').hide();
 	            	}
 	            	$('#myModal').modal('hide');
 	            },     
 	            error: function(err) {     
-	                alert(err);     
+	                alert("操作出错");     
 	            }     
 	        });
 		}	    
@@ -237,9 +241,9 @@
 				
 				<tr>
 					<td colspan="3" >
-					<div id="hintMessageDiv">
+					<div id="hintMessageDiv" style="color:red;">
 					<c:if test="${charge.project.hintShowFlag eq '1' }">
-					  提醒：<font color="red">${charge.project.hintMessage}</font>
+					  提醒：${charge.project.hintMessage}
 					</c:if>						
 					</div>
 					</td>
@@ -349,7 +353,7 @@
 			</div>
            <form:form id="messageSetForm" action="${ctx}/charge/charge/setHintMessage" method="post" class="form-horizontal">			
 			<div class="modal-body">
-
+			<input id="prjNum" name="prjNum" type="hidden" value="${charge.project.prjNum }">
 			<input type="radio" name="hintShowFlag" value="1" <c:if test="${charge.project.hintShowFlag eq '1' }">checked</c:if>>打开提醒
 			<input type="radio" name="hintShowFlag" value="0" <c:if test="${charge.project.hintShowFlag ne '1' }">checked</c:if>>关闭提醒
 			<BR>
