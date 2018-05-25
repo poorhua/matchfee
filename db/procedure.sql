@@ -79,9 +79,11 @@ BEGIN
 	   END IF;
 	END IF;
 
-  #deductMoney can't exceed sumMoneyExcludeLandPay
+  #deductMoney can not exceed sumMoneyExcludeLandPay
   IF deductMoney>sumMoneyExcludeLandPay THEN
-     set deductMoney = sumMoneyExcludeLandPay;
+     IF sumMoneyExcludeLandPay>0 THEN
+        set deductMoney = sumMoneyExcludeLandPay;
+     END IF;
   END IF;
 	
 	UPDATE tcharge 

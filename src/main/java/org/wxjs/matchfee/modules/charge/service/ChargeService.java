@@ -218,11 +218,13 @@ public class ChargeService extends CrudService<ChargeDao, Charge> {
 				charge.setPreviousRemain(item.getMoneyGap());
 			}
 			
-			if(itemId <= Util.getInteger(chargeId)){
+			double landPayMoney = Util.getDouble(item.getLandPayMoney());
+			
+			if(itemId <= Util.getInteger(chargeId) && landPayMoney > 0){
 				landPayMoneyHistory.append("征收"+itemId)
 				.append(", 抵扣 ")
 				.append(Util.formatMoneyArea(item.getLandPayMoney()) +"元<br>");
-				landPayMoneyTotal += Util.getDouble(item.getLandPayMoney());
+				landPayMoneyTotal += landPayMoney;
 			}
 		}
 		
